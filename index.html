@@ -4,8 +4,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Study Reference :: Home</title>
+    <title>Data Science Journey :: Study Reference Hub</title>
+    <meta name="description" content="Personal Data Science & Programming reference hub covering Python Core, Data Structures, OOP, NumPy, Pandas, Machine Learning and SQL.">
     <link rel="stylesheet" href="style.css">
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
 </head>
 
 <body>
@@ -13,10 +18,200 @@
     <header class="topbar">
         <a class="brand" href="index.html">study_reference/</a>
         <nav>
-            <a href="python/index.html">Python</a>
-            <!-- SLOT:MAIN-NAV -->
+            <a href="index.html" class="active">Home</a>
+            <a href="python/index.html">Python Core</a>
+            <a href="https://github.com/Adnan-Eram-Argho/My-Data_science_journey" target="_blank" rel="noopener">GitHub Repo ↗</a>
         </nav>
     </header>
+
+    <main class="dashboard-shell">
+        <!-- Hero Section -->
+        <section class="hero-dashboard">
+            <div class="kicker">
+                <span class="kicker-dot"></span>
+                // DATA SCIENCE STUDY REFERENCE HUB
+            </div>
+            <h1>My Data Science <span>&amp; Programming Journey</span></h1>
+            <p>
+                A consolidated reference hub built from hands-on Jupyter Notebooks, real-world experiments, and core computer science fundamentals. Clean code snippets, edge cases explained, and reference cards.
+            </p>
+
+            <div class="dashboard-stats">
+                <div class="stat-item">
+                    <div class="stat-val">01</div>
+                    <div class="stat-lbl">Active Module</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-val">23</div>
+                    <div class="stat-lbl">Python Topics</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-val">60+</div>
+                    <div class="stat-lbl">Tested Examples</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-val">100%</div>
+                    <div class="stat-lbl">Original Code</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Modules Grid -->
+        <div class="section-head">
+            <h2>// STUDY MODULES</h2>
+        </div>
+
+        <div class="cards-grid">
+            <!-- Python Core (ACTIVE) -->
+            <div class="module-card active-card">
+                <div>
+                    <div class="card-top">
+                        <div class="card-icon">🐍</div>
+                        <span class="status-tag active">Active</span>
+                    </div>
+                    <h3>Python Core &amp; Functional Tools</h3>
+                    <p>
+                        In-depth reference covering lists, dicts, sets, OOP paradigms, magic methods, custom exceptions, iterators, generators, and decorators.
+                    </p>
+                    <div class="card-tags">
+                        <span class="card-tag">Data Structures</span>
+                        <span class="card-tag">OOP</span>
+                        <span class="card-tag">Decorators</span>
+                        <span class="card-tag">Generators</span>
+                    </div>
+                </div>
+                <a href="python/index.html" class="card-btn btn-active">Explore Python Core →</a>
+            </div>
+
+            <!-- NumPy (PLANNED) -->
+            <div class="module-card">
+                <div>
+                    <div class="card-top">
+                        <div class="card-icon">🔢</div>
+                        <span class="status-tag planned">Planned</span>
+                    </div>
+                    <h3>NumPy &amp; Numerical Computing</h3>
+                    <p>
+                        Multi-dimensional arrays, matrix transformations, vectorized calculations, random sampling, and linear algebra operations.
+                    </p>
+                    <div class="card-tags">
+                        <span class="card-tag">NDArray</span>
+                        <span class="card-tag">Broadcasting</span>
+                        <span class="card-tag">Vectorization</span>
+                    </div>
+                </div>
+                <button class="card-btn btn-disabled" disabled>Coming Soon</button>
+            </div>
+
+            <!-- Pandas (PLANNED) -->
+            <div class="module-card">
+                <div>
+                    <div class="card-top">
+                        <div class="card-icon">🐼</div>
+                        <span class="status-tag planned">Planned</span>
+                    </div>
+                    <h3>Pandas Data Analysis</h3>
+                    <p>
+                        DataFrames, Series, missing data treatment, GroupBy aggregations, merging/joining datasets, and time-series manipulation.
+                    </p>
+                    <div class="card-tags">
+                        <span class="card-tag">DataFrames</span>
+                        <span class="card-tag">Data Cleaning</span>
+                        <span class="card-tag">GroupBy</span>
+                    </div>
+                </div>
+                <button class="card-btn btn-disabled" disabled>Coming Soon</button>
+            </div>
+
+            <!-- Data Visualization (PLANNED) -->
+            <div class="module-card">
+                <div>
+                    <div class="card-top">
+                        <div class="card-icon">📊</div>
+                        <span class="status-tag planned">Planned</span>
+                    </div>
+                    <h3>Data Visualization</h3>
+                    <p>
+                        Visual storytelling using Matplotlib, Seaborn statistical plots, custom styling, and interactive Plotly charts.
+                    </p>
+                    <div class="card-tags">
+                        <span class="card-tag">Matplotlib</span>
+                        <span class="card-tag">Seaborn</span>
+                        <span class="card-tag">Plotly</span>
+                    </div>
+                </div>
+                <button class="card-btn btn-disabled" disabled>Coming Soon</button>
+            </div>
+
+            <!-- Machine Learning (PLANNED) -->
+            <div class="module-card">
+                <div>
+                    <div class="card-top">
+                        <div class="card-icon">🤖</div>
+                        <span class="status-tag planned">Planned</span>
+                    </div>
+                    <h3>Machine Learning</h3>
+                    <p>
+                        Supervised &amp; unsupervised learning algorithms, feature engineering, model tuning, cross-validation, and metrics.
+                    </p>
+                    <div class="card-tags">
+                        <span class="card-tag">Scikit-Learn</span>
+                        <span class="card-tag">Regression</span>
+                        <span class="card-tag">Classification</span>
+                    </div>
+                </div>
+                <button class="card-btn btn-disabled" disabled>Coming Soon</button>
+            </div>
+
+            <!-- SQL & Databases (PLANNED) -->
+            <div class="module-card">
+                <div>
+                    <div class="card-top">
+                        <div class="card-icon">🗄️</div>
+                        <span class="status-tag planned">Planned</span>
+                    </div>
+                    <h3>SQL &amp; Database Analytics</h3>
+                    <p>
+                        Relational database queries, complex JOINs, aggregation logic, CTEs, subqueries, and analytical window functions.
+                    </p>
+                    <div class="card-tags">
+                        <span class="card-tag">SQL</span>
+                        <span class="card-tag">Joins</span>
+                        <span class="card-tag">Window Functions</span>
+                    </div>
+                </div>
+                <button class="card-btn btn-disabled" disabled>Coming Soon</button>
+            </div>
+        </div>
+
+        <!-- Quick Topics Index -->
+        <section class="quick-index">
+            <div class="section-head" style="margin-bottom: 8px;">
+                <h2>// QUICK TOPIC INDEX (PYTHON CORE)</h2>
+            </div>
+            <p style="color: var(--muted); font-size: 14px; margin: 0 0 16px;">
+                Jump directly to specific topics inside the Python Core reference module:
+            </p>
+            <div class="chips-wrapper">
+                <a href="python/index.html#lists" class="topic-chip"><span class="chip-num">01</span> Lists</a>
+                <a href="python/index.html#tuples" class="topic-chip"><span class="chip-num">02</span> Tuples</a>
+                <a href="python/index.html#dicts" class="topic-chip"><span class="chip-num">03</span> Dictionaries</a>
+                <a href="python/index.html#sets" class="topic-chip"><span class="chip-num">04</span> Sets</a>
+                <a href="python/index.html#functions" class="topic-chip"><span class="chip-num">05</span> Functions</a>
+                <a href="python/index.html#lambda" class="topic-chip"><span class="chip-num">06</span> Lambda</a>
+                <a href="python/index.html#exceptions" class="topic-chip"><span class="chip-num">13</span> Exceptions</a>
+                <a href="python/index.html#magic-methods" class="topic-chip"><span class="chip-num">14</span> Magic Methods</a>
+                <a href="python/index.html#oop-basics" class="topic-chip"><span class="chip-num">15</span> OOP Basics</a>
+                <a href="python/index.html#inheritance" class="topic-chip"><span class="chip-num">17</span> Inheritance</a>
+                <a href="python/index.html#generators" class="topic-chip"><span class="chip-num">22</span> Generators</a>
+                <a href="python/index.html#decorators" class="topic-chip"><span class="chip-num">23</span> Decorators</a>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        Data Science Journey &amp; Study Reference • Maintained by Adnan Eram Argho
+    </footer>
 
 </body>
 
