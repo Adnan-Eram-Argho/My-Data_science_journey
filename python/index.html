@@ -1,0 +1,2347 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Python Core :: Full Reference</title>
+    <link rel="stylesheet" href="../style.css">
+
+</head>
+
+<body>
+
+    <div class="shell">
+        <aside class="sidebar" id="sidebar">
+            <div class="sidebar-head">
+                <span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+                <span class="sidebar-title">python_core.ipynb</span>
+            </div>
+            <nav class="nb-group" id="navlinks">
+                <a class="nb-link" href="#lists"><span class="ico">▸</span> 01 · Lists</a>
+                <a class="nb-link" href="#tuples"><span class="ico">▸</span> 02 · Tuples</a>
+                <a class="nb-link" href="#dicts"><span class="ico">▸</span> 03 · Dictionaries</a>
+                <a class="nb-link" href="#sets"><span class="ico">▸</span> 04 · Sets</a>
+                <a class="nb-link" href="#functions"><span class="ico">▸</span> 05 · Functions</a>
+                <a class="nb-link" href="#lambda"><span class="ico">▸</span> 06 · Lambda</a>
+                <a class="nb-link" href="#map"><span class="ico">▸</span> 07 · map()</a>
+                <a class="nb-link" href="#filter"><span class="ico">▸</span> 08 · filter()</a>
+                <a class="nb-link" href="#comparison"><span class="ico">▸</span> 09 · Comparison</a>
+                <a class="nb-link" href="#modules"><span class="ico">▸</span> 10 · Modules & Packages</a>
+                <a class="nb-link" href="#stdlib"><span class="ico">▸</span> 11 · Standard Library</a>
+                <a class="nb-link" href="#fileops"><span class="ico">▸</span> 12 · File Operations</a>
+                <a class="nb-link" href="#exceptions"><span class="ico">▸</span> 13 · Exception Handling</a>
+                <a class="nb-link" href="#magic-methods"><span class="ico">▸</span> 14 · Magic Methods</a>
+                <a class="nb-link" href="#oop-basics"><span class="ico">▸</span> 15 · OOP Basics</a>
+                <a class="nb-link" href="#encapsulation"><span class="ico">▸</span> 16 · Encapsulation</a>
+                <a class="nb-link" href="#inheritance"><span class="ico">▸</span> 17 · Inheritance</a>
+                <a class="nb-link" href="#polymorphism"><span class="ico">▸</span> 18 · Polymorphism</a>
+                <a class="nb-link" href="#abstraction"><span class="ico">▸</span> 19 · Abstraction</a>
+                <a class="nb-link" href="#custom-exceptions"><span class="ico">▸</span> 20 · Custom Exceptions</a>
+
+                <li><a href="#iterators" class="nb-link"><span class="ico">▸</span>21 · Iterators</a></li>
+                <li><a href="#generators" class="nb-link"><span class="ico">▸</span>22 · Generators</a></li>
+                <li><a href="#decorators" class="nb-link"><span class="ico">▸</span>23 · Decorators</a></li>
+                <!-- SLOT:NAV -->
+
+            </nav>
+            <div class="sidebar-foot">
+                8 notebooks converted<br>
+                Every example is your original code<br>
+                Kernel: python3
+            </div>
+        </aside>
+
+        <main>
+            <div class="hero">
+                <div class="kicker">// consolidated study reference</div>
+                <h1>Python Core Data Structures <span>&amp; Functional Tools</span></h1>
+                <p>Every cell from your 8 notebooks — <code>dictionaries</code>, <code>inbuild_data_structure</code>,
+                    <code>sets</code>, <code>tuples</code>, <code>functions</code>, <code>lambda_function</code>,
+                    <code>map_function</code>, <code>filter_function</code> — rebuilt as one reference, with the nuances
+                    explained, not just the syntax.
+                </p>
+                <div class="hero-stats">
+                    <div><b>8</b>topics</div>
+                    <div><b>60+</b>code cells</div>
+                    <div><b>0</b>skipped edge cases</div>
+                </div>
+            </div>
+
+            <!-- ============ LISTS ============ -->
+            <section class="topic" id="lists">
+                <div class="topic-head"><span class="topic-num">01</span>
+                    <h2>Lists</h2>
+                </div>
+                <p class="topic-sub">An <b>ordered, mutable</b> collection. Unlike tuples, you can change, add, or
+                    remove items
+                    after creation. Duplicates are allowed.</p>
+
+                <h3 class="sub">Creating &amp; indexing</h3>
+                <div class="cell">
+                    <div class="cell-in"><span class="prompt">In [1]</span>
+                        <pre class="code">lst = []
+<span class="c-fn">print</span>(<span class="c-fn">type</span>(lst))
+
+fruits = [<span class="c-str">"apple"</span>, <span class="c-str">"banana"</span>, <span class="c-str">"cherry"</span>, <span class="c-str">"Kiwi"</span>, <span class="c-str">"mango"</span>]
+<span class="c-fn">print</span>(fruits[-1])      <span class="c-com"># last item</span>
+<span class="c-fn">print</span>(fruits[1:])     <span class="c-com"># from index 1 to end</span>
+<span class="c-fn">print</span>(fruits[1:3])    <span class="c-com"># index 1 up to (not incl.) 3</span></pre>
+                    </div>
+                    <div class="cell-out"><span class="prompt">Out[1]</span>
+                        <pre class="out">mango
+['banana', 'cherry', 'Kiwi', 'mango']
+['banana', 'cherry']</pre>
+                    </div>
+                </div>
+
+                <div class="box warn">
+                    <span class="tag">⚠ Nuance — slice assignment with a string</span>
+                    <p><code>fruits[1:] = "watermelon"</code> does <b>not</b> insert the word "watermelon" as one
+                        element. Because
+                        a string is itself an iterable of characters, Python unpacks it and inserts <b>each character as
+                            its own
+                            list item</b>, replacing everything from index 1 onward.</p>
+                </div>
+                <div class="cell">
+                    <div class="cell-in"><span class="prompt">In [2]</span>
+                        <pre class="code">fruits[1:] = <span class="c-str">"watermelon"</span>
+<span class="c-fn">print</span>(fruits)</pre>
+                    </div>
+                    <div class="cell-out"><span class="prompt">Out[2]</span>
+                        <pre class="out">['apple', 'w', 'a', 't', 'e', 'r', 'm', 'e', 'l', 'o', 'n']</pre>
+                    </div>
+                </div>
+
+                <h3 class="sub">Core methods</h3>
+                <div class="badges">
+                    <span class="badge"><b>.append(x)</b> add to end</span>
+                    <span class="badge"><b>.insert(i,x)</b> add at index</span>
+                    <span class="badge"><b>.remove(x)</b> delete first match</span>
+                    <span class="badge"><b>.pop()</b> remove + return last</span>
+                    <span class="badge"><b>.index(x)</b> first index of x</span>
+                    <span class="badge"><b>.count(x)</b> occurrences of x</span>
+                    <span class="badge"><b>.sort()</b> in-place sort</span>
+                    <span class="badge"><b>.reverse()</b> in-place reverse</span>
+                    <span class="badge"><b>.clear()</b> empty the list</span>
+                </div>
+                <div class="cell">
+                    <div class="cell-in"><span class="prompt">In [3]</span>
+                        <pre class="code">fruits = [<span class="c-str">"apple"</span>, <span class="c-str">"banana"</span>, <span class="c-str">"cherry"</span>, <span class="c-str">"kiwi"</span>, <span class="c-str">"mango"</span>]
+fruits.append(<span class="c-str">"orange"</span>)
+<span class="c-fn">print</span>(fruits)
+fruits.insert(<span class="c-num">1</span>, <span class="c-str">"watermelon"</span>)
+<span class="c-fn">print</span>(fruits)
+fruits.remove(<span class="c-str">"cherry"</span>)   <span class="c-com"># removes the FIRST occurrence only</span>
+<span class="c-fn">print</span>(fruits)
+
+popped = fruits.pop()   <span class="c-com"># removes & returns the LAST item</span>
+<span class="c-fn">print</span>(popped, fruits)
+
+<span class="c-fn">print</span>(fruits.index(<span class="c-str">"apple"</span>))   <span class="c-com"># 0</span>
+fruits.insert(<span class="c-num">2</span>, <span class="c-str">"banana"</span>)
+<span class="c-fn">print</span>(fruits.count(<span class="c-str">"banana"</span>))</pre>
+                    </div>
+                    <div class="cell-out"><span class="prompt">Out[3]</span>
+                        <pre class="out">['apple', 'banana', 'cherry', 'kiwi', 'mango', 'orange']
+['apple', 'watermelon', 'banana', 'cherry', 'kiwi', 'mango', 'orange']
+['apple', 'watermelon', 'banana', 'kiwi', 'mango', 'orange']
+mango ['apple', 'watermelon', 'banana', 'kiwi', 'orange']
+0
+1</pre>
+                    </div>
+                </div>
+                <div class="box note">
+                    <span class="tag">remove() vs pop()</span>
+                    <p><code>remove(value)</code> deletes by <b>value</b> (first match); <code>pop()</code> deletes by
+                        <b>position</b> (default: last) and is the only one that <b>returns</b> the removed item.
+                    </p>
+                </div>
+
+                <h3 class="sub">Slicing</h3>
+                <div class="cell">
+                    <div class="cell-in"><span class="prompt">In [4]</span>
+                        <pre class="code">numbers = [<span class="c-num">1</span>,<span class="c-num">2</span>,<span class="c-num">3</span>,<span class="c-num">4</span>,<span class="c-num">5</span>,<span class="c-num">6</span>,<span class="c-num">7</span>,<span class="c-num">8</span>,<span class="c-num">9</span>,<span class="c-num">10</span>]
+<span class="c-fn">print</span>(numbers[2:5])   <span class="c-com"># [3, 4, 5]</span>
+<span class="c-fn">print</span>(numbers[:5])    <span class="c-com"># from start to index 5</span>
+<span class="c-fn">print</span>(numbers[5:])    <span class="c-com"># from index 5 to end</span>
+<span class="c-fn">print</span>(numbers[::])   <span class="c-com"># full copy</span>
+<span class="c-fn">print</span>(numbers[::2])   <span class="c-com"># every 2nd item</span>
+<span class="c-fn">print</span>(numbers[::-1])  <span class="c-com"># reversed</span></pre>
+                    </div>
+                    <div class="cell-out"><span class="prompt">Out[4]</span>
+                        <pre class="out">[3, 4, 5]
+[1, 2, 3, 4, 5]
+[6, 7, 8, 9, 10]
+[1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+[1, 3, 5, 7, 9]
+[10, 9, 8, 7, 6, 5, 4, 3, 2, 1]</pre>
+                    </div>
+                </div>
+                <div class="box tip"><span class="tag">Slice syntax</span>
+                    <p><code>[start:stop:step]</code> — any of the three can be omitted. A negative <code>step</code>
+                        (like
+                        <code>-1</code>) walks backward, which is the idiomatic way to reverse a sequence without
+                        <code>.reverse()</code>.
+                    </p>
+                </div>
+
+                <h3 class="sub">Iterating</h3>
+                <div class="cell">
+                    <div class="cell-in"><span class="prompt">In [5]</span>
+                        <pre class="code"><span class="c-kw">for</span> fruit <span class="c-kw">in</span> fruits:
+    <span class="c-fn">print</span>(fruit)
+
+<span class="c-kw">for</span> index, number <span class="c-kw">in</span> <span class="c-fn">enumerate</span>(numbers):
+    <span class="c-fn">print</span>(index, number)</pre>
+                    </div>
+                    <div class="cell-out"><span class="prompt">Out[5]</span>
+                        <pre class="out">apple
+banana
+...
+0 1
+1 2
+2 3 ...</pre>
+                    </div>
+                </div>
+                <div class="box note"><span class="tag">enumerate()</span>
+                    <p>Gives you <code>(index, value)</code> pairs in one pass — the cleanest way to loop when you need
+                        position
+                        <i>and</i> value, instead of manually tracking a counter.
+                    </p>
+                </div>
+
+                <h3 class="sub">List comprehension</h3>
+                <p class="topic-sub" style="margin:0 0 16px;">Basic: <code>[expression for item in iterable]</code> ·
+                    Conditional: <code>[expression for item in iterable if condition]</code> · Nested:
+                    <code>[expr for a in it1 for b in it2]</code>
+                </p>
+                <div class="cell">
+                    <div class="cell-in"><span class="prompt">In [6]</span>
+                        <pre
+                            class="code"><span class="c-com"># basic — equivalent to a for-loop that appends x**2</span>
+square = [num**<span class="c-num">2</span> <span class="c-kw">for</span> num <span class="c-kw">in</span> <span class="c-fn">range</span>(<span class="c-num">10</span>)]
+
+<span class="c-com"># with condition — keep only even numbers</span>
+lst = [x <span class="c-kw">for</span> x <span class="c-kw">in</span> <span class="c-fn">range</span>(<span class="c-num">10</span>) <span class="c-kw">if</span> (x % <span class="c-num">2</span> == <span class="c-num">0</span>)]
+
+<span class="c-com"># nested — cartesian product of two lists</span>
+lst1 = [<span class="c-num">1</span>,<span class="c-num">2</span>,<span class="c-num">3</span>,<span class="c-num">4</span>]
+lst2 = [<span class="c-str">"a"</span>,<span class="c-str">"b"</span>,<span class="c-str">"c"</span>,<span class="c-str">"d"</span>]
+pair = [(a,b) <span class="c-kw">for</span> a <span class="c-kw">in</span> lst1 <span class="c-kw">for</span> b <span class="c-kw">in</span> lst2]
+
+<span class="c-com"># with a function call inside the expression</span>
+words = [<span class="c-str">'hello'</span>,<span class="c-str">'world'</span>,<span class="c-str">'my'</span>,<span class="c-str">'name'</span>,<span class="c-str">'is'</span>,<span class="c-str">'Anna'</span>]
+lengths = [<span class="c-fn">len</span>(word) <span class="c-kw">for</span> word <span class="c-kw">in</span> words]</pre>
+                    </div>
+                    <div class="cell-out"><span class="prompt">Out[6]</span>
+                        <pre class="out">square  → [0, 1, 4, 9, 16, 25, 36, 49, 64, 81]
+lst     → [0, 2, 4, 6, 8]
+pair    → [(1,'a'),(1,'b'),(1,'c'),(1,'d'),(2,'a'), ... (4,'d')]  16 pairs total
+lengths → [5, 5, 2, 4, 2, 4]</pre>
+                    </div>
+                </div>
+                <div class="box note">
+                    <span class="tag">How nested comprehension order works</span>
+                    <p>The <b>leftmost</b> <code>for</code> is the outer loop. For every <code>a</code> in
+                        <code>lst1</code>, it
+                        runs through the entire <code>lst2</code> before moving to the next <code>a</code> — same order
+                        as writing
+                        two nested <code>for</code> loops.
+                    </p>
+                </div>
+
+                <h3 class="sub">Bonus: comprehensions that build a dict / merge dicts</h3>
+                <div class="cell">
+                    <div class="cell-in"><span class="prompt">In [7]</span>
+                        <pre class="code">numbers = [<span class="c-num">1</span>,<span class="c-num">2</span>,<span class="c-num">2</span>,<span class="c-num">3</span>,<span class="c-num">3</span>,<span class="c-num">3</span>,<span class="c-num">4</span>,<span class="c-num">4</span>,<span class="c-num">4</span>]
+freq = {x:x+<span class="c-num">1</span> <span class="c-kw">for</span> x <span class="c-kw">in</span> numbers <span class="c-kw">if</span> x <span class="c-kw">in</span> numbers}
+<span class="c-fn">print</span>(freq)
+
+<span class="c-com"># merging two dicts using ** unpacking</span>
+dict1 = {<span class="c-str">"a"</span>:<span class="c-num">1</span>,<span class="c-str">"b"</span>:<span class="c-num">2</span>}
+dict2 = {<span class="c-str">"c"</span>:<span class="c-num">1</span>,<span class="c-str">"d"</span>:<span class="c-num">2</span>}
+merged_dict = {**dict1, **dict2}
+<span class="c-fn">print</span>(merged_dict)</pre>
+                    </div>
+                    <div class="cell-out"><span class="prompt">Out[7]</span>
+                        <pre class="out">{1: 2, 2: 3, 3: 4, 4: 5}
+{'a': 1, 'b': 2, 'c': 1, 'd': 2}</pre>
+                    </div>
+                </div>
+                <div class="box warn">
+                    <span class="tag">⚠ Read this comprehension carefully</span>
+                    <p>Because a dict comprehension builds a mapping from <b>unique keys</b>, duplicate values in
+                        <code>numbers</code> (like the three <code>3</code>s) collapse into a <b>single</b> key — the
+                        last one
+                        processed wins. That's why <code>freq</code> has only 4 entries even though <code>numbers</code>
+                        has 9
+                        items. The <code>if x in numbers</code> condition is always true here, so it filters nothing —
+                        it's
+                        effectively a no-op.
+                    </p>
+                </div>
+                <div class="box note">
+                    <span class="tag">** unpacking</span>
+                    <p><code>{**dict1, **dict2}</code> spreads both dicts' key-value pairs into a new dict. If a key
+                        exists in
+                        both, the value from the <b>later</b> dict (rightmost) overwrites the earlier one.</p>
+                </div>
+                <a class="backtotop" href="#lists">↑ back to top</a>
+            </section>
+
+            <!-- ============ TUPLES ============ -->
+            <section class="topic" id="tuples">
+                <div class="topic-head"><span class="topic-num">02</span>
+                    <h2>Tuples</h2>
+                </div>
+                <p class="topic-sub">An <b>ordered, immutable</b> collection. Once created, you cannot add, remove, or
+                    change
+                    elements — which is exactly why tuples only have <b>two</b> methods, versus a list's many.</p>
+
+                <h3 class="sub">Creating &amp; converting</h3>
+                <div class="cell">
+                    <div class="cell-in"><span class="prompt">In [1]</span>
+                        <pre
+                            class="code">empty_tuple = ()
+<span class="c-fn">print</span>(empty_tuple, <span class="c-fn">type</span>(empty_tuple))
+
+tpt = (<span class="c-num">6</span>,<span class="c-num">7</span>,<span class="c-num">8</span>,<span class="c-num">9</span>)
+
+<span class="c-com"># type conversion between list and tuple</span>
+numbers = <span class="c-fn">tuple</span>([<span class="c-num">1</span>,<span class="c-num">2</span>,<span class="c-num">3</span>,<span class="c-num">4</span>,<span class="c-num">5</span>])
+numr    = <span class="c-fn">list</span>((<span class="c-num">1</span>,<span class="c-num">2</span>,<span class="c-num">3</span>,<span class="c-num">4</span>,<span class="c-num">5</span>))</pre>
+                    </div>
+                    <div class="cell-out"><span class="prompt">Out[1]</span>
+                        <pre class="out">() <class 'tuple'></pre>
+                    </div>
+                </div>
+
+                <h3 class="sub">Accessing</h3>
+                <div class="cell">
+                    <div class="cell-in"><span class="prompt">In [2]</span>
+                        <pre class="code">numbers[<span class="c-num">0</span>]      <span class="c-com"># 1</span>
+numbers[-<span class="c-num">1</span>]     <span class="c-com"># 5, last item</span>
+<span class="c-fn">print</span>(numbers[::-1])   <span class="c-com"># reversed — still a tuple</span></pre>
+                    </div>
+                    <div class="cell-out"><span class="prompt">Out[2]</span>
+                        <pre class="out">(5, 4, 3, 2, 1)</pre>
+                    </div>
+                </div>
+
+                <h3 class="sub">Operations &amp; methods</h3>
+                <div class="badges">
+                    <span class="badge"><b>+</b> concatenation</span>
+                    <span class="badge"><b>*</b> repetition</span>
+                    <span class="badge"><b>.count(x)</b> occurrences</span>
+                    <span class="badge"><b>.index(x)</b> first index of x</span>
+                </div>
+                <div class="cell">
+                    <div class="cell-in"><span class="prompt">In [3]</span>
+                        <pre class="code">concat_tuples = numbers + tpt
+<span class="c-fn">print</span>(concat_tuples)
+tpt * <span class="c-num">3</span>
+
+<span class="c-fn">print</span>(numbers.count(<span class="c-num">1</span>))   <span class="c-com"># 1</span>
+<span class="c-fn">print</span>(numbers.index(<span class="c-num">1</span>))   <span class="c-com"># 0</span></pre>
+                    </div>
+                    <div class="cell-out"><span class="prompt">Out[3]</span>
+                        <pre class="out">(1, 2, 3, 4, 5, 6, 7, 8, 9)
+(6, 7, 8, 9, 6, 7, 8, 9, 6, 7, 8, 9)
+1
+0</pre>
+                    </div>
+                </div>
+                <div class="box note"><span class="tag">Why only 2 methods?</span>
+                    <p>Every other list-like method (<code>append</code>, <code>remove</code>, <code>sort</code>...)
+                        mutates the
+                        object in place. Tuples are immutable, so those methods simply don't exist for them —
+                        <code>count()</code>
+                        and <code>index()</code> only <i>read</i>, they never modify.
+                    </p>
+                </div>
+
+                <h3 class="sub">Packing &amp; unpacking</h3>
+                <div class="cell">
+                    <div class="cell-in"><span class="prompt">In [4]</span>
+                        <pre class="code"><span class="c-com"># packing — the parentheses are optional</span>
+packed_tuple = <span class="c-num">1</span>, <span class="c-str">"hello"</span>, <span class="c-num">3.14</span>, <span class="c-num">5</span>
+<span class="c-fn">print</span>(packed_tuple)
+
+<span class="c-com"># basic unpacking — one variable per element</span>
+a, b, c, d = packed_tuple
+<span class="c-fn">print</span>(a, b, c)
+
+<span class="c-com"># extended unpacking with *</span>
+a, *b, c = packed_tuple
+<span class="c-fn">print</span>(a, b, c)</pre>
+                    </div>
+                    <div class="cell-out"><span class="prompt">Out[4]</span>
+                        <pre class="out">(1, 'hello', 3.14, 5)
+1 hello 3.14
+1 ['hello', 3.14] 5</pre>
+                    </div>
+                </div>
+                <div class="box tip">
+                    <span class="tag">Extended unpacking, explained</span>
+                    <p><code>a, *b, c = packed_tuple</code> assigns the <b>first</b> element to <code>a</code>, the
+                        <b>last</b>
+                        element to <code>c</code>, and sweeps <b>everything in between</b> into <code>b</code> — but
+                        note
+                        <code>b</code> comes out as a <b>list</b>, not a tuple, no matter what the original type was.
+                        The
+                        <code>*</code> can only be used on <b>one</b> variable in an unpacking statement, and Python
+                        figures out how
+                        many items it should absorb based on how many other variables are present.
+                    </p>
+                </div>
+                <a class="backtotop" href="#tuples">↑ back to top</a>
+            </section>
+
+            <!-- ============ DICTIONARIES ============ -->
+            <section class="topic" id="dicts">
+                <div class="topic-head"><span class="topic-num">03</span>
+                    <h2>Dictionaries</h2>
+                </div>
+                <p class="topic-sub">An <b>unordered collection of key:value pairs</b>. Keys must be <b>unique</b> and
+                    <b>immutable</b> (strings, numbers, tuples — never lists). Dicts are mutable.
+                </p>
+
+                <h3 class="sub">Creating &amp; accessing</h3>
+                <div class="cell">
+                    <div class="cell-in"><span class="prompt">In [1]</span>
+                        <pre
+                            class="code">empty_dict = {}
+<span class="c-fn">print</span>(<span class="c-fn">type</span>(empty_dict))    <span class="c-com"># same as dict()</span>
+
+student = {
+    <span class="c-str">"name"</span>: <span class="c-str">"Argho"</span>,
+    <span class="c-str">"age"</span>: <span class="c-num">23</span>,
+    <span class="c-str">"grade"</span>: <span class="c-str">"A+"</span>
+}
+<span class="c-fn">print</span>(student[<span class="c-str">'grade'</span>])                       <span class="c-com"># direct key access</span>
+<span class="c-fn">print</span>(student.get(<span class="c-str">'name'</span>))                  <span class="c-com"># .get() — safe access</span>
+<span class="c-fn">print</span>(student.get(<span class="c-str">'last_name'</span>,<span class="c-str">'not Found'</span>))  <span class="c-com"># with a default</span></pre>
+                    </div>
+                    <div class="cell-out"><span class="prompt">Out[1]</span>
+                        <pre class="out"><class 'dict'>
+A+
+Argho
+not Found</pre>
+                    </div>
+                </div>
+                <div class="box warn"><span class="tag">⚠ dict[key] vs .get(key)</span>
+                    <p>Square-bracket access (<code>student['x']</code>) raises a <code>KeyError</code> if the key
+                        doesn't exist.
+                        <code>.get('x')</code> instead returns <code>None</code> (or your chosen default) — always
+                        prefer
+                        <code>.get()</code> when a key might be missing.
+                    </p>
+                </div>
+                <div class="box note"><span class="tag">Single-key rule</span>
+                    <p>A dict key can only be used <b>once</b>. Repeating a key in a literal silently keeps only the
+                        last value
+                        written for it.</p>
+                </div>
+
+                <h3 class="sub">Modifying</h3>
+                <div class="cell">
+                    <div class="cell-in"><span class="prompt">In [2]</span>
+                        <pre class="code">student[<span class="c-str">"age"</span>] = <span class="c-num">33</span>              <span class="c-com"># update existing key</span>
+<span class="c-fn">print</span>(student)
+student[<span class="c-str">"address"</span>] = <span class="c-str">"Dhaka"</span>      <span class="c-com"># add a new key</span>
+<span class="c-fn">print</span>(student)
+<span class="c-kw">del</span> student[<span class="c-str">"age"</span>]              <span class="c-com"># delete a key:value pair</span>
+<span class="c-fn">print</span>(student)</pre>
+                    </div>
+                    <div class="cell-out"><span class="prompt">Out[2]</span>
+                        <pre class="out">{'name': 'Argho', 'age': 33, 'grade': 'A+'}
+{'name': 'Argho', 'age': 33, 'grade': 'A+', 'address': 'Dhaka'}
+{'name': 'Argho', 'grade': 'A+', 'address': 'Dhaka'}</pre>
+                    </div>
+                </div>
+
+                <h3 class="sub">Methods: keys(), values(), items()</h3>
+                <div class="cell">
+                    <div class="cell-in"><span class="prompt">In [3]</span>
+                        <pre class="code">keys = student.keys()
+values = student.values()
+items = student.items()
+<span class="c-fn">print</span>(keys)
+<span class="c-fn">print</span>(values)
+<span class="c-fn">print</span>(items)</pre>
+                    </div>
+                    <div class="cell-out"><span class="prompt">Out[3]</span>
+                        <pre class="out">dict_keys(['name', 'grade', 'address'])
+dict_values(['Argho', 'A+', 'Dhaka'])
+dict_items([('name', 'Argho'), ('grade', 'A+'), ('address', 'Dhaka')])</pre>
+                    </div>
+                </div>
+                <div class="box note"><span class="tag">"view" objects</span>
+                    <p><code>dict_keys</code>, <code>dict_values</code>, and <code>dict_items</code> are <b>live
+                            views</b>, not
+                        static lists — if the dict changes afterward, the view reflects the change automatically. Wrap
+                        in
+                        <code>list(...)</code> if you need a frozen snapshot.
+                    </p>
+                </div>
+
+                <h3 class="sub">Shallow copy vs .copy() — the most important nuance</h3>
+                <div class="cell">
+                    <div class="cell-in"><span class="prompt">In [4]</span>
+                        <pre class="code">student_copy = student          <span class="c-com"># NOT a real copy — same object in memory</span>
+<span class="c-fn">print</span>(student)
+<span class="c-com"># del student['name']  → this would ALSO remove it from student_copy</span>
+<span class="c-fn">print</span>(student_copy)
+
+student_copy1 = student.copy()  <span class="c-com"># a real, independent copy</span></pre>
+                    </div>
+                    <div class="cell-out"><span class="prompt">Out[4]</span>
+                        <pre class="out">{'grade': 'A+', 'address': 'Dhaka'}
+{'grade': 'A+', 'address': 'Dhaka'}</pre>
+                    </div>
+                </div>
+                <div class="box warn">
+                    <span class="tag">⚠ student_copy = student is a reference, not a copy</span>
+                    <p><code>student_copy = student</code> just makes <code>student_copy</code> point to the <b>exact
+                            same
+                            dictionary object</b> as <code>student</code>. Any mutation through either name
+                        (adding/deleting/updating
+                        a key) shows up in both, because there is only ever one dict in memory. To get a truly
+                        independent dict, use
+                        <code>student.copy()</code> (a <b>shallow copy</b> — a new outer dict, though nested mutable
+                        objects inside
+                        it would still be shared).
+                    </p>
+                </div>
+
+                <h3 class="sub">Iterating</h3>
+                <div class="cell">
+                    <div class="cell-in"><span class="prompt">In [5]</span>
+                        <pre
+                            class="code"><span class="c-kw">for</span> key <span class="c-kw">in</span> student:               <span class="c-com"># iterating a dict directly gives KEYS</span>
+    <span class="c-fn">print</span>(key)
+
+<span class="c-kw">for</span> value <span class="c-kw">in</span> student.values():
+    <span class="c-fn">print</span>(value)
+
+<span class="c-kw">for</span> item <span class="c-kw">in</span> student.items():      <span class="c-com"># each item is a (key, value) tuple</span>
+    <span class="c-fn">print</span>(item)
+
+<span class="c-kw">for</span> key, value <span class="c-kw">in</span> student.items():  <span class="c-com"># unpack directly</span>
+    <span class="c-fn">print</span>(<span class="c-fn">f</span><span class="c-str">"key: {key}, value: {value}"</span>)</pre>
+                    </div>
+                    <div class="cell-out"><span class="prompt">Out[5]</span>
+                        <pre class="out">name
+address
+Argho
+Dhaka
+('name', 'Argho')
+('address', 'Dhaka')
+key: name, value: Argho
+key: address, value: Dhaka</pre>
+                    </div>
+                </div>
+
+                <h3 class="sub">Dict comprehension</h3>
+                <div class="cell">
+                    <div class="cell-in"><span class="prompt">In [6]</span>
+                        <pre class="code">squares = {x:x**<span class="c-num">2</span> <span class="c-kw">for</span> x <span class="c-kw">in</span> <span class="c-fn">range</span>(<span class="c-num">10</span>)}
+<span class="c-fn">print</span>(squares)
+
+<span class="c-com"># conditional comprehension</span>
+squares_even = {x:x**<span class="c-num">2</span> <span class="c-kw">for</span> x <span class="c-kw">in</span> <span class="c-fn">range</span>(<span class="c-num">10</span>) <span class="c-kw">if</span> x % <span class="c-num">2</span> == <span class="c-num">0</span>}
+<span class="c-fn">print</span>(squares_even)</pre>
+                    </div>
+                    <div class="cell-out"><span class="prompt">Out[6]</span>
+                        <pre class="out">{0: 0, 1: 1, 2: 4, 3: 9, 4: 16, 5: 25, 6: 36, 7: 49, 8: 64, 9: 81}
+{0: 0, 2: 4, 4: 16, 6: 36, 8: 64}</pre>
+                    </div>
+                </div>
+                <a class="backtotop" href="#dicts">↑ back to top</a>
+            </section>
+
+            <!-- ============ SETS ============ -->
+            <section class="topic" id="sets">
+                <div class="topic-head"><span class="topic-num">04</span>
+                    <h2>Sets</h2>
+                </div>
+                <p class="topic-sub">An <b>unordered collection of unique elements</b>. No duplicates, no guaranteed
+                    order, no
+                    indexing — sets exist for membership tests and math-style operations.</p>
+
+                <h3 class="sub">Creating</h3>
+                <div class="cell">
+                    <div class="cell-in"><span class="prompt">In [1]</span>
+                        <pre
+                            class="code">my_set = {<span class="c-num">1</span>,<span class="c-num">2</span>,<span class="c-num">3</span>}
+<span class="c-fn">print</span>(my_set, <span class="c-fn">type</span>(my_set))
+
+my_empty_set = <span class="c-fn">set</span>()                 <span class="c-com"># {} would make a DICT, not a set!</span>
+my_set2 = <span class="c-fn">set</span>([<span class="c-num">1</span>,<span class="c-num">2</span>,<span class="c-num">3</span>,<span class="c-num">4</span>,<span class="c-num">5</span>])   <span class="c-com"># from a list</span></pre>
+                    </div>
+                    <div class="cell-out"><span class="prompt">Out[1]</span>
+                        <pre class="out">{1, 2, 3} <class 'set'></pre>
+                    </div>
+                </div>
+                <div class="box warn"><span class="tag">⚠ {} is a dict, not a set</span>
+                    <p>An empty pair of curly braces <code>{}</code> creates a <b>dictionary</b>. An empty set must be
+                        written
+                        <code>set()</code>.
+                    </p>
+                </div>
+
+                <h3 class="sub">Adding &amp; removing — remove() vs discard()</h3>
+                <div class="cell">
+                    <div class="cell-in"><span class="prompt">In [2]</span>
+                        <pre class="code">my_set = {<span class="c-num">1</span>, <span class="c-num">2</span>, <span class="c-num">3</span>, <span class="c-num">5</span>}
+
+removed = my_set.pop()             <span class="c-com"># removes an ARBITRARY element (sets are unordered)</span>
+<span class="c-fn">print</span>(<span class="c-str">"Removed:"</span>, removed)
+<span class="c-fn">print</span>(<span class="c-str">"After pop:"</span>, my_set)
+
+my_set.discard(<span class="c-num">1</span>)                 <span class="c-com"># safe — does nothing if 1 isn't present</span>
+<span class="c-fn">print</span>(<span class="c-str">"After discard:"</span>, my_set)
+
+my_set.remove(<span class="c-num">2</span>)                  <span class="c-com"># raises KeyError if 2 isn't present</span>
+<span class="c-fn">print</span>(<span class="c-str">"After remove:"</span>, my_set)
+
+new_set = my_set.union({<span class="c-num">3</span>, <span class="c-num">4</span>})
+<span class="c-fn">print</span>(<span class="c-str">"Union result:"</span>, new_set)
+
+my_set.clear()
+<span class="c-fn">print</span>(<span class="c-str">"After clear:"</span>, my_set)</pre>
+                    </div>
+                    <div class="cell-out"><span class="prompt">Out[2]</span>
+                        <pre class="out">Removed: 1
+After pop: {2, 3, 5}
+After discard: {2, 3, 5}
+After remove: {3, 5}
+Union result: {3, 4, 5}
+After clear: set()</pre>
+                    </div>
+                </div>
+                <table class="cmp">
+                    <tr>
+                        <th>Method</th>
+                        <th>If element is missing</th>
+                        <th>Returns removed value?</th>
+                    </tr>
+                    <tr>
+                        <td><code>discard(x)</code></td>
+                        <td>does nothing, no error</td>
+                        <td>no</td>
+                    </tr>
+                    <tr>
+                        <td><code>remove(x)</code></td>
+                        <td><b>raises <code>KeyError</code></b></td>
+                        <td>no</td>
+                    </tr>
+                    <tr>
+                        <td><code>pop()</code></td>
+                        <td>raises <code>KeyError</code> if set is empty</td>
+                        <td>yes — but an <i>arbitrary</i> element, not a chosen one</td>
+                    </tr>
+                </table>
+                <div class="box warn"><span class="tag">⚠ From your notebook: calling a method on an undefined
+                        set</span>
+                    <p>Your original code called <code>my_set.add(6)</code> before <code>my_set</code> had been
+                        (re)assigned in
+                        that cell's scope, producing a <code>NameError: name 'my_set' is not defined</code>. Good
+                        reminder: a
+                        variable must exist in the current execution order before you can call a method on it — Jupyter
+                        cells run in
+                        whatever order <i>you</i> execute them, not top-to-bottom automatically.</p>
+                </div>
+
+                <h3 class="sub">Membership &amp; math operations</h3>
+                <div class="cell">
+                    <div class="cell-in"><span class="prompt">In [3]</span>
+                        <pre class="code">my_set = {<span class="c-num">1</span>,<span class="c-num">2</span>,<span class="c-num">3</span>,<span class="c-num">4</span>,<span class="c-num">5</span>}
+<span class="c-fn">print</span>(<span class="c-num">1</span> <span class="c-kw">in</span> my_set)   <span class="c-com"># membership test — True</span>
+
+set1 = {<span class="c-num">1</span>,<span class="c-num">2</span>,<span class="c-num">3</span>,<span class="c-num">4</span>,<span class="c-num">5</span>,<span class="c-num">6</span>}
+set2 = {<span class="c-num">4</span>,<span class="c-num">5</span>,<span class="c-num">6</span>,<span class="c-num">7</span>,<span class="c-num">8</span>,<span class="c-num">9</span>}
+
+union_set = set1.union(set2)                  <span class="c-com"># {1,2,3,4,5,6,7,8,9}</span>
+intersection_set = set1.intersection(set2)    <span class="c-com"># {4,5,6}</span>
+
+set1.intersection_update(set2)   <span class="c-com"># mutates set1 in place, keeping only shared items</span>
+<span class="c-fn">print</span>(set1)</pre>
+                    </div>
+                    <div class="cell-out"><span class="prompt">Out[3]</span>
+                        <pre class="out">True
+{4, 5, 6}</pre>
+                    </div>
+                </div>
+                <div class="box note"><span class="tag">.intersection() vs .intersection_update()</span>
+                    <p><code>.intersection()</code> (and <code>.union()</code>, <code>.difference()</code>) <b>return a
+                            new
+                            set</b>, leaving the original unchanged. <code>.intersection_update()</code> instead
+                        <b>mutates the set
+                            it's called on</b> — same "returns new" vs "updates in place" pattern you'll see across
+                        Python's
+                        built-ins.
+                    </p>
+                </div>
+
+                <div class="cell">
+                    <div class="cell-in"><span class="prompt">In [4]</span>
+                        <pre class="code">set1 = {<span class="c-num">1</span>,<span class="c-num">2</span>,<span class="c-num">3</span>,<span class="c-num">4</span>,<span class="c-num">5</span>,<span class="c-num">6</span>}
+set2 = {<span class="c-num">4</span>,<span class="c-num">5</span>,<span class="c-num">6</span>,<span class="c-num">7</span>,<span class="c-num">8</span>,<span class="c-num">9</span>}
+
+<span class="c-fn">print</span>(set1.difference(set2))            <span class="c-com"># in set1 but NOT in set2</span>
+set1.symmetric_difference(set2)             <span class="c-com"># in either set, but NOT both</span></pre>
+                    </div>
+                    <div class="cell-out"><span class="prompt">Out[4]</span>
+                        <pre class="out">{1, 2, 3}
+{1, 2, 3, 7, 8, 9}</pre>
+                    </div>
+                </div>
+
+                <h3 class="sub">Subset / superset</h3>
+                <div class="cell">
+                    <div class="cell-in"><span class="prompt">In [5]</span>
+                        <pre
+                            class="code">set1 = {<span class="c-num">1</span>,<span class="c-num">2</span>,<span class="c-num">3</span>}
+set2 = {<span class="c-num">3</span>,<span class="c-num">4</span>,<span class="c-num">5</span>}
+
+<span class="c-fn">print</span>(set1.issubset(set2))     <span class="c-com"># is every item of set1 also in set2?</span>
+<span class="c-fn">print</span>(set2.issuperset(set1))   <span class="c-com"># does set2 contain all of set1?</span></pre>
+                    </div>
+                    <div class="cell-out"><span class="prompt">Out[5]</span>
+                        <pre class="out">False
+False</pre>
+                    </div>
+                </div>
+                <div class="box tip"><span class="tag">Why both are False here</span>
+                    <p><code>set1</code> and <code>set2</code> only share the element <code>3</code> — <code>set1</code>
+                        has
+                        <code>1,2</code> which aren't in <code>set2</code>, so it's not a subset; <code>set2</code> has
+                        <code>4,5</code> which aren't in <code>set1</code>, so <code>set2</code> isn't a superset
+                        either.
+                    </p>
+                </div>
+                <a class="backtotop" href="#sets">↑ back to top</a>
+            </section>
+
+            <!-- ============ FUNCTIONS ============ -->
+            <section class="topic" id="functions">
+                <div class="topic-head"><span class="topic-num">05</span>
+                    <h2>Functions</h2>
+                </div>
+                <p class="topic-sub">Reusable blocks of code defined with <code>def</code>. Covers default parameters,
+                    <code>*args</code>, <code>**kwargs</code>, and combining both.
+                </p>
+
+                <h3 class="sub">Basic syntax</h3>
+                <div class="cell">
+                    <div class="cell-in"><span class="prompt">In [1]</span>
+                        <pre class="code"><span class="c-kw">def</span> function_name(parameters):
+    <span class="c-str">"""docstring"""</span>
+    <span class="c-com"># function body</span>
+    <span class="c-kw">return</span> expression
+
+<span class="c-com"># ---- real example ----</span>
+num = <span class="c-num">23</span>
+<span class="c-kw">def</span> even_or_odd(num):
+    <span class="c-str">"""This function performs the task"""</span>
+    <span class="c-kw">if</span>(num % <span class="c-num">2</span> == <span class="c-num">0</span>):
+        <span class="c-kw">return</span> <span class="c-str">"even"</span>
+    <span class="c-kw">else</span>:
+        <span class="c-kw">return</span> <span class="c-str">"odd"</span>
+even_or_odd(num)</pre>
+                    </div>
+                    <div class="cell-out"><span class="prompt">Out[1]</span>
+                        <pre class="out">'odd'</pre>
+                    </div>
+                </div>
+
+                <h3 class="sub">Default parameters</h3>
+                <div class="cell">
+                    <div class="cell-in"><span class="prompt">In [2]</span>
+                        <pre class="code"><span class="c-kw">def</span> greet(name = <span class="c-str">"Argho"</span>):
+    <span class="c-fn">print</span>(<span class="c-str">"Hello, "</span> + name)
+
+greet()   <span class="c-com"># no argument passed → uses the default</span></pre>
+                    </div>
+                    <div class="cell-out"><span class="prompt">Out[2]</span>
+                        <pre class="out">Hello, Argho</pre>
+                    </div>
+                </div>
+                <div class="box note"><span class="tag">Default values</span>
+                    <p>A default parameter is only used when the caller <b>doesn't supply</b> that argument. Calling
+                        <code>greet("Anik")</code> would print "Hello, Anik" — the default is a fallback, not a fixed
+                        value.
+                    </p>
+                </div>
+
+                <h3 class="sub">*args — variable positional arguments</h3>
+                <div class="cell">
+                    <div class="cell-in"><span class="prompt">In [3]</span>
+                        <pre
+                            class="code"><span class="c-kw">def</span> print_numbers(*args):
+    <span class="c-kw">for</span> number <span class="c-kw">in</span> args:
+        <span class="c-fn">print</span>(number)
+
+print_numbers(<span class="c-num">1</span>,<span class="c-num">2</span>,<span class="c-num">3</span>,<span class="c-num">4</span>,<span class="c-num">5</span>)</pre>
+                    </div>
+                    <div class="cell-out"><span class="prompt">Out[3]</span>
+                        <pre class="out">1
+2
+3
+4
+5</pre>
+                    </div>
+                </div>
+                <div class="box tip"><span class="tag">What *args really is</span>
+                    <p><code>*args</code> collects any number of extra <b>positional</b> arguments into a <b>tuple</b>
+                        named
+                        <code>args</code> (the name is convention, only the <code>*</code> matters). Lets a function
+                        accept an
+                        unknown number of inputs.
+                    </p>
+                </div>
+
+                <h3 class="sub">**kwargs — variable keyword arguments</h3>
+                <div class="cell">
+                    <div class="cell-in"><span class="prompt">In [4]</span>
+                        <pre class="code"><span class="c-kw">def</span> print_details(**kwargs):
+    <span class="c-kw">for</span> key, value <span class="c-kw">in</span> kwargs.items():
+        <span class="c-fn">print</span>(key, value)
+
+print_details(name=<span class="c-str">'Ram'</span>, age=<span class="c-num">20</span>)</pre>
+                    </div>
+                    <div class="cell-out"><span class="prompt">Out[4]</span>
+                        <pre class="out">name Ram
+age 20</pre>
+                    </div>
+                </div>
+                <div class="box tip"><span class="tag">What **kwargs really is</span>
+                    <p><code>**kwargs</code> collects any number of extra <b>keyword</b> arguments into a <b>dict</b> —
+                        keys are
+                        the parameter names, values are what was passed.</p>
+                </div>
+
+                <h3 class="sub">Combining *args and **kwargs</h3>
+                <div class="cell">
+                    <div class="cell-in"><span class="prompt">In [5]</span>
+                        <pre
+                            class="code"><span class="c-kw">def</span> print_details(*args, **kwargs):
+    <span class="c-kw">for</span> number <span class="c-kw">in</span> args:
+        <span class="c-fn">print</span>(number)
+    <span class="c-kw">for</span> key, value <span class="c-kw">in</span> kwargs.items():
+        <span class="c-fn">print</span>(key, value)
+
+print_details(<span class="c-num">1</span>,<span class="c-num">2</span>,<span class="c-num">3</span>,<span class="c-num">4</span>, name=<span class="c-str">'Ram'</span>, age=<span class="c-num">20</span>)</pre>
+                    </div>
+                    <div class="cell-out"><span class="prompt">Out[5]</span>
+                        <pre class="out">1
+2
+3
+4
+name Ram
+age 20</pre>
+                    </div>
+                </div>
+                <div class="box warn"><span class="tag">⚠ Order matters</span>
+                    <p>When defining a function, the order must be: <b>normal params → *args → **kwargs</b>. And when
+                        calling it,
+                        all positional arguments must come <b>before</b> any keyword arguments —
+                        <code>print_details(1,2,3,4,name='Ram',age=20)</code> works; putting <code>name='Ram'</code>
+                        before the
+                        numbers would raise a <code>SyntaxError</code>.
+                    </p>
+                </div>
+                <a class="backtotop" href="#functions">↑ back to top</a>
+            </section>
+
+            <!-- ============ LAMBDA ============ -->
+            <section class="topic" id="lambda">
+                <div class="topic-head"><span class="topic-num">06</span>
+                    <h2>Lambda Functions</h2>
+                </div>
+                <p class="topic-sub">A <b>lambda function</b> is a function without a name — an "anonymous function."
+                    Syntax:
+                    <code>lambda arguments: expression</code>. It always returns the value of that single expression.
+                </p>
+
+                <div class="cell">
+                    <div class="cell-in"><span class="prompt">In [1]</span>
+                        <pre class="code"><span class="c-com"># syntax only — this line alone does nothing useful</span>
+<span class="c-kw">lambda</span> arguments: expression</pre>
+                    </div>
+                </div>
+
+                <div class="cell">
+                    <div class="cell-in"><span class="prompt">In [2]</span>
+                        <pre class="code"><span class="c-kw">def</span> addition(a,b):
+    <span class="c-kw">return</span> a+b
+addition(<span class="c-num">1</span>,<span class="c-num">2</span>)
+<span class="c-fn">type</span>(addition)          <span class="c-com"># <class 'function'></span>
+
+addition1 = <span class="c-kw">lambda</span> a,b: a+b
+addition1(<span class="c-num">1</span>,<span class="c-num">2</span>)</pre>
+                    </div>
+                    <div class="cell-out"><span class="prompt">Out[2]</span>
+                        <pre class="out">3</pre>
+                    </div>
+                </div>
+                <div class="box note"><span class="tag">def vs lambda</span>
+                    <p><code>addition</code> and <code>addition1</code> behave identically and are both of
+                        <code>type 'function'</code> — a lambda is not a separate kind of object, just a shorthand way
+                        to define
+                        one, restricted to a single expression (no statements, no multiple lines).
+                    </p>
+                </div>
+
+                <div class="cell">
+                    <div class="cell-in"><span class="prompt">In [3]</span>
+                        <pre class="code">even = <span class="c-kw">lambda</span> x: x % <span class="c-num">2</span> == <span class="c-num">0</span>
+<span class="c-fn">print</span>(even(<span class="c-num">5</span>))</pre>
+                    </div>
+                    <div class="cell-out"><span class="prompt">Out[3]</span>
+                        <pre class="out">False</pre>
+                    </div>
+                </div>
+                <div class="box tip"><span class="tag">Where lambdas actually shine</span>
+                    <p>Rarely used standalone with a name like <code>even</code> above — their real purpose is being
+                        passed
+                        <b>inline</b> as an argument to functions like <code>map()</code>, <code>filter()</code>, and
+                        <code>sorted(key=...)</code>, which is exactly what the next two sections do.
+                    </p>
+                </div>
+                <a class="backtotop" href="#lambda">↑ back to top</a>
+            </section>
+
+            <!-- ============ MAP ============ -->
+            <section class="topic" id="map">
+                <div class="topic-head"><span class="topic-num">07</span>
+                    <h2>map()</h2>
+                </div>
+
+                <p class="topic-sub"><code>map(function, iterable)</code> applies <code>function</code> to <b>every
+                        item</b> in
+                    <code>iterable</code> and returns a <b>map object</b> (a lazy iterator) — wrap it in
+                    <code>list()</code> to
+                    see the results.
+                </p>
+
+                <div class="cell">
+                    <div class="cell-in"><span class="prompt">In [1]</span>
+                        <pre class="code">numbers = [<span class="c-num">1</span>,<span class="c-num">2</span>,<span class="c-num">3</span>,<span class="c-num">4</span>,<span class="c-num">5</span>,<span class="c-num">6</span>,<span class="c-num">7</span>,<span class="c-num">8</span>,<span class="c-num">9</span>,<span class="c-num">10</span>]
+squared = <span class="c-fn">list</span>(<span class="c-fn">map</span>(<span class="c-kw">lambda</span> x: x**<span class="c-num">2</span>, numbers))
+<span class="c-fn">print</span>(squared)</pre>
+                    </div>
+                    <div class="cell-out"><span class="prompt">Out[1]</span>
+                        <pre class="out">[1, 4, 9, 16, 25, 36, 49, 64, 81, 100]</pre>
+                    </div>
+                </div>
+
+                <h3 class="sub">map() with multiple iterables</h3>
+                <div class="cell">
+                    <div class="cell-in"><span class="prompt">In [2]</span>
+                        <pre class="code">numbers1 = [<span class="c-num">1</span>,<span class="c-num">2</span>,<span class="c-num">3</span>,<span class="c-num">4</span>,<span class="c-num">5</span>]
+numbers2 = [<span class="c-num">10</span>,<span class="c-num">20</span>,<span class="c-num">30</span>,<span class="c-num">40</span>,<span class="c-num">50</span>]
+
+added_numbers = <span class="c-fn">map</span>(<span class="c-kw">lambda</span> x,y: x+y, numbers1, numbers2)
+<span class="c-fn">print</span>(<span class="c-fn">list</span>(added_numbers))</pre>
+                    </div>
+                    <div class="cell-out"><span class="prompt">Out[2]</span>
+                        <pre class="out">[11, 22, 33, 44, 55]</pre>
+                    </div>
+                </div>
+                <div class="box note"><span class="tag">Multiple iterables</span>
+                    <p>When given two (or more) iterables, <code>map()</code> pairs items <b>positionally</b> — index 0
+                        with index
+                        0, index 1 with index 1, etc. — and feeds them into the function together. It stops as soon as
+                        the
+                        <b>shortest</b> iterable runs out.
+                    </p>
+                </div>
+                <a class="backtotop" href="#map">↑ back to top</a>
+            </section>
+
+            <!-- ============ FILTER ============ -->
+            <section class="topic" id="filter">
+                <div class="topic-head"><span class="topic-num">08</span>
+                    <h2>filter()</h2>
+                </div>
+                <p class="topic-sub"><code>filter(function, iterable)</code> keeps only the items for which
+                    <code>function</code> returns <b>True</b> — unlike <code>map()</code>, it doesn't transform items,
+                    it selects
+                    a subset of them.
+                </p>
+
+                <div class="cell">
+                    <div class="cell-in"><span class="prompt">In [1]</span>
+                        <pre class="code">numbers = [<span class="c-num">1</span>,<span class="c-num">2</span>,<span class="c-num">3</span>,<span class="c-num">4</span>,<span class="c-num">5</span>,<span class="c-num">6</span>,<span class="c-num">7</span>,<span class="c-num">8</span>,<span class="c-num">9</span>,<span class="c-num">10</span>]
+even_numbers = <span class="c-fn">list</span>(<span class="c-fn">filter</span>(<span class="c-kw">lambda</span> x: x % <span class="c-num">2</span> == <span class="c-num">0</span>, numbers))
+<span class="c-fn">print</span>(even_numbers)</pre>
+                    </div>
+                    <div class="cell-out"><span class="prompt">Out[1]</span>
+                        <pre class="out">[2, 4, 6, 8, 10]</pre>
+                    </div>
+                </div>
+
+                <h3 class="sub">filter() with multiple conditions</h3>
+                <div class="cell">
+                    <div class="cell-in"><span class="prompt">In [2]</span>
+                        <pre class="code">numbers = [<span class="c-num">1</span>,<span class="c-num">2</span>,<span class="c-num">3</span>,<span class="c-num">4</span>,<span class="c-num">5</span>,<span class="c-num">6</span>,<span class="c-num">7</span>,<span class="c-num">8</span>,<span class="c-num">9</span>,<span class="c-num">10</span>]
+filtered_numbers = <span class="c-fn">list</span>(<span class="c-fn">filter</span>(<span class="c-kw">lambda</span> x: x % <span class="c-num">2</span> == <span class="c-num">0</span> <span class="c-kw">and</span> x % <span class="c-num">3</span> == <span class="c-num">0</span>, numbers))
+<span class="c-fn">print</span>(filtered_numbers)</pre>
+                    </div>
+                    <div class="cell-out"><span class="prompt">Out[2]</span>
+                        <pre class="out">[6]</pre>
+                    </div>
+                </div>
+                <div class="box tip"><span class="tag">Chaining conditions</span>
+                    <p>Combine multiple checks inside the lambda with <code>and</code> / <code>or</code>. Here, only
+                        numbers
+                        divisible by <b>both</b> 2 and 3 (i.e. divisible by 6) survive — out of 1–10, that's only
+                        <code>6</code>.
+                    </p>
+                </div>
+                <table class="cmp">
+                    <tr>
+                        <th>Tool</th>
+                        <th>Purpose</th>
+                        <th>Output size vs input</th>
+                    </tr>
+                    <tr>
+                        <td><code>map()</code></td>
+                        <td>transform every item</td>
+                        <td>same size</td>
+                    </tr>
+                    <tr>
+                        <td><code>filter()</code></td>
+                        <td>keep items where condition is True</td>
+                        <td>same size or smaller</td>
+                    </tr>
+                </table>
+                <a class="backtotop" href="#filter">↑ back to top</a>
+            </section>
+
+            <a class="nb-link" href="#comparison"><span class="ico">▸</span> 09 · Comparison</a>
+            <section class="topic" id="comparison">
+                <div class="topic-head"><span class="topic-num">09</span>
+                    <h2>List vs Tuple vs Dict vs Set</h2>
+                </div>
+                <p class="topic-sub">Same data, four containers — why each one exists and when Python reaches for it.
+                </p>
+
+                <table class="cmp">
+                    <tr>
+                        <th>Structure</th>
+                        <th>Ordered?</th>
+                        <th>Mutable?</th>
+                        <th>Duplicates?</th>
+                        <th>Access by</th>
+                        <th>Use when</th>
+                    </tr>
+                    <tr>
+                        <td><code>list</code></td>
+                        <td>Yes</td>
+                        <td>Yes</td>
+                        <td>Yes</td>
+                        <td>index <code>[0]</code></td>
+                        <td>sequence you'll change/reorder</td>
+                    </tr>
+                    <tr>
+                        <td><code>tuple</code></td>
+                        <td>Yes</td>
+                        <td>No</td>
+                        <td>Yes</td>
+                        <td>index <code>[0]</code></td>
+                        <td>fixed record, won't change</td>
+                    </tr>
+                    <tr>
+                        <td><code>dict</code></td>
+                        <td>No*</td>
+                        <td>Yes</td>
+                        <td>keys: No</td>
+                        <td>key <code>['name']</code></td>
+                        <td>lookup by label, not position</td>
+                    </tr>
+                    <tr>
+                        <td><code>set</code></td>
+                        <td>No</td>
+                        <td>Yes</td>
+                        <td>No</td>
+                        <td>membership <code>in</code></td>
+                        <td>uniqueness / fast "is it in here?"</td>
+                    </tr>
+                </table>
+                <div class="box note"><span class="tag">*dict ordering</span>
+                    <p>Modern Python dicts preserve insertion order for iteration, but you still can't access items by
+                        numeric
+                        position — that's what makes them "unordered" for lookup purposes.</p>
+                </div>
+
+                <h3 class="sub">Same data, four ways</h3>
+                <div class="cell">
+                    <div class="cell-in"><span class="prompt">In [1]</span>
+                        <pre class="code">fruits_list  = [<span class="c-str">"apple"</span>, <span class="c-str">"banana"</span>, <span class="c-str">"apple"</span>]   <span class="c-com"># ordered, allows duplicate "apple"</span>
+fruits_tuple = (<span class="c-str">"apple"</span>, <span class="c-str">"banana"</span>, <span class="c-str">"apple"</span>)   <span class="c-com"># same as above, but locked — can't edit</span>
+fruit_stock  = {<span class="c-str">"apple"</span>: <span class="c-num">10</span>, <span class="c-str">"banana"</span>: <span class="c-num">5</span>}     <span class="c-com"># labeled lookup, not position-based</span>
+fruits_set   = {<span class="c-str">"apple"</span>, <span class="c-str">"banana"</span>, <span class="c-str">"apple"</span>}   <span class="c-com"># duplicate "apple" silently collapses</span>
+<span class="c-fn">print</span>(fruits_list)
+<span class="c-fn">print</span>(fruits_tuple)
+<span class="c-fn">print</span>(fruit_stock)
+<span class="c-fn">print</span>(fruits_set)</pre>
+                    </div>
+                    <div class="cell-out"><span class="prompt">Out[1]</span>
+                        <pre class="out">['apple', 'banana', 'apple']
+('apple', 'banana', 'apple')
+{'apple': 10, 'banana': 5}
+{'apple', 'banana'}</pre>
+                    </div>
+                </div>
+                <div class="box tip"><span class="tag">Why the set has only 2 items</span>
+                    <p>A <code>set</code> enforces uniqueness at creation — the second <code>"apple"</code> is simply
+                        dropped.
+                        This is exactly why sets are the right tool when you need to de-duplicate or check membership
+                        fast, and the
+                        wrong tool when order or duplicates matter.</p>
+                </div>
+                <a class="backtotop" href="#comparison">↑ back to top</a>
+            </section>
+
+
+            <!-- ============ MODULES & PACKAGES ============ -->
+            <section class="topic" id="modules">
+                <div class="topic-head"><span class="topic-num">10</span>
+                    <h2>Modules & Packages</h2>
+                </div>
+                <p class="topic-sub">A <b>module</b> is any <code>.py</code> file; a <b>package</b> is a folder of
+                    modules with
+                    an <code>__init__.py</code>. Import gives you access to names defined elsewhere.</p>
+
+                <h3 class="sub">Importing basics</h3>
+                <div class="cell">
+                    <div class="cell-in"><span class="prompt">In [1]</span>
+                        <pre class="code"><span class="c-kw">import</span> math
+<span class="c-fn">print</span>(math.sqrt(<span class="c-num">25</span>))
+
+<span class="c-kw">from</span> math <span class="c-kw">import</span> sqrt, pi
+<span class="c-fn">print</span>(sqrt(<span class="c-num">5</span>))
+
+<span class="c-kw">import</span> datetime <span class="c-kw">as</span> dt
+<span class="c-fn">print</span>(dt.datetime.now())</pre>
+                    </div>
+                    <div class="cell-out"><span class="prompt">Out[1]</span>
+                        <pre class="out">5.0
+2.23606797749979
+2026-08-10 ...</pre>
+                    </div>
+                </div>
+                <div class="box warn"><span class="tag">⚠ from module import *</span>
+                    <p>Imports <b>every</b> public name from the module directly into your namespace — convenient but
+                        risky, since
+                        it can silently overwrite names you've already defined and makes it unclear where a function
+                        came from.</p>
+                </div>
+
+                <h3 class="sub">Creating a package</h3>
+                <div class="cell">
+                    <div class="cell-in"><span class="prompt">In [2]</span>
+                        <pre class="code"><span class="c-com"># mypackage/
+#   __init__.py
+#   module1.py   → def add(a,b): return a+b
+#   module2.py   → def multiply(a,b): return a*b</span>
+
+<span class="c-kw">from</span> mypackage <span class="c-kw">import</span> module1, module2
+<span class="c-fn">print</span>(module1.add(<span class="c-num">2</span>,<span class="c-num">3</span>))
+<span class="c-fn">print</span>(module2.multiply(<span class="c-num">2</span>,<span class="c-num">3</span>))</pre>
+                    </div>
+                    <div class="cell-out"><span class="prompt">Out[2]</span>
+                        <pre class="out">5
+6</pre>
+                    </div>
+                </div>
+                <div class="box note"><span class="tag">__init__.py</span>
+                    <p>Marks a folder as a package and can re-export names — <code>from .module1 import add</code>
+                        inside
+                        <code>__init__.py</code> lets callers write <code>from mypackage import add</code> instead of
+                        <code>from mypackage.module1 import add</code>.
+                    </p>
+                </div>
+
+                <h3 class="sub">Handling import errors</h3>
+                <div class="cell">
+                    <div class="cell-in"><span class="prompt">In [3]</span>
+                        <pre
+                            class="code"><span class="c-kw">try</span>:
+    <span class="c-kw">import</span> non_existent_module
+<span class="c-kw">except</span> ImportError <span class="c-kw">as</span> e:
+    <span class="c-fn">print</span>(<span class="c-fn">f</span><span class="c-str">"Error importing module: {e}"</span>)</pre>
+                    </div>
+                    <div class="cell-out"><span class="prompt">Out[3]</span>
+                        <pre class="out">Error importing module: No module named 'non_existent_module'</pre>
+                    </div>
+                </div>
+                <a class="backtotop" href="#modules">↑ back to top</a>
+            </section>
+
+
+
+
+
+            <!-- ============ STANDARD LIBRARY ============ -->
+            <section class="topic" id="stdlib">
+                <div class="topic-head"><span class="topic-num">11</span>
+                    <h2>Standard Library</h2>
+                </div>
+                <p class="topic-sub">Built-in modules that ship with Python — no install needed. Covers <code>os</code>,
+                    <code>shutil</code>, <code>json</code>, <code>csv</code>, <code>datetime</code>, <code>time</code>,
+                    <code>re</code>.
+                </p>
+
+                <div class="badges">
+                    <span class="badge"><b>os</b> filesystem / paths</span>
+                    <span class="badge"><b>shutil</b> high-level file ops</span>
+                    <span class="badge"><b>json</b> serialization</span>
+                    <span class="badge"><b>csv</b> read/write CSV</span>
+                    <span class="badge"><b>datetime</b> dates & times</span>
+                    <span class="badge"><b>time</b> timestamps, sleep</span>
+                    <span class="badge"><b>re</b> regex</span>
+                </div>
+
+                <div class="cell">
+                    <div class="cell-in"><span class="prompt">In [1]</span>
+                        <pre class="code"><span class="c-kw">import</span> os
+<span class="c-fn">print</span>(os.getcwd())
+os.mkdir(<span class="c-str">'new_directory'</span>)
+<span class="c-fn">print</span>(os.listdir(<span class="c-str">'.'</span>))
+os.rmdir(<span class="c-str">'new_directory'</span>)</pre>
+                    </div>
+                </div>
+
+                <div class="cell">
+                    <div class="cell-in"><span class="prompt">In [2]</span>
+                        <pre class="code"><span class="c-kw">import</span> shutil
+shutil.copyfile(<span class="c-str">'source.txt'</span>,<span class="c-str">'destination.txt'</span>)</pre>
+                    </div>
+                    <div class="cell-out"><span class="prompt">Out[2]</span>
+                        <pre class="out">'destination.txt'</pre>
+                    </div>
+                </div>
+
+                <div class="cell">
+                    <div class="cell-in"><span class="prompt">In [3]</span>
+                        <pre class="code"><span class="c-kw">import</span> json
+data = {<span class="c-str">'name'</span>:<span class="c-str">'John'</span>, <span class="c-str">'age'</span>:<span class="c-num">30</span>}
+json_str = json.dumps(data)
+<span class="c-fn">print</span>(json_str, <span class="c-fn">type</span>(json_str))
+data2 = json.loads(json_str)
+<span class="c-fn">print</span>(data2)</pre>
+                    </div>
+                    <div class="cell-out"><span class="prompt">Out[3]</span>
+                        <pre class="out">{"name": "John", "age": 30} <class 'str'>
+{'name': 'John', 'age': 30}</pre>
+                    </div>
+                </div>
+                <div class="box note"><span class="tag">json.dumps vs json.loads</span>
+                    <p><code>dumps</code> converts a Python object → JSON <b>string</b>. <code>loads</code> converts a
+                        JSON string
+                        → Python object. (<code>dump</code>/<code>load</code> without the "s" do the same but write/read
+                        directly
+                        to/from a <b>file</b>.)</p>
+                </div>
+
+                <div class="cell">
+                    <div class="cell-in"><span class="prompt">In [4]</span>
+                        <pre class="code"><span class="c-kw">import</span> csv
+<span class="c-kw">with</span> <span class="c-fn">open</span>(<span class="c-str">'example.csv'</span>,mode=<span class="c-str">'w'</span>,newline=<span class="c-str">''</span>) <span class="c-kw">as</span> file:
+    writer = csv.writer(file)
+    writer.writerow([<span class="c-str">'Name'</span>,<span class="c-str">'Age'</span>,<span class="c-str">'City'</span>])
+    writer.writerow([<span class="c-str">'John'</span>,<span class="c-num">30</span>,<span class="c-str">'New York'</span>])
+
+<span class="c-kw">with</span> <span class="c-fn">open</span>(<span class="c-str">'example.csv'</span>,mode=<span class="c-str">'r'</span>) <span class="c-kw">as</span> file:
+    reader = csv.reader(file)
+    <span class="c-kw">for</span> row <span class="c-kw">in</span> reader:
+        <span class="c-fn">print</span>(row)</pre>
+                    </div>
+                    <div class="cell-out"><span class="prompt">Out[4]</span>
+                        <pre class="out">['Name', 'Age', 'City']
+['John', '30', 'New York']</pre>
+                    </div>
+                </div>
+
+                <div class="cell">
+                    <div class="cell-in"><span class="prompt">In [5]</span>
+                        <pre class="code"><span class="c-kw">from</span> datetime <span class="c-kw">import</span> datetime, timedelta
+now = datetime.now()
+<span class="c-fn">print</span>(now)
+<span class="c-fn">print</span>(now + timedelta(days=<span class="c-num">1</span>))
+
+<span class="c-kw">import</span> time
+start = time.time()
+time.sleep(<span class="c-num">2</span>)
+<span class="c-fn">print</span>(time.time() - start)</pre>
+                    </div>
+                </div>
+
+                <div class="cell">
+                    <div class="cell-in"><span class="prompt">In [6]</span>
+                        <pre class="code"><span class="c-kw">import</span> re
+pattern = <span class="c-fn">r</span><span class="c-str">'\d+'</span>
+text = <span class="c-str">'There are 12 apples and 34 bananas.'</span>
+matches = re.search(pattern, text)
+<span class="c-fn">print</span>(matches.group())</pre>
+                    </div>
+                    <div class="cell-out"><span class="prompt">Out[6]</span>
+                        <pre class="out">12</pre>
+                    </div>
+                </div>
+                <div class="box tip"><span class="tag">os vs shutil</span>
+                    <p><code>os</code> handles low-level filesystem ops (mkdir, rmdir, listdir, cwd).
+                        <code>shutil</code> handles
+                        higher-level "whole file/tree" ops (copy, move, delete a full directory tree) that would take
+                        multiple
+                        <code>os</code> calls to do manually.
+                    </p>
+                </div>
+                <a class="backtotop" href="#stdlib">↑ back to top</a>
+            </section>
+
+            <!-- ============ FILE OPERATIONS ============ -->
+            <section class="topic" id="fileops">
+                <div class="topic-head"><span class="topic-num">12</span>
+                    <h2>File Operations</h2>
+                </div>
+                <p class="topic-sub">Reading, writing, and managing files with Python's built-in <code>open()</code> —
+                    plus
+                    binary mode and directory handling via <code>os</code>.</p>
+
+                <h3 class="sub">Read modes</h3>
+                <div class="badges">
+                    <span class="badge"><b>'r'</b> read (default)</span>
+                    <span class="badge"><b>'w'</b> write, overwrite</span>
+                    <span class="badge"><b>'a'</b> append</span>
+                    <span class="badge"><b>'w+'</b> write + read</span>
+                    <span class="badge"><b>'rb' / 'wb'</b> binary</span>
+                </div>
+                <div class="cell">
+                    <div class="cell-in"><span class="prompt">In [1]</span>
+                        <pre
+                            class="code"><span class="c-kw">with</span> <span class="c-fn">open</span>(<span class="c-str">'example.txt'</span>,<span class="c-str">'r'</span>) <span class="c-kw">as</span> file:
+    content = file.read()
+    <span class="c-fn">print</span>(content)
+
+<span class="c-com"># reading line by line</span>
+<span class="c-kw">with</span> <span class="c-fn">open</span>(<span class="c-str">'example.txt'</span>,<span class="c-str">'r'</span>) <span class="c-kw">as</span> file:
+    <span class="c-kw">for</span> line <span class="c-kw">in</span> file:
+        <span class="c-fn">print</span>(line.strip())   <span class="c-com"># strip() removes the trailing \n</span></pre>
+                    </div>
+                </div>
+
+                <h3 class="sub">Writing — 'w' vs 'a'</h3>
+                <div class="cell">
+                    <div class="cell-in"><span class="prompt">In [2]</span>
+                        <pre class="code"><span class="c-com"># 'w' — OVERWRITES the whole file</span>
+<span class="c-kw">with</span> <span class="c-fn">open</span>(<span class="c-str">'example.txt'</span>,<span class="c-str">'w'</span>) <span class="c-kw">as</span> file:
+    file.write(<span class="c-str">"hello world \n"</span>)
+    file.write(<span class="c-str">'this is a new line'</span>)
+
+<span class="c-com"># 'a' — appends without touching existing content</span>
+<span class="c-kw">with</span> <span class="c-fn">open</span>(<span class="c-str">'example.txt'</span>,<span class="c-str">'a'</span>) <span class="c-kw">as</span> file:
+    file.write(<span class="c-str">". appending a new line \n"</span>)
+
+<span class="c-com"># writing a list of lines</span>
+lines = [<span class="c-str">"line 1\n"</span>, <span class="c-str">"line 2\n"</span>, <span class="c-str">"line 3\n"</span>]
+<span class="c-kw">with</span> <span class="c-fn">open</span>(<span class="c-str">'example.txt'</span>,<span class="c-str">'a'</span>) <span class="c-kw">as</span> file:
+    file.writelines(lines)</pre>
+                    </div>
+                </div>
+                <div class="box warn">
+                    <span class="tag">⚠ 'w' silently destroys existing content</span>
+                    <p>Opening a file in <code>'w'</code> mode truncates it to zero length the moment it's opened — even
+                        before
+                        you write anything. If you meant to keep old content, you need <code>'a'</code>.</p>
+                </div>
+
+                <h3 class="sub">Binary files</h3>
+                <div class="cell">
+                    <div class="cell-in"><span class="prompt">In [3]</span>
+                        <pre class="code">data = <span class="c-fn">b</span><span class="c-str">'\x00\x01\x02\x03\x04\x05'</span>
+<span class="c-kw">with</span> <span class="c-fn">open</span>(<span class="c-str">'example.bin'</span>, <span class="c-str">'wb'</span>) <span class="c-kw">as</span> file:
+    file.write(data)
+
+<span class="c-kw">with</span> <span class="c-fn">open</span>(<span class="c-str">'example.bin'</span>, <span class="c-str">'rb'</span>) <span class="c-kw">as</span> file:
+    content = file.read()
+    <span class="c-fn">print</span>(content)</pre>
+                    </div>
+                    <div class="cell-out"><span class="prompt">Out[3]</span>
+                        <pre class="out">b'\x00\x01\x02\x03\x04\x05'</pre>
+                    </div>
+                </div>
+                <div class="box note"><span class="tag">Text mode vs binary mode</span>
+                    <p>Text mode (<code>'r'/'w'/'a'</code>) decodes/encodes using a text encoding (usually UTF-8) and
+                        handles
+                        newline translation. Binary mode (<code>'rb'/'wb'</code>) reads/writes raw bytes with zero
+                        translation —
+                        required for images, executables, or any non-text data.</p>
+                </div>
+
+                <h3 class="sub">'w+' — write and read with the same handle</h3>
+                <div class="cell">
+                    <div class="cell-in"><span class="prompt">In [4]</span>
+                        <pre class="code"><span class="c-kw">with</span> <span class="c-fn">open</span>(<span class="c-str">'example.txt'</span>,<span class="c-str">'w+'</span>) <span class="c-kw">as</span> file:
+    file.write(<span class="c-str">"hello world \n"</span>)
+    file.write(<span class="c-str">'this is a new line'</span>)
+    file.seek(<span class="c-num">0</span>)              <span class="c-com"># move cursor back to start</span>
+    content = file.read()
+    <span class="c-fn">print</span>(content)</pre>
+                    </div>
+                    <div class="cell-out"><span class="prompt">Out[4]</span>
+                        <pre class="out">hello world 
+this is a new line</pre>
+                    </div>
+                </div>
+                <div class="box tip"><span class="tag">Why seek(0) is needed</span>
+                    <p>After writing, the file cursor sits at the <b>end</b> of the file. Calling <code>read()</code>
+                        right away
+                        would return an empty string — <code>seek(0)</code> rewinds the cursor to the beginning first.
+                    </p>
+                </div>
+
+                <h3 class="sub">Directories &amp; paths (os module)</h3>
+                <div class="cell">
+                    <div class="cell-in"><span class="prompt">In [5]</span>
+                        <pre class="code"><span class="c-kw">import</span> os
+
+<span class="c-com"># create a directory — raises FileExistsError if it's already there</span>
+new_directory = <span class="c-str">"package"</span>
+os.mkdir(new_directory)
+<span class="c-kw">with</span> <span class="c-fn">open</span>(os.path.join(new_directory, <span class="c-str">'example.txt'</span>), <span class="c-str">'w'</span>) <span class="c-kw">as</span> file:
+    file.write(<span class="c-str">"hello world"</span>)
+
+<span class="c-fn">print</span>(os.listdir(<span class="c-str">'.'</span>))
+
+<span class="c-com"># existence / type checks</span>
+path = <span class="c-str">'example1.txt'</span>
+<span class="c-fn">print</span>(os.path.exists(path))
+<span class="c-fn">print</span>(os.path.isfile(path))
+<span class="c-fn">print</span>(os.path.isdir(path))
+
+<span class="c-fn">print</span>(os.path.abspath(<span class="c-str">'example.txt'</span>))</pre>
+                    </div>
+                    <div class="cell-out"><span class="prompt">Out[5]</span>
+                        <pre class="out">['example.bin', 'example.txt', 'fileoperation.ipynb', 'package', 'source.txt']
+False
+False
+False
+d:\learning\...\example.txt</pre>
+                    </div>
+                </div>
+                <div class="box warn">
+                    <span class="tag">⚠ os.mkdir() raises FileExistsError on rerun</span>
+                    <p>Running the same cell twice fails with <code>FileExistsError</code> because
+                        <code>os.mkdir()</code> refuses
+                        to overwrite an existing directory. Use <code>os.makedirs(name, exist_ok=True)</code> if you
+                        want it to
+                        silently succeed either way.
+                    </p>
+                </div>
+                <a class="backtotop" href="#fileops">↑ back to top</a>
+            </section>
+
+            <!-- exceptions -->
+            <section class="topic" id="exceptions">
+                <div class="topic-head"><span class="topic-num">13</span>
+                    <h2>Exception Handling</h2>
+                </div>
+                <p class="topic-sub"><code>try</code>/<code>except</code> lets you catch errors instead of crashing —
+                    <code>else</code> runs on success, <code>finally</code> always runs, for cleanup.
+                </p>
+
+                <h3 class="sub">Basic try/except</h3>
+                <div class="cell">
+                    <div class="cell-in"><span class="prompt">In [1]</span>
+                        <pre class="code">a = <span class="c-num">10</span>
+<span class="c-kw">try</span>:
+    a = b
+<span class="c-kw">except</span> NameError <span class="c-kw">as</span> e:
+    <span class="c-fn">print</span>(<span class="c-str">"NameError occurred:"</span>, e)</pre>
+                    </div>
+                    <div class="cell-out"><span class="prompt">Out[1]</span>
+                        <pre class="out">NameError occurred: name 'b' is not defined</pre>
+                    </div>
+                </div>
+
+                <h3 class="sub">Catching a specific error</h3>
+                <div class="cell">
+                    <div class="cell-in"><span class="prompt">In [2]</span>
+                        <pre class="code"><span class="c-kw">try</span>:
+    result = <span class="c-num">1</span> / <span class="c-num">0</span>
+<span class="c-kw">except</span> ZeroDivisionError <span class="c-kw">as</span> e:
+    <span class="c-fn">print</span>(<span class="c-str">"ZeroDivisionError occurred:"</span>, e)</pre>
+                    </div>
+                    <div class="cell-out"><span class="prompt">Out[2]</span>
+                        <pre class="out">ZeroDivisionError occurred: division by zero</pre>
+                    </div>
+                </div>
+                <div class="box warn"><span class="tag">⚠ Broad except hides the real error</span>
+                    <p>A catch-all <code>except Exception as e</code> catches everything, so a fixed print label can be
+                        misleading if different error types reuse the same message.</p>
+                </div>
+
+                <h3 class="sub">Multiple except blocks + else</h3>
+                <div class="cell">
+                    <div class="cell-in"><span class="prompt">In [3]</span>
+                        <pre class="code"><span class="c-kw">try</span>:
+    num = <span class="c-fn">int</span>(<span class="c-fn">input</span>(<span class="c-str">"Enter a number"</span>))
+    result = <span class="c-num">10</span> / num
+<span class="c-kw">except</span> ValueError <span class="c-kw">as</span> e:
+    <span class="c-fn">print</span>(<span class="c-str">"ValueError occurred:"</span>, e)
+<span class="c-kw">except</span> ZeroDivisionError <span class="c-kw">as</span> e:
+    <span class="c-fn">print</span>(<span class="c-str">"ZeroDivisionError occurred:"</span>, e)
+<span class="c-kw">except</span> Exception <span class="c-kw">as</span> e:
+    <span class="c-fn">print</span>(<span class="c-str">"An unexpected error occurred:"</span>, e)
+<span class="c-kw">else</span>:
+    <span class="c-fn">print</span>(<span class="c-str">"Result is:"</span>, result)</pre>
+                    </div>
+                    <div class="cell-out"><span class="prompt">Out[3]</span>
+                        <pre class="out">Result is: 2.0</pre>
+                    </div>
+                </div>
+                <div class="box note"><span class="tag">else only runs on success</span>
+                    <p><code>else</code> executes only when the <code>try</code> block raised nothing — a natural place
+                        for code
+                        that depends on the result being valid.</p>
+                </div>
+
+                <h3 class="sub">Adding finally</h3>
+                <div class="cell">
+                    <div class="cell-in"><span class="prompt">In [4]</span>
+                        <pre class="code"><span class="c-kw">try</span>:
+    num = <span class="c-fn">int</span>(<span class="c-fn">input</span>(<span class="c-str">"Enter a number"</span>))
+    result = <span class="c-num">10</span> / num
+<span class="c-kw">except</span> ValueError <span class="c-kw">as</span> e:
+    <span class="c-fn">print</span>(<span class="c-str">"ValueError occurred:"</span>, e)
+<span class="c-kw">except</span> ZeroDivisionError <span class="c-kw">as</span> e:
+    <span class="c-fn">print</span>(<span class="c-str">"ZeroDivisionError occurred:"</span>, e)
+<span class="c-kw">else</span>:
+    <span class="c-fn">print</span>(<span class="c-str">"Result is:"</span>, result)
+<span class="c-kw">finally</span>:
+    <span class="c-fn">print</span>(<span class="c-str">"Execution completed."</span>)</pre>
+                    </div>
+                    <div class="cell-out"><span class="prompt">Out[4]</span>
+                        <pre class="out">ValueError occurred: invalid literal for int() with base 10: 's'
+Execution completed.</pre>
+                    </div>
+                </div>
+                <div class="box tip"><span class="tag">finally always runs</span>
+                    <p>Whether or not an exception occurred, <code>finally</code> executes — the right place to release
+                        resources like open files or connections.</p>
+                </div>
+
+                <h3 class="sub">Exceptions with file handling</h3>
+                <div class="cell">
+                    <div class="cell-in"><span class="prompt">In [5]</span>
+                        <pre class="code"><span class="c-kw">try</span>:
+    file = <span class="c-fn">open</span>(<span class="c-str">'example.txt'</span>, <span class="c-str">'r'</span>)
+    content = file.read()
+    <span class="c-fn">print</span>(content)
+<span class="c-kw">except</span> FileNotFoundError <span class="c-kw">as</span> e:
+    <span class="c-fn">print</span>(<span class="c-str">"FileNotFoundError occurred:"</span>, e)
+<span class="c-kw">finally</span>:
+    <span class="c-kw">if</span> <span class="c-str">'file'</span> <span class="c-kw">in</span> <span class="c-fn">locals</span>() <span class="c-kw">and</span> file <span class="c-kw">and not</span> file.closed:
+        file.close()
+        <span class="c-fn">print</span>(<span class="c-str">"File closed."</span>)</pre>
+                    </div>
+                    <div class="cell-out"><span class="prompt">Out[5]</span>
+                        <pre
+                            class="out">FileNotFoundError occurred: [Errno 2] No such file or directory: 'example.txt'</pre>
+                    </div>
+                </div>
+                <div class="box warn"><span class="tag">⚠ Bug in the source notebook</span>
+                    <p>The original called <code>file.closed()</code> — but <code>closed</code> is a <b>property</b>,
+                        not a
+                        method. It should be <code>file.closed</code> with no parentheses; fixed above.</p>
+                </div>
+                <a class="backtotop" href="#exceptions">↑ back to top</a>
+            </section>
+
+            <section class="topic" id="magic-methods">
+                <div class="topic-head"><span class="topic-num">14</span>
+                    <h2>Magic Methods</h2>
+                </div>
+                <p class="topic-sub">Dunder methods let objects hook into built-in operators and functions.</p>
+
+                <h3 class="sub">__str__ vs __repr__</h3>
+                <div class="cell">
+                    <div class="cell-in"><span class="prompt">In</span>
+                        <pre
+                            class="code"><span class="c-kw">class</span> <span class="c-fn">Person</span>:
+    <span class="c-kw">def</span> <span class="c-fn">__init__</span>(self, name, age):
+        self.name = name
+        self.age = age
+
+    <span class="c-kw">def</span> <span class="c-fn">__str__</span>(self):
+        <span class="c-kw">return</span> <span class="c-str">f"{self.name}, age={self.age}"</span>
+
+    <span class="c-kw">def</span> <span class="c-fn">__repr__</span>(self):
+        <span class="c-kw">return</span> <span class="c-str">f"Person(name={self.name}, age={self.age})"</span>
+
+person = Person(<span class="c-str">"John"</span>, <span class="c-num">30</span>)
+<span class="c-fn">print</span>(person)        <span class="c-cm"># uses __str__</span>
+<span class="c-fn">print</span>(<span class="c-fn">repr</span>(person))  <span class="c-cm"># uses __repr__</span></pre>
+                    </div>
+                    <div class="cell-out"><span class="prompt">Out</span>
+                        <pre class="out">John, age=30
+Person(name=John, age=30)</pre>
+                    </div>
+                </div>
+
+                <h3 class="sub">Operator overloading — __add__, __sub__, __mul__, __eq__</h3>
+                <div class="cell">
+                    <div class="cell-in"><span class="prompt">In</span>
+                        <pre class="code"><span class="c-kw">class</span> <span class="c-fn">Vector</span>:
+    <span class="c-kw">def</span> <span class="c-fn">__init__</span>(self, x, y):
+        self.x = x
+        self.y = y
+
+    <span class="c-kw">def</span> <span class="c-fn">__add__</span>(self, other):
+        <span class="c-kw">return</span> Vector(self.x + other.x, self.y + other.y)
+
+    <span class="c-kw">def</span> <span class="c-fn">__sub__</span>(self, other):
+        <span class="c-kw">return</span> Vector(self.x - other.x, self.y - other.y)
+
+    <span class="c-kw">def</span> <span class="c-fn">__mul__</span>(self, scalar):
+        <span class="c-kw">return</span> Vector(self.x * scalar, self.y * scalar)
+
+    <span class="c-kw">def</span> <span class="c-fn">__eq__</span>(self, other):
+        <span class="c-kw">return</span> self.x == other.x <span class="c-kw">and</span> self.y == other.y
+
+    <span class="c-kw">def</span> <span class="c-fn">__repr__</span>(self):
+        <span class="c-kw">return</span> <span class="c-str">f"Vector({self.x}, {self.y})"</span>
+
+v1 = Vector(<span class="c-num">1</span>, <span class="c-num">2</span>)
+v2 = Vector(<span class="c-num">3</span>, <span class="c-num">4</span>)
+<span class="c-fn">print</span>(v1 + v2)
+<span class="c-fn">print</span>(v1 - v2)
+<span class="c-fn">print</span>(v1 * <span class="c-num">2</span>)
+<span class="c-fn">print</span>(v1 == v2)</pre>
+                    </div>
+                    <div class="cell-out"><span class="prompt">Out</span>
+                        <pre class="out">Vector(4, 6)
+Vector(-2, -2)
+Vector(2, 4)
+False</pre>
+                    </div>
+                </div>
+
+                <div class="box note"><span class="tag">Note</span> Other common dunders worth knowing:
+                    <code>__len__</code>,
+                    <code>__getitem__</code>, <code>__setitem__</code>, <code>__delitem__</code>, <code>__iter__</code>,
+                    <code>__contains__</code>, <code>__call__</code> — not covered in this notebook yet.
+                </div>
+
+                <a href="#top" class="backtotop">↑ Back to top</a>
+            </section>
+
+            <!-- OOPs -->
+            <section class="topic" id="oop-basics">
+                <div class="topic-head"><span class="topic-num">15</span>
+                    <h2>OOP Basics</h2>
+                </div>
+                <p class="topic-sub">Classes, objects, instance variables/methods, a small BankAccount example.</p>
+
+                <h3 class="sub">Class & Object</h3>
+                <div class="cell">
+                    <div class="cell-in"><span class="prompt">In</span>
+                        <pre class="code"><span class="c-kw">class</span> <span class="c-fn">Car</span>:
+    <span class="c-kw">pass</span>
+
+audi = Car()
+bmw = Car()
+<span class="c-fn">print</span>(<span class="c-fn">type</span>(audi))</pre>
+                    </div>
+                    <div class="cell-out"><span class="prompt">Out</span>
+                        <pre class="out">&lt;class '__main__.Car'&gt;</pre>
+                    </div>
+                </div>
+
+                <h3 class="sub">Instance Variables & Methods</h3>
+                <div class="cell">
+                    <div class="cell-in"><span class="prompt">In</span>
+                        <pre class="code"><span class="c-kw">class</span> <span class="c-fn">Dog</span>:
+    <span class="c-kw">def</span> <span class="c-fn">__init__</span>(self, name, age):
+        self.name = name
+        self.age = age
+
+    <span class="c-kw">def</span> <span class="c-fn">bark</span>(self):
+        <span class="c-fn">print</span>(<span class="c-str">f"{self.name} is barking."</span>)
+
+dog1 = Dog(<span class="c-str">"Tom"</span>, <span class="c-num">5</span>)
+dog1.bark()</pre>
+                    </div>
+                    <div class="cell-out"><span class="prompt">Out</span>
+                        <pre class="out">Tom is barking.</pre>
+                    </div>
+                </div>
+
+                <h3 class="sub">Mini Project — Bank Account</h3>
+                <div class="cell">
+                    <div class="cell-in"><span class="prompt">In</span>
+                        <pre class="code"><span class="c-kw">class</span> <span class="c-fn">BankAccount</span>:
+    <span class="c-kw">def</span> <span class="c-fn">__init__</span>(self, owner, balance):
+        self.owner = owner
+        self.balance = balance
+
+    <span class="c-kw">def</span> <span class="c-fn">deposit</span>(self, amount):
+        self.balance += amount
+        <span class="c-fn">print</span>(<span class="c-str">f"Deposited {amount}. New balance is {self.balance}."</span>)
+
+    <span class="c-kw">def</span> <span class="c-fn">withdraw</span>(self, amount):
+        <span class="c-kw">if</span> amount &gt; self.balance:
+            <span class="c-fn">print</span>(<span class="c-str">"Insufficient funds."</span>)
+        <span class="c-kw">else</span>:
+            self.balance -= amount
+            <span class="c-fn">print</span>(<span class="c-str">f"Withdrew {amount}. New balance is {self.balance}."</span>)
+
+    <span class="c-kw">def</span> <span class="c-fn">get_balance</span>(self):
+        <span class="c-kw">return</span> self.balance
+
+account = BankAccount(<span class="c-str">"Alice"</span>, <span class="c-num">1000</span>)
+account.deposit(<span class="c-num">500</span>)
+account.withdraw(<span class="c-num">200</span>)
+<span class="c-fn">print</span>(account.get_balance())</pre>
+                    </div>
+                    <div class="cell-out"><span class="prompt">Out</span>
+                        <pre class="out">Deposited 500. New balance is 1500.
+Withdrew 200. New balance is 1300.
+1300</pre>
+                    </div>
+                </div>
+                <a href="#top" class="backtotop">↑ Back to top</a>
+            </section>
+
+            <section class="topic" id="encapsulation">
+                <div class="topic-head"><span class="topic-num">16</span>
+                    <h2>Encapsulation</h2>
+                </div>
+                <p class="topic-sub">Public, protected (_), and private (__) access modifiers; getters/setters.</p>
+
+                <h3 class="sub">Public Variable</h3>
+                <div class="cell">
+                    <div class="cell-in"><span class="prompt">In</span>
+                        <pre class="code"><span class="c-kw">class</span> <span class="c-fn">Person</span>:
+    <span class="c-kw">def</span> <span class="c-fn">__init__</span>(self, name, age):
+        self.name = name  <span class="c-cm">## public variable</span>
+        self.age = age
+
+person1 = Person(<span class="c-str">"Sachin"</span>, <span class="c-num">25</span>)
+<span class="c-fn">print</span>(person1.name)</pre>
+                    </div>
+                    <div class="cell-out"><span class="prompt">Out</span>
+                        <pre class="out">Sachin</pre>
+                    </div>
+                </div>
+
+                <h3 class="sub">Protected Variable (_)</h3>
+                <div class="cell">
+                    <div class="cell-in"><span class="prompt">In</span>
+                        <pre class="code"><span class="c-kw">class</span> <span class="c-fn">Person</span>:
+    <span class="c-kw">def</span> <span class="c-fn">__init__</span>(self, name, age):
+        self._name = name  <span class="c-cm">## protected variable</span>
+        self._age = age
+
+<span class="c-kw">class</span> <span class="c-fn">Employee</span>(Person):
+    <span class="c-kw">def</span> <span class="c-fn">__init__</span>(self, name, age, salary):
+        <span class="c-fn">super</span>().__init__(name, age)
+
+employee = Employee(<span class="c-str">"Adnan"</span>, <span class="c-num">25</span>, <span class="c-num">10000</span>)
+<span class="c-fn">print</span>(employee._name)</pre>
+                    </div>
+                    <div class="cell-out"><span class="prompt">Out</span>
+                        <pre class="out">Adnan</pre>
+                    </div>
+                </div>
+
+                <h3 class="sub">Private Variable (__) with Getter/Setter</h3>
+                <div class="cell">
+                    <div class="cell-in"><span class="prompt">In</span>
+                        <pre class="code"><span class="c-kw">class</span> <span class="c-fn">Person</span>:
+    <span class="c-kw">def</span> <span class="c-fn">__init__</span>(self, name, age):
+        self.__name = name  <span class="c-cm">## private variable</span>
+        self.__age = age
+
+    <span class="c-kw">def</span> <span class="c-fn">get_name</span>(self):
+        <span class="c-kw">return</span> self.__name
+
+    <span class="c-kw">def</span> <span class="c-fn">set_name</span>(self, name):
+        self.__name = name
+
+person1 = Person(<span class="c-str">"Sachin"</span>, <span class="c-num">25</span>)
+person1.set_name(<span class="c-str">"Adnan"</span>)
+<span class="c-fn">print</span>(person1.get_name())</pre>
+                    </div>
+                    <div class="cell-out"><span class="prompt">Out</span>
+                        <pre class="out">Adnan</pre>
+                    </div>
+                </div>
+
+                <div class="box warn"><span class="tag">Warn</span> Direct access like <code>person1.name</code> raises
+                    <code>AttributeError</code> once the variable is private (<code>__name</code>) — must go through the
+                    getter.
+                </div>
+                <a href="#top" class="backtotop">↑ Back to top</a>
+            </section>
+
+            <section class="topic" id="inheritance">
+                <div class="topic-head"><span class="topic-num">17</span>
+                    <h2>Inheritance</h2>
+                </div>
+                <p class="topic-sub">Single inheritance, method override + super(), and multiple inheritance.</p>
+
+                <h3 class="sub">Single Inheritance</h3>
+                <div class="cell">
+                    <div class="cell-in"><span class="prompt">In</span>
+                        <pre class="code"><span class="c-kw">class</span> <span class="c-fn">Car</span>:
+    <span class="c-kw">def</span> <span class="c-fn">__init__</span>(self, windows, doors, engineType):
+        self.windows = windows
+        self.doors = doors
+        self.engineType = engineType
+
+    <span class="c-kw">def</span> <span class="c-fn">drive</span>(self):
+        <span class="c-fn">print</span>(<span class="c-str">f"the person will drive the {self.engineType} car"</span>)
+
+<span class="c-kw">class</span> <span class="c-fn">Tesla</span>(Car):
+    <span class="c-kw">def</span> <span class="c-fn">__init__</span>(self, windows, doors, engineType, autopilot):
+        <span class="c-fn">super</span>().__init__(windows, doors, engineType)
+        self.autopilot = autopilot
+
+    <span class="c-kw">def</span> <span class="c-fn">selfdriving</span>(self):
+        <span class="c-fn">print</span>(<span class="c-str">f"autopilot: {self.autopilot}"</span>)
+
+tesla1 = Tesla(<span class="c-num">4</span>, <span class="c-num">5</span>, <span class="c-str">"electric"</span>, <span class="c-str">"yes"</span>)
+tesla1.selfdriving()
+tesla1.drive()</pre>
+                    </div>
+                    <div class="cell-out"><span class="prompt">Out</span>
+                        <pre class="out">autopilot: yes
+the person will drive the electric car</pre>
+                    </div>
+                </div>
+
+                <h3 class="sub">Multiple Inheritance</h3>
+                <div class="cell">
+                    <div class="cell-in"><span class="prompt">In</span>
+                        <pre class="code"><span class="c-kw">class</span> <span class="c-fn">Animal</span>:
+    <span class="c-kw">def</span> <span class="c-fn">__init__</span>(self, name):
+        self.name = name
+
+    <span class="c-kw">def</span> <span class="c-fn">speak</span>(self):
+        <span class="c-fn">print</span>(<span class="c-str">f"{self.name} makes a sound"</span>)
+
+<span class="c-kw">class</span> <span class="c-fn">Pet</span>:
+    <span class="c-kw">def</span> <span class="c-fn">__init__</span>(self, owner):
+        self.owner = owner
+
+<span class="c-kw">class</span> <span class="c-fn">Dog</span>(Animal, Pet):
+    <span class="c-kw">def</span> <span class="c-fn">__init__</span>(self, name, owner):
+        Animal.__init__(self, name)
+        Pet.__init__(self, owner)
+
+dog = Dog(<span class="c-str">"Buddy"</span>, <span class="c-str">"Alice"</span>)
+<span class="c-fn">print</span>(dog.name, dog.owner)
+dog.speak()</pre>
+                    </div>
+                    <div class="cell-out"><span class="prompt">Out</span>
+                        <pre class="out">Buddy Alice
+Buddy makes a sound</pre>
+                    </div>
+                </div>
+                <a href="#top" class="backtotop">↑ Back to top</a>
+            </section>
+
+            <section class="topic" id="polymorphism">
+                <div class="topic-head"><span class="topic-num">18</span>
+                    <h2>Polymorphism</h2>
+                </div>
+                <p class="topic-sub">Method overriding, duck-typing across unrelated methods, and ABC-based
+                    polymorphism.</p>
+
+                <h3 class="sub">Method Overriding</h3>
+                <div class="cell">
+                    <div class="cell-in"><span class="prompt">In</span>
+                        <pre class="code"><span class="c-kw">class</span> <span class="c-fn">Animal</span>:
+    <span class="c-kw">def</span> <span class="c-fn">speak</span>(self):
+        <span class="c-kw">return</span> <span class="c-str">"Animal speaks"</span>
+
+<span class="c-kw">class</span> <span class="c-fn">Dog</span>(Animal):
+    <span class="c-kw">def</span> <span class="c-fn">speak</span>(self):
+        <span class="c-kw">return</span> <span class="c-str">"woof"</span>
+
+<span class="c-kw">class</span> <span class="c-fn">Cat</span>(Animal):
+    <span class="c-kw">def</span> <span class="c-fn">speak</span>(self):
+        <span class="c-kw">return</span> <span class="c-str">"meow"</span>
+
+<span class="c-kw">def</span> <span class="c-fn">animal_speak</span>(animal):
+    <span class="c-fn">print</span>(animal.speak())
+
+animal_speak(Dog())
+animal_speak(Cat())</pre>
+                    </div>
+                    <div class="cell-out"><span class="prompt">Out</span>
+                        <pre class="out">woof
+meow</pre>
+                    </div>
+                </div>
+
+                <h3 class="sub">Polymorphism with Shapes</h3>
+                <div class="cell">
+                    <div class="cell-in"><span class="prompt">In</span>
+                        <pre class="code"><span class="c-kw">class</span> <span class="c-fn">Shape</span>:
+    <span class="c-kw">def</span> <span class="c-fn">area</span>(self):
+        <span class="c-kw">return</span> <span class="c-str">"the area of the figure"</span>
+
+<span class="c-kw">class</span> <span class="c-fn">Rectangle</span>(Shape):
+    <span class="c-kw">def</span> <span class="c-fn">__init__</span>(self, width, height):
+        self.width = width
+        self.height = height
+
+    <span class="c-kw">def</span> <span class="c-fn">area</span>(self):
+        <span class="c-kw">return</span> self.width * self.height
+
+<span class="c-kw">class</span> <span class="c-fn">Circle</span>(Shape):
+    <span class="c-kw">def</span> <span class="c-fn">__init__</span>(self, radius):
+        self.radius = radius
+
+    <span class="c-kw">def</span> <span class="c-fn">area</span>(self):
+        <span class="c-kw">return</span> <span class="c-num">3.14</span> * self.radius * self.radius
+
+<span class="c-kw">def</span> <span class="c-fn">print_area</span>(shape):
+    <span class="c-fn">print</span>(shape.area())
+
+print_area(Rectangle(<span class="c-num">5</span>, <span class="c-num">10</span>))
+print_area(Circle(<span class="c-num">60</span>))</pre>
+                    </div>
+                    <div class="cell-out"><span class="prompt">Out</span>
+                        <pre class="out">50
+11304.0</pre>
+                    </div>
+                </div>
+                <a href="#top" class="backtotop">↑ Back to top</a>
+            </section>
+
+            <section class="topic" id="abstraction">
+                <div class="topic-head"><span class="topic-num">19</span>
+                    <h2>Abstraction</h2>
+                </div>
+                <p class="topic-sub">Abstract base classes hide implementation details and force subclasses to implement
+                    required methods.</p>
+
+                <div class="cell">
+                    <div class="cell-in"><span class="prompt">In</span>
+                        <pre class="code"><span class="c-kw">from</span> abc <span class="c-kw">import</span> ABC, abstractmethod
+
+<span class="c-kw">class</span> <span class="c-fn">Vehicle</span>(ABC):
+    <span class="c-kw">def</span> <span class="c-fn">drive</span>(self):
+        <span class="c-fn">print</span>(<span class="c-str">"the vehicle is used for driving"</span>)
+
+    <span class="c-fn">@abstractmethod</span>
+    <span class="c-kw">def</span> <span class="c-fn">start_engine</span>(self):
+        <span class="c-kw">pass</span>
+
+<span class="c-kw">class</span> <span class="c-fn">Car</span>(Vehicle):
+    <span class="c-kw">def</span> <span class="c-fn">start_engine</span>(self):
+        <span class="c-fn">print</span>(<span class="c-str">"the car engine is started"</span>)
+
+<span class="c-kw">def</span> <span class="c-fn">operate_vehicle</span>(vehicle):
+    vehicle.start_engine()
+    vehicle.drive()
+
+operate_vehicle(Car())</pre>
+                    </div>
+                    <div class="cell-out"><span class="prompt">Out</span>
+                        <pre class="out">the car engine is started
+the vehicle is used for driving</pre>
+                    </div>
+                </div>
+
+                <div class="box note"><span class="tag">Note</span> <code>Vehicle()</code> directly can't be
+                    instantiated —
+                    <code>ABC</code> + <code>@abstractmethod</code> block that.
+                </div>
+                <a href="#top" class="backtotop">↑ Back to top</a>
+            </section>
+
+            <section class="topic" id="custom-exceptions">
+                <div class="topic-head"><span class="topic-num">20</span>
+                    <h2>Custom Exceptions</h2>
+                </div>
+                <p class="topic-sub">Defining custom exception classes by subclassing Exception.</p>
+
+                <div class="cell">
+                    <div class="cell-in"><span class="prompt">In</span>
+                        <pre class="code"><span class="c-kw">class</span> <span class="c-fn">Error</span>(Exception):
+    <span class="c-str">"""Base class for other exceptions"""</span>
+    <span class="c-kw">pass</span>
+
+<span class="c-kw">class</span> <span class="c-fn">dobException</span>(Error):
+    <span class="c-str">"""Raised when the input value is too small"""</span>
+    <span class="c-kw">pass</span>
+
+year = <span class="c-fn">int</span>(<span class="c-fn">input</span>(<span class="c-str">"Enter your year of birth: "</span>))
+age = <span class="c-num">2024</span> - year
+
+<span class="c-kw">try</span>:
+    <span class="c-kw">if</span> age &gt;= <span class="c-num">30</span> <span class="c-kw">and</span> age &lt;= <span class="c-num">20</span>:
+        <span class="c-fn">print</span>(<span class="c-str">"The age is valid"</span>)
+    <span class="c-kw">else</span>:
+        <span class="c-kw">raise</span> dobException
+<span class="c-kw">except</span> dobException <span class="c-kw">as</span> e:
+    <span class="c-fn">print</span>(<span class="c-str">"end=> The age is not valid"</span>)</pre>
+                    </div>
+                    <div class="cell-out"><span class="prompt">Out</span>
+                        <pre class="out">end=&gt; The age is not valid</pre>
+                    </div>
+                </div>
+                <a href="#top" class="backtotop">↑ Back to top</a>
+            </section>
+
+
+
+            <section class="topic" id="iterators">
+                <div class="topic-head">
+                    <span class="topic-num">21</span>
+                    <h2>Iterators</h2>
+                </div>
+                <p class="topic-sub">An iterable is anything you can loop over. iter() turns it into an iterator; next()
+                    pulls one value at a time until it raises StopIteration.</p>
+
+                <h3 class="sub">Iterable → Iterator</h3>
+                <div class="cell">
+                    <div class="cell-in">
+                        <span class="prompt">In</span>
+                        <pre class="code">my_list = [<span class="c-num">1</span>, <span class="c-num">2</span>, <span class="c-num">3</span>, <span class="c-num">4</span>, <span class="c-num">5</span>, <span class="c-num">6</span>]
+
+<span class="c-kw">for</span> i <span class="c-kw">in</span> my_list:
+    <span class="c-fn">print</span>(i)
+
+<span class="c-fn">print</span>(<span class="c-fn">type</span>(my_list))
+
+iterator = <span class="c-fn">iter</span>(my_list)
+<span class="c-fn">print</span>(<span class="c-fn">next</span>(iterator))
+<span class="c-fn">print</span>(<span class="c-fn">next</span>(iterator))</pre>
+                    </div>
+                    <div class="cell-out">
+                        <span class="prompt">Out</span>
+                        <pre class="out">1
+2
+3
+4
+5
+6
+&lt;class 'list'&gt;
+1
+2</pre>
+                    </div>
+                </div>
+
+                <h3 class="sub">StopIteration</h3>
+                <div class="cell">
+                    <div class="cell-in">
+                        <span class="prompt">In</span>
+                        <pre class="code"><span class="c-kw">try</span>:
+    <span class="c-kw">while</span> <span class="c-kw">True</span>:
+        <span class="c-fn">print</span>(<span class="c-fn">next</span>(iterator))
+<span class="c-kw">except</span> StopIteration:
+    <span class="c-fn">print</span>(<span class="c-str">"End of iteration"</span>)</pre>
+                    </div>
+                    <div class="cell-out">
+                        <span class="prompt">Out</span>
+                        <pre class="out">3
+4
+5
+6
+End of iteration</pre>
+                    </div>
+                </div>
+                <div class="box note">
+                    <span class="tag">NOTE</span>
+                    A for loop calls next() internally and catches StopIteration for you — that's why you never see it
+                    while looping normally.
+                </div>
+
+                <h3 class="sub">Strings are iterable too</h3>
+                <div class="cell">
+                    <div class="cell-in">
+                        <span class="prompt">In</span>
+                        <pre class="code">my_string = <span class="c-str">"Argho"</span>
+string_iterator = <span class="c-fn">iter</span>(my_string)
+<span class="c-fn">print</span>(<span class="c-fn">next</span>(string_iterator))
+<span class="c-fn">print</span>(<span class="c-fn">next</span>(string_iterator))</pre>
+                    </div>
+                    <div class="cell-out">
+                        <span class="prompt">Out</span>
+                        <pre class="out">A
+r</pre>
+                    </div>
+                </div>
+
+                <a href="#top" class="backtotop">↑ Back to top</a>
+            </section>
+
+            <section class="topic" id="generators">
+                <div class="topic-head">
+                    <span class="topic-num">22</span>
+                    <h2>Generators</h2>
+                </div>
+                <p class="topic-sub">A generator function uses yield instead of return. Calling it doesn't run the body
+                    — it hands back a generator object, and each next() resumes exactly where it left off.</p>
+
+                <h3 class="sub">yield instead of return</h3>
+                <div class="cell">
+                    <div class="cell-in">
+                        <span class="prompt">In</span>
+                        <pre class="code"><span class="c-kw">def</span> <span class="c-fn">square</span>(n):
+    <span class="c-kw">for</span> i <span class="c-kw">in</span> <span class="c-fn">range</span>(n):
+        <span class="c-kw">yield</span> i ** <span class="c-num">2</span>
+
+<span class="c-fn">print</span>(<span class="c-fn">square</span>(<span class="c-num">5</span>))
+
+<span class="c-kw">for</span> i <span class="c-kw">in</span> <span class="c-fn">square</span>(<span class="c-num">5</span>):
+    <span class="c-fn">print</span>(i)</pre>
+                    </div>
+                    <div class="cell-out">
+                        <span class="prompt">Out</span>
+                        <pre class="out">&lt;generator object square at 0x7f61014cb9f0&gt;
+0
+1
+4
+9
+16</pre>
+                    </div>
+                </div>
+
+                <h3 class="sub">next() resumes where it left off</h3>
+                <div class="cell">
+                    <div class="cell-in">
+                        <span class="prompt">In</span>
+                        <pre class="code">a = <span class="c-fn">square</span>(<span class="c-num">5</span>)
+<span class="c-fn">print</span>(<span class="c-fn">next</span>(a))
+<span class="c-fn">print</span>(<span class="c-fn">next</span>(a))
+
+<span class="c-kw">def</span> <span class="c-fn">my_generator</span>():
+    <span class="c-kw">yield</span> <span class="c-num">1</span>
+    <span class="c-kw">yield</span> <span class="c-num">2</span>
+    <span class="c-kw">yield</span> <span class="c-num">3</span>
+
+gen = <span class="c-fn">my_generator</span>()
+<span class="c-kw">for</span> i <span class="c-kw">in</span> gen:
+    <span class="c-fn">print</span>(i)</pre>
+                    </div>
+                    <div class="cell-out">
+                        <span class="prompt">Out</span>
+                        <pre class="out">0
+1
+1
+2
+3</pre>
+                    </div>
+                </div>
+
+                <h3 class="sub">Practical use: reading large files</h3>
+                <div class="cell">
+                    <div class="cell-in">
+                        <span class="prompt">In</span>
+                        <pre class="code"><span class="c-kw">def</span> <span class="c-fn">read_large_file</span>(file_path):
+    <span class="c-kw">with</span> <span class="c-fn">open</span>(file_path, <span class="c-str">'r'</span>) <span class="c-kw">as</span> file:
+        <span class="c-kw">for</span> line <span class="c-kw">in</span> file:
+            <span class="c-kw">yield</span> line
+
+<span class="c-kw">for</span> line <span class="c-kw">in</span> <span class="c-fn">read_large_file</span>(<span class="c-str">'large_file.txt'</span>):
+    <span class="c-fn">print</span>(line)</pre>
+                    </div>
+                </div>
+                <div class="box tip">
+                    <span class="tag">TIP</span>
+                    read_large_file never loads the whole file into memory — it yields one line at a time. That's the
+                    point of using yield here instead of reading everything into a list first.
+                </div>
+
+                <a href="#top" class="backtotop">↑ Back to top</a>
+            </section>
+
+            <section class="topic" id="decorators">
+                <div class="topic-head">
+                    <span class="topic-num">23</span>
+                    <h2>Decorators</h2>
+                </div>
+                <p class="topic-sub">Functions are first-class objects in Python — they can be assigned, passed around,
+                    and returned. A decorator is a function that wraps another function and returns the wrapper;
+                    @decorator is shorthand for reassigning the function to the wrapped version.</p>
+
+                <h3 class="sub">Functions are first-class objects</h3>
+                <div class="cell">
+                    <div class="cell-in">
+                        <span class="prompt">In</span>
+                        <pre class="code"><span class="c-kw">def</span> <span class="c-fn">welcome</span>():
+    <span class="c-kw">return</span> <span class="c-str">"Welcome to Python"</span>
+
+welcome()</pre>
+                    </div>
+                    <div class="cell-out">
+                        <span class="prompt">Out</span>
+                        <pre class="out">'Welcome to Python'</pre>
+                    </div>
+                </div>
+                <div class="cell">
+                    <div class="cell-in">
+                        <span class="prompt">In</span>
+                        <pre class="code">wel = welcome
+<span class="c-fn">print</span>(<span class="c-fn">wel</span>())
+
+<span class="c-kw">del</span> welcome
+<span class="c-fn">print</span>(<span class="c-fn">wel</span>())</pre>
+                    </div>
+                    <div class="cell-out">
+                        <span class="prompt">Out</span>
+                        <pre class="out">Welcome to Python
+Welcome to Python</pre>
+                    </div>
+                </div>
+                <div class="box note">
+                    <span class="tag">NOTE</span>
+                    wel still works after del welcome — the name welcome was deleted, not the function object. wel kept
+                    its own reference to it.
+                </div>
+
+                <h3 class="sub">Closures</h3>
+                <div class="cell">
+                    <div class="cell-in">
+                        <span class="prompt">In</span>
+                        <pre class="code"><span class="c-kw">def</span> <span class="c-fn">main_welcome</span>():
+    msg = <span class="c-str">"welcome"</span>
+    <span class="c-kw">def</span> <span class="c-fn">sub_welcome_method</span>():
+        <span class="c-fn">print</span>(<span class="c-str">"welcome to the advanced python course"</span>)
+        <span class="c-fn">print</span>(msg)
+        <span class="c-fn">print</span>(<span class="c-str">"please learn this concept clearly"</span>)
+    <span class="c-kw">return</span> <span class="c-fn">sub_welcome_method</span>()
+
+<span class="c-fn">main_welcome</span>()</pre>
+                    </div>
+                    <div class="cell-out">
+                        <span class="prompt">Out</span>
+                        <pre class="out">welcome to the advanced python course
+welcome
+please learn this concept clearly</pre>
+                    </div>
+                </div>
+
+                <h3 class="sub">Passing a function as an argument</h3>
+                <div class="cell">
+                    <div class="cell-in">
+                        <span class="prompt">In</span>
+                        <pre class="code"><span class="c-kw">def</span> <span class="c-fn">greet_with</span>(func):
+    <span class="c-kw">def</span> <span class="c-fn">sub_welcome_method</span>():
+        <span class="c-fn">print</span>(<span class="c-str">"welcome to the advanced python course"</span>)
+        <span class="c-fn">func</span>(<span class="c-str">"bye bye"</span>)
+        <span class="c-fn">print</span>(<span class="c-str">"please learn this concept clearly"</span>)
+    <span class="c-kw">return</span> <span class="c-fn">sub_welcome_method</span>()
+
+<span class="c-fn">greet_with</span>(print)</pre>
+                    </div>
+                    <div class="cell-out">
+                        <span class="prompt">Out</span>
+                        <pre class="out">welcome to the advanced python course
+bye bye
+please learn this concept clearly</pre>
+                    </div>
+                </div>
+
+                <h3 class="sub">The decorator pattern &amp; @syntax</h3>
+                <div class="cell">
+                    <div class="cell-in">
+                        <span class="prompt">In</span>
+                        <pre class="code"><span class="c-kw">def</span> <span class="c-fn">my_decorator</span>(func):
+    <span class="c-kw">def</span> <span class="c-fn">wrapper</span>():
+        <span class="c-fn">print</span>(<span class="c-str">"Something is happening before the function is called."</span>)
+        <span class="c-fn">func</span>()
+        <span class="c-fn">print</span>(<span class="c-str">"Something is happening after the function is called."</span>)
+    <span class="c-kw">return</span> wrapper
+
+@<span class="c-fn">my_decorator</span>
+<span class="c-kw">def</span> <span class="c-fn">say_hello</span>():
+    <span class="c-fn">print</span>(<span class="c-str">"Hello!"</span>)
+
+<span class="c-fn">say_hello</span>()</pre>
+                    </div>
+                    <div class="cell-out">
+                        <span class="prompt">Out</span>
+                        <pre class="out">Something is happening before the function is called.
+Hello!
+Something is happening after the function is called.</pre>
+                    </div>
+                </div>
+
+                <h3 class="sub">Decorators with arguments</h3>
+                <div class="cell">
+                    <div class="cell-in">
+                        <span class="prompt">In</span>
+                        <pre class="code"><span class="c-kw">def</span> <span class="c-fn">repeat</span>(n):
+    <span class="c-kw">def</span> <span class="c-fn">decorator</span>(func):
+        <span class="c-kw">def</span> <span class="c-fn">wrapper</span>(*args, **kwargs):
+            <span class="c-kw">for</span> _ <span class="c-kw">in</span> <span class="c-fn">range</span>(n):
+                <span class="c-fn">func</span>(*args, **kwargs)
+        <span class="c-kw">return</span> wrapper
+    <span class="c-kw">return</span> decorator
+
+@<span class="c-fn">repeat</span>(<span class="c-num">3</span>)
+<span class="c-kw">def</span> <span class="c-fn">say_hello2</span>():
+    <span class="c-fn">print</span>(<span class="c-str">"Hello!"</span>)
+
+<span class="c-fn">say_hello2</span>()</pre>
+                    </div>
+                    <div class="cell-out">
+                        <span class="prompt">Out</span>
+                        <pre class="out">Hello!
+Hello!
+Hello!</pre>
+                    </div>
+                </div>
+                <div class="box warn">
+                    <span class="tag">WARNING</span>
+                    wrapper must accept and forward *args, **kwargs to func — otherwise a decorated function that takes
+                    arguments will break.
+                </div>
+
+                <a href="#top" class="backtotop">↑ Back to top</a>
+            </section>
+
+            <!-- SLOT:SECTION -->
+
+
+
+
+
+        </main>
+    </div>
+
+    <footer>
+        Built from: dictionaries.ipynb · inbuild_data_structure.ipynb · sets.ipynb · tuples.ipynb ·
+        functions.ipynb · lambda_function.ipynb · map_function.ipynb · filter_function.ipynb
+    </footer>
+
+    <script>
+        // highlight active section in sidebar while scrolling
+        const links = document.querySelectorAll('.nb-link');
+        const sections = document.querySelectorAll('section.topic');
+        const setActive = () => {
+            let current = sections[0]?.id;
+            sections.forEach(sec => {
+                if (window.scrollY >= sec.offsetTop - 120) current = sec.id;
+            });
+            links.forEach(l => l.classList.toggle('active', l.getAttribute('href') === '#' + current));
+        };
+        window.addEventListener('scroll', setActive);
+        setActive();
+    </script>
+</body>
+
+</html>
