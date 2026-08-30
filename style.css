@@ -849,4 +849,11 @@ footer {
 .topic-chip .chip-num {
     color: var(--accent-2);
     font-size: 11px;
-}
+}
+
+/* In Progress status tag */
+.status-tag.progress {
+    background: rgba(227, 163, 61, 0.15);
+    color: #e3a33d;
+    border: 1px solid rgba(227, 163, 61, 0.35);
+}
