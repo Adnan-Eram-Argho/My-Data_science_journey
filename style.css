@@ -554,7 +554,44 @@ footer {
     }
     .topbar {
         padding: 16px 20px;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 12px;
     }
+    .topbar nav {
+        flex-wrap: wrap;
+        gap: 4px;
+    }
+    .topbar nav a {
+        font-size: 11.5px;
+        padding: 5px 8px;
+    }
+    .hero-dashboard {
+        padding: 28px 20px;
+    }
+    .dashboard-stats {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 16px;
+    }
+    .cards-grid {
+        grid-template-columns: 1fr;
+    }
+    .quick-index {
+        padding: 20px 16px;
+    }
+}
+
+/* Mobile sidebar: hide desktop dots when toggle is visible */
+@media (max-width: 900px) {
+    .desktop-dots {
+        display: none;
+    }
+}
+
+.toggle-icon {
+    font-size: 18px;
+    color: var(--muted);
 }
 
 .hero-dashboard {
@@ -856,4 +893,21 @@ footer {
     background: rgba(227, 163, 61, 0.15);
     color: #e3a33d;
     border: 1px solid rgba(227, 163, 61, 0.35);
+}
+
+/* ===== Nav group label (sidebar section headers) ===== */
+.nav-group-label {
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: .1em;
+    text-transform: uppercase;
+    color: var(--accent);
+    padding: 14px 10px 6px;
+    font-weight: 700;
+}
+
+/* ===== SQL module badge color ===== */
+.badge.sql {
+    color: #4dd68e;
+    border-color: rgba(77, 214, 142, .35);
 }

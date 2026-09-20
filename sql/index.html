@@ -1,0 +1,454 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SQL (SQLite) :: Full Reference</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../style.css">
+</head>
+
+<body>
+
+    <div class="shell">
+        <aside class="sidebar" id="sidebar">
+            <div class="sidebar-head">
+                <button class="mobile-toggle" id="mobileToggle" aria-label="Toggle navigation">
+                    <span><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+                    <span class="sidebar-title">sqlite_python.ipynb</span></span>
+                    <span class="toggle-icon">☰</span>
+                </button>
+                <span class="dot r desktop-dots"></span><span class="dot y desktop-dots"></span><span class="dot g desktop-dots"></span>
+                <span class="sidebar-title desktop-dots">sqlite_python.ipynb</span>
+            </div>
+            <nav class="nb-group" id="navlinks">
+                <a class="nb-link" href="../index.html"><span class="ico">◂</span> Home</a>
+                <div class="nav-group-label">SQLite (Python)</div>
+                <a class="nb-link" href="#sql-01"><span class="ico">▸</span> 01 · Connection &amp; Cursor</a>
+                <a class="nb-link" href="#sql-02"><span class="ico">▸</span> 02 · Create Table</a>
+                <a class="nb-link" href="#sql-03"><span class="ico">▸</span> 03 · INSERT</a>
+                <a class="nb-link" href="#sql-04"><span class="ico">▸</span> 04 · SELECT &amp; fetchall</a>
+                <a class="nb-link" href="#sql-05"><span class="ico">▸</span> 05 · UPDATE &amp; DELETE</a>
+                <a class="nb-link" href="#sql-06"><span class="ico">▸</span> 06 · DROP &amp; Close</a>
+                <a class="nb-link" href="#sql-07"><span class="ico">▸</span> 07 · Full Example: Sales</a>
+                <!-- SLOT:NAV -->
+
+            </nav>
+            <div class="sidebar-foot">
+                1 notebook converted<br>
+                Every example is your original code<br>
+                Kernel: python3
+            </div>
+        </aside>
+
+        <main>
+            <div class="hero">
+                <div class="kicker">// consolidated study reference</div>
+                <h1>SQL (SQLite) <span>&amp; Database Operations</span></h1>
+                <p>Every cell from your SQLite notebook — <code>connect</code>, <code>cursor</code>,
+                    <code>CREATE TABLE</code>, <code>INSERT</code>, <code>SELECT</code>, <code>UPDATE</code>,
+                    <code>DELETE</code>, <code>DROP TABLE</code> — rebuilt as one reference, with the nuances
+                    explained, not just the syntax.
+                </p>
+                <div class="hero-stats">
+                    <div><b>7</b>topics</div>
+                    <div><b>15+</b>code cells</div>
+                    <div><b>0</b>skipped edge cases</div>
+                </div>
+            </div>
+
+            <!-- ============ CONNECTION & CURSOR ============ -->
+            <section class="topic" id="sql-01">
+                <div class="topic-head"><span class="topic-num">01</span>
+                    <h2>Connection &amp; Cursor</h2>
+                </div>
+                <p class="topic-sub">The <b>connection</b> opens a channel to the database file, and the <b>cursor</b>
+                    is the object that actually sends SQL statements and fetches results back.</p>
+
+                <h3 class="sub">Connecting to a database</h3>
+                <div class="cell">
+                    <div class="cell-in"><span class="prompt">In [1]</span>
+                        <pre class="code"><span class="c-kw">import</span> sqlite3
+
+<span class="c-com">## connect to an sqlite database</span>
+sqliteConnection = sqlite3.connect(<span class="c-str">'my_database.db'</span>)
+sqliteConnection</pre>
+                    </div>
+                    <div class="cell-out"><span class="prompt">Out[1]</span>
+                        <pre class="out">&lt;sqlite3.Connection at 0x2407a5b8040&gt;</pre>
+                    </div>
+                </div>
+
+                <h3 class="sub">Creating a cursor</h3>
+                <div class="cell">
+                    <div class="cell-in"><span class="prompt">In [2]</span>
+                        <pre class="code"><span class="c-com">## connect holo dokan er dorjar moto ar cursor holo dokandar er moto. eta giye data niye ashe</span>
+cursor = sqliteConnection.cursor()</pre>
+                    </div>
+                </div>
+
+                <div class="box note">
+                    <span class="tag">Auto-creation</span>
+                    <p>If <code>my_database.db</code> doesn't exist, SQLite creates it automatically when you call
+                        <code>sqlite3.connect()</code>. No need to create the file manually.</p>
+                </div>
+                <a class="backtotop" href="#sql-01">↑ back to top</a>
+            </section>
+
+            <!-- ============ CREATE TABLE ============ -->
+            <section class="topic" id="sql-02">
+                <div class="topic-head"><span class="topic-num">02</span>
+                    <h2>Create Table</h2>
+                </div>
+                <p class="topic-sub">Define the table schema with column names, data types, and constraints. Use
+                    <code>cursor.execute()</code> to run the DDL statement, then <b>commit</b> to persist.</p>
+
+                <h3 class="sub">Creating the employees table</h3>
+                <div class="cell">
+                    <div class="cell-in"><span class="prompt">In [3]</span>
+                        <pre class="code">cursor.execute(<span class="c-str">'''
+Create Table If Not Exists employees(
+    id Integer Primary Key,
+    name Text Not Null,
+    age Integer,
+    department Text
+    )
+'''</span>)
+
+<span class="c-com">##commit the changes</span>
+sqliteConnection.commit()</pre>
+                    </div>
+                </div>
+
+                <div class="box tip">
+                    <span class="tag">Key clauses explained</span>
+                    <p><code>IF NOT EXISTS</code> — prevents an error if the table already exists; the statement
+                        becomes a safe no-op.<br>
+                        <code>PRIMARY KEY</code> — guarantees each row has a unique identifier; SQLite auto-increments
+                        integer primary keys.<br>
+                        <code>NOT NULL</code> — the column must always have a value; inserting <code>NULL</code> will
+                        raise an error.</p>
+                </div>
+
+                <div class="box warn">
+                    <span class="tag">⚠ Don't forget commit()</span>
+                    <p>Without <code>commit()</code>, changes are <b>not saved</b> to the database file. They only exist
+                        in memory and will be lost when the connection closes.</p>
+                </div>
+                <a class="backtotop" href="#sql-02">↑ back to top</a>
+            </section>
+
+            <!-- ============ INSERT ============ -->
+            <section class="topic" id="sql-03">
+                <div class="topic-head"><span class="topic-num">03</span>
+                    <h2>INSERT</h2>
+                </div>
+                <p class="topic-sub">Add rows to a table. You can insert one row at a time with <code>execute()</code>,
+                    or batch-insert many rows with <code>executemany()</code> and <code>?</code> placeholders.</p>
+
+                <h3 class="sub">Single inserts</h3>
+                <div class="cell">
+                    <div class="cell-in"><span class="prompt">In [4]</span>
+                        <pre class="code">cursor.execute(<span class="c-str">'''
+Insert into employees (name,age,department) values ('John',25,'IT')
+'''</span>)
+cursor.execute(<span class="c-str">'''
+Insert into employees (name,age,department) values ('Jane',30,'HR')
+'''</span>)
+cursor.execute(<span class="c-str">'''
+Insert into employees (name,age,department) values ('Mike',35,'Finance')
+'''</span>)
+sqliteConnection.commit()</pre>
+                    </div>
+                </div>
+
+                <h3 class="sub">Better way — executemany with ? placeholders</h3>
+                <div class="cell">
+                    <div class="cell-in"><span class="prompt">In [5]</span>
+                        <pre class="code">sales_data = [
+    (<span class="c-str">'2023-01-01'</span>, <span class="c-str">'Product A'</span>, <span class="c-num">100</span>, <span class="c-str">'North'</span>),
+    (<span class="c-str">'2023-01-02'</span>, <span class="c-str">'Product B'</span>, <span class="c-num">200</span>, <span class="c-str">'South'</span>),
+    (<span class="c-str">'2023-01-03'</span>, <span class="c-str">'Product C'</span>, <span class="c-num">150</span>, <span class="c-str">'East'</span>),
+    (<span class="c-str">'2023-01-04'</span>, <span class="c-str">'Product D'</span>, <span class="c-num">300</span>, <span class="c-str">'West'</span>)
+]
+cursor.executemany(<span class="c-str">'''
+Insert into sales (date, product, sales, region) values (?,?,?,?)
+'''</span>, sales_data)
+connection.commit()</pre>
+                    </div>
+                </div>
+
+                <div class="box warn">
+                    <span class="tag">⚠ SQL injection risk</span>
+                    <p>Always use <code>?</code> placeholders — <b>never</b> build SQL with f-strings or string
+                        concatenation. Parameterized queries let SQLite handle escaping, which prevents SQL injection
+                        attacks.</p>
+                </div>
+                <a class="backtotop" href="#sql-03">↑ back to top</a>
+            </section>
+
+            <!-- ============ SELECT & FETCHALL ============ -->
+            <section class="topic" id="sql-04">
+                <div class="topic-head"><span class="topic-num">04</span>
+                    <h2>SELECT &amp; fetchall</h2>
+                </div>
+                <p class="topic-sub">Run a query with <code>execute()</code>, then call <code>fetchall()</code> on the
+                    cursor to retrieve the result rows as a list of tuples.</p>
+
+                <h3 class="sub">Querying all rows</h3>
+                <div class="cell">
+                    <div class="cell-in"><span class="prompt">In [6]</span>
+                        <pre class="code"><span class="c-com">##query any data from sqlite3</span>
+cursor.execute(<span class="c-str">'''
+Select * from employees
+'''</span>)
+
+rows = cursor.fetchall()
+
+<span class="c-com">## print the queried data</span>
+<span class="c-kw">for</span> row <span class="c-kw">in</span> rows:
+    <span class="c-fn">print</span>(row)</pre>
+                    </div>
+                    <div class="cell-out"><span class="prompt">Out[6]</span>
+                        <pre class="out">(1, 'John', 25, 'IT')
+(2, 'Jane', 30, 'HR')
+(3, 'Mike', 35, 'Finance')</pre>
+                    </div>
+                </div>
+
+                <div class="box note">
+                    <span class="tag">execute() vs fetchall()</span>
+                    <p><code>execute()</code> only runs the query and returns the cursor object
+                        (<code>&lt;sqlite3.Cursor at 0x...&gt;</code>); you need <code>fetchall()</code> to actually
+                        retrieve the rows. Use <code>fetchone()</code> if you only need the first matching row.</p>
+                </div>
+                <a class="backtotop" href="#sql-04">↑ back to top</a>
+            </section>
+
+            <!-- ============ UPDATE & DELETE ============ -->
+            <section class="topic" id="sql-05">
+                <div class="topic-head"><span class="topic-num">05</span>
+                    <h2>UPDATE &amp; DELETE</h2>
+                </div>
+                <p class="topic-sub">Modify existing rows with <code>UPDATE ... SET ... WHERE</code>, or remove rows
+                    with <code>DELETE FROM ... WHERE</code>. Always include a <code>WHERE</code> clause unless you
+                    genuinely want to affect every row.</p>
+
+                <h3 class="sub">Updating a row</h3>
+                <div class="cell">
+                    <div class="cell-in"><span class="prompt">In [7]</span>
+                        <pre class="code"><span class="c-com">## update the data</span>
+cursor.execute(<span class="c-str">'''
+Update employees set age = 28 where name = 'John'
+'''</span>)
+sqliteConnection.commit()</pre>
+                    </div>
+                </div>
+
+                <h3 class="sub">Deleting a row</h3>
+                <div class="cell">
+                    <div class="cell-in"><span class="prompt">In [8]</span>
+                        <pre class="code"><span class="c-com">## delete the data</span>
+cursor.execute(<span class="c-str">'''
+Delete from employees where name = 'Jane'
+'''</span>)
+sqliteConnection.commit()</pre>
+                    </div>
+                </div>
+
+                <h3 class="sub">Verify changes</h3>
+                <div class="cell">
+                    <div class="cell-in"><span class="prompt">In [9]</span>
+                        <pre class="code">cursor.execute(<span class="c-str">'''
+Select * from employees
+'''</span>)
+rows = cursor.fetchall()
+<span class="c-kw">for</span> row <span class="c-kw">in</span> rows:
+    <span class="c-fn">print</span>(row)</pre>
+                    </div>
+                    <div class="cell-out"><span class="prompt">Out[9]</span>
+                        <pre class="out">(1, 'John', 28, 'IT')
+(3, 'Mike', 35, 'Finance')</pre>
+                    </div>
+                </div>
+
+                <div class="box warn">
+                    <span class="tag">⚠ UPDATE / DELETE without WHERE</span>
+                    <p><code>UPDATE</code> without a <code>WHERE</code> clause modifies <b>every row</b> in the table.
+                        <code>DELETE</code> without <code>WHERE</code> removes <b>all rows</b>. Always double-check
+                        your filter condition before running these statements.</p>
+                </div>
+                <a class="backtotop" href="#sql-05">↑ back to top</a>
+            </section>
+
+            <!-- ============ DROP TABLE & CLOSE ============ -->
+            <section class="topic" id="sql-06">
+                <div class="topic-head"><span class="topic-num">06</span>
+                    <h2>DROP TABLE &amp; Close Connection</h2>
+                </div>
+                <p class="topic-sub"><code>DROP TABLE</code> permanently removes a table and all its data.
+                    <code>connection.close()</code> releases the database file lock.</p>
+
+                <h3 class="sub">Dropping a table</h3>
+                <div class="cell">
+                    <div class="cell-in"><span class="prompt">In [10]</span>
+                        <pre class="code"><span class="c-com">## delete the whole table</span>
+cursor.execute(<span class="c-str">'''
+DROP TABLE employees
+'''</span>)</pre>
+                    </div>
+                </div>
+
+                <h3 class="sub">Closing the connection</h3>
+                <div class="cell">
+                    <div class="cell-in"><span class="prompt">In [11]</span>
+                        <pre class="code"><span class="c-com">## close the connection properly</span>
+connection.close()</pre>
+                    </div>
+                </div>
+
+                <div class="box note">
+                    <span class="tag">Permanent deletion</span>
+                    <p><code>DROP TABLE</code> removes the table <b>and all its data</b> permanently — there is no
+                        undo. Always close the connection at the end of your script to release the database file lock
+                        and flush any pending changes.</p>
+                </div>
+                <a class="backtotop" href="#sql-06">↑ back to top</a>
+            </section>
+
+            <!-- ============ FULL EXAMPLE: SALES DATA ============ -->
+            <section class="topic" id="sql-07">
+                <div class="topic-head"><span class="topic-num">07</span>
+                    <h2>Full Example: Sales Data</h2>
+                </div>
+                <p class="topic-sub">A complete end-to-end workflow: connect → create table → insert rows → query →
+                    delete → query again → commit → close.</p>
+
+                <h3 class="sub">Connect &amp; create table</h3>
+                <div class="cell">
+                    <div class="cell-in"><span class="prompt">In [12]</span>
+                        <pre class="code"><span class="c-kw">import</span> sqlite3
+
+<span class="c-com">##  working with sales data</span>
+connection = sqlite3.connect(<span class="c-str">'sales_data.db'</span>)
+cursor = connection.cursor()
+
+<span class="c-com">##create a table for sales data</span>
+cursor.execute(<span class="c-str">'''
+CREATE TABLE IF NOT EXISTS sales(
+    id INTEGER PRIMARY KEY,
+    date  TEXT NOT NULL,
+    product TEXT NOT NULL,
+    sales INTEGER,
+    region TEXT)
+'''</span>)
+connection.commit()</pre>
+                    </div>
+                </div>
+
+                <h3 class="sub">Insert with executemany</h3>
+                <div class="cell">
+                    <div class="cell-in"><span class="prompt">In [13]</span>
+                        <pre class="code">sales_data = [
+    (<span class="c-str">'2023-01-01'</span>, <span class="c-str">'Product A'</span>, <span class="c-num">100</span>, <span class="c-str">'North'</span>),
+    (<span class="c-str">'2023-01-02'</span>, <span class="c-str">'Product B'</span>, <span class="c-num">200</span>, <span class="c-str">'South'</span>),
+    (<span class="c-str">'2023-01-03'</span>, <span class="c-str">'Product C'</span>, <span class="c-num">150</span>, <span class="c-str">'East'</span>),
+    (<span class="c-str">'2023-01-04'</span>, <span class="c-str">'Product D'</span>, <span class="c-num">300</span>, <span class="c-str">'West'</span>)
+]
+cursor.executemany(<span class="c-str">'''
+Insert into sales (date, product, sales, region) values (?,?,?,?)
+'''</span>, sales_data)
+connection.commit()</pre>
+                    </div>
+                </div>
+
+                <h3 class="sub">Query all rows</h3>
+                <div class="cell">
+                    <div class="cell-in"><span class="prompt">In [14]</span>
+                        <pre class="code">cursor.execute(<span class="c-str">'''
+SELECT * FROM sales
+'''</span>)
+rows = cursor.fetchall()
+<span class="c-kw">for</span> row <span class="c-kw">in</span> rows:
+    <span class="c-fn">print</span>(row)</pre>
+                    </div>
+                    <div class="cell-out"><span class="prompt">Out[14]</span>
+                        <pre class="out">(1, '2023-01-01', 'Product A', 100, 'North')
+(2, '2023-01-02', 'Product B', 200, 'South')
+(3, '2023-01-03', 'Product C', 150, 'East')
+(4, '2023-01-04', 'Product D', 300, 'West')</pre>
+                    </div>
+                </div>
+
+                <h3 class="sub">Delete a row &amp; verify</h3>
+                <div class="cell">
+                    <div class="cell-in"><span class="prompt">In [15]</span>
+                        <pre class="code">cursor.execute(<span class="c-str">'''
+Delete from sales where product = 'Product B'
+'''</span>)
+
+cursor.execute(<span class="c-str">'''
+SELECT * FROM sales
+'''</span>)
+rows = cursor.fetchall()
+<span class="c-kw">for</span> row <span class="c-kw">in</span> rows:
+    <span class="c-fn">print</span>(row)
+
+connection.commit()</pre>
+                    </div>
+                    <div class="cell-out"><span class="prompt">Out[15]</span>
+                        <pre class="out">(1, '2023-01-01', 'Product A', 100, 'North')
+(3, '2023-01-03', 'Product C', 150, 'East')
+(4, '2023-01-04', 'Product D', 300, 'West')</pre>
+                    </div>
+                </div>
+
+                <h3 class="sub">Close the connection</h3>
+                <div class="cell">
+                    <div class="cell-in"><span class="prompt">In [16]</span>
+                        <pre class="code">connection.close()</pre>
+                    </div>
+                </div>
+                <a class="backtotop" href="#sql-07">↑ back to top</a>
+            </section>
+
+            <!-- SLOT:SECTION -->
+
+        </main>
+    </div>
+
+    <footer>
+        Built from: sqlite_python.ipynb
+    </footer>
+
+    <script>
+        // highlight active section in sidebar while scrolling
+        const links = document.querySelectorAll('.nb-link');
+        const sections = document.querySelectorAll('section.topic');
+        const setActive = () => {
+            let current = sections[0]?.id;
+            sections.forEach(sec => {
+                if (window.scrollY >= sec.offsetTop - 120) current = sec.id;
+            });
+            links.forEach(l => l.classList.toggle('active', l.getAttribute('href') === '#' + current));
+        };
+        window.addEventListener('scroll', setActive);
+        setActive();
+
+        // mobile sidebar toggle
+        const sidebar = document.getElementById('sidebar');
+        const toggle = document.getElementById('mobileToggle');
+        if (toggle) {
+            toggle.addEventListener('click', () => sidebar.classList.toggle('open'));
+            // close sidebar when a nav link is clicked
+            document.querySelectorAll('.nb-link[href^="#"]').forEach(link => {
+                link.addEventListener('click', () => sidebar.classList.remove('open'));
+            });
+        }
+    </script>
+</body>
+
+</html>
