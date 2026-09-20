@@ -911,3 +911,18 @@ footer {
     color: #4dd68e;
     border-color: rgba(77, 214, 142, .35);
 }
+
+/* ===== Index group labels (homepage topic index headers) ===== */
+.index-group-label {
+    font-family: var(--mono);
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--text);
+    margin: 20px 0 8px;
+    padding-bottom: 6px;
+    border-bottom: 1px solid var(--line);
+}
+
+.index-group-label:first-of-type {
+    margin-top: 0;
+}
