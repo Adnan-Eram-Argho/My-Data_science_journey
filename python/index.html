@@ -42,6 +42,7 @@
                 <li><a href="#iterators" class="nb-link"><span class="ico">▸</span>21 · Iterators</a></li>
                 <li><a href="#generators" class="nb-link"><span class="ico">▸</span>22 · Generators</a></li>
                 <li><a href="#decorators" class="nb-link"><span class="ico">▸</span>23 · Decorators</a></li>
+                <a href="#logging" class="nb-link"><span class="ico">▸</span>24 · Logging</a>
                 <!-- SLOT:NAV -->
 
             </nav>
@@ -2314,6 +2315,141 @@ Hello!</pre>
                 <a href="#top" class="backtotop">↑ Back to top</a>
             </section>
 
+            <section class="topic" id="logging">
+                <div class="topic-head">
+                    <span class="topic-num">24</span>
+                    <h2>Logging</h2>
+                </div>
+                <p class="topic-sub">Track what your program does — debug info, warnings, and errors — instead of
+                    relying on print() statements.</p>
+
+                <h3 class="sub">Basic Setup & Severity Levels</h3>
+                <div class="cell">
+                    <div class="cell-in">
+                        <span class="prompt">In</span>
+                        <pre class="code"><span class="c-kw">import</span> logging
+logging.basicConfig(level<span class="c-op">=</span>logging.DEBUG)
+
+logging.debug(<span class="c-str">"This is a debug message"</span>)
+logging.info(<span class="c-str">"This is an info message"</span>)
+logging.warning(<span class="c-str">"This is a warning message"</span>)
+logging.error(<span class="c-str">"This is an error message"</span>)
+logging.critical(<span class="c-str">"This is a critical message"</span>)</pre>
+                    </div>
+                    <div class="cell-out">
+                        <span class="prompt">Out</span>
+                        <pre class="out">DEBUG:root:This is a debug message
+INFO:root:This is an info message
+WARNING:root:This is a warning message
+ERROR:root:This is an error message
+CRITICAL:root:This is a critical message</pre>
+                    </div>
+                </div>
+
+                <div class="box tip"><span class="tag">TIP</span> Severity order: DEBUG &lt; INFO &lt; WARNING &lt;
+                    ERROR &lt; CRITICAL. <code>level=logging.DEBUG</code> দিলে DEBUG এর উপরের সবকিছু দেখাবে।</div>
+
+                <h3 class="sub">Logging to a File</h3>
+                <div class="cell">
+                    <div class="cell-in">
+                        <span class="prompt">In</span>
+                        <pre class="code"><span class="c-kw">import</span> logging
+logging.basicConfig(
+    filename<span class="c-op">=</span><span class="c-str">'app.log'</span>,
+    filemode<span class="c-op">=</span><span class="c-str">'w'</span>,
+    level<span class="c-op">=</span>logging.DEBUG,
+    format<span class="c-op">=</span><span class="c-str">'%(asctime)s - %(name)s - %(levelname)s - %(message)s'</span>,
+    datefmt<span class="c-op">=</span><span class="c-str">'%Y-%m-%d %H:%M:%S'</span>,
+)
+
+logging.debug(<span class="c-str">"This is a debug message"</span>)
+logging.error(<span class="c-str">"This is an error message"</span>)</pre>
+                    </div>
+                    <div class="cell-out">
+                        <span class="prompt">Out</span>
+                        <pre class="out"># app.log ফাইলে লেখা হবে
+2026-09-23 10:34:53 - root - DEBUG - This is a debug message
+2026-09-23 10:34:53 - root - ERROR - This is an error message</pre>
+                    </div>
+                </div>
+
+                <div class="box warn"><span class="tag">WARN</span> <code>filemode='w'</code> প্রতিবার রান করলে পুরনো
+                    log ওভাররাইট করে দেয়। পুরনো history রাখতে <code>'a'</code> (append) ব্যবহার করো।</div>
+
+                <h3 class="sub">Multiple Loggers (Per-Module)</h3>
+                <div class="cell">
+                    <div class="cell-in">
+                        <span class="prompt">In</span>
+                        <pre class="code"><span class="c-kw">import</span> logging
+
+logger1 <span class="c-op">=</span> logging.getLogger(<span class="c-str">'module1'</span>)
+logger1.setLevel(logging.DEBUG)
+
+logger2 <span class="c-op">=</span> logging.getLogger(<span class="c-str">"module2"</span>)
+logger2.setLevel(logging.WARNING)
+
+logging.basicConfig(
+    level<span class="c-op">=</span>logging.DEBUG,
+    format<span class="c-op">=</span><span class="c-str">'%(asctime)s - %(name)s - %(levelname)s - %(message)s'</span>,
+    datefmt<span class="c-op">=</span><span class="c-str">'%Y-%m-%d %H:%M:%S'</span>
+)
+
+logger1.debug(<span class="c-str">"This is a debug message from module 1"</span>)
+logger2.debug(<span class="c-str">"This is a debug message from module 2"</span>)   <span class="c-op">#</span> WARNING এর নিচে, তাই filtered
+logger2.warning(<span class="c-str">"This is a warning message from module 2"</span>)</pre>
+                    </div>
+                    <div class="cell-out">
+                        <span class="prompt">Out</span>
+                        <pre class="out">2026-09-23 16:05:00 - module1 - DEBUG - This is a debug message from module 1
+2026-09-23 16:05:00 - module2 - WARNING - This is a warning message from module 2</pre>
+                    </div>
+                </div>
+
+                <div class="box note"><span class="tag">NOTE</span> প্রতিটা logger-এর নিজস্ব <code>setLevel()</code>
+                    থাকে। <code>logger2</code> শুধু WARNING+ দেখায়, তাই ওর DEBUG কল silently drop হয়ে যায়।</div>
+
+                <h3 class="sub">Real App Pattern — File + Console Handlers</h3>
+                <div class="cell">
+                    <div class="cell-in">
+                        <span class="prompt">In</span>
+                        <pre class="code"><span class="c-kw">import</span> logging
+
+logging.basicConfig(
+    level<span class="c-op">=</span>logging.DEBUG,
+    format<span class="c-op">=</span><span class="c-str">"%(asctime)s - %(name)s - %(levelname)s - %(message)s"</span>,
+    datefmt<span class="c-op">=</span><span class="c-str">"%Y-%m-%d %H:%M:%S"</span>,
+    handlers<span class="c-op">=</span>[
+        logging.FileHandler(<span class="c-str">"app1.log"</span>),
+        logging.StreamHandler()
+    ],
+)
+
+logger <span class="c-op">=</span> logging.getLogger(<span class="c-str">"Arithmetic APP"</span>)
+
+<span class="c-kw">def</span> <span class="c-fn">div</span>(a, b):
+    <span class="c-kw">try</span>:
+        result <span class="c-op">=</span> a <span class="c-op">/</span> b
+        logger.debug(<span class="c-fn">f</span><span class="c-str">"Dividing {a} and {b}. Result: {result}"</span>)
+        <span class="c-kw">return</span> result
+    <span class="c-kw">except</span> ZeroDivisionError <span class="c-kw">as</span> e:
+        logger.error(<span class="c-fn">f</span><span class="c-str">"Error occurred during division: {e}"</span>)
+        <span class="c-kw">return</span> <span class="c-kw">None</span>
+
+div(10, 0)</pre>
+                    </div>
+                    <div class="cell-out">
+                        <span class="prompt">Out</span>
+                        <pre
+                            class="out">2026-09-23 10:34:53 - Arithmetic APP - ERROR - Error occurred during division: division by zero</pre>
+                    </div>
+                </div>
+
+                <div class="box tip"><span class="tag">TIP</span>
+                    <code>handlers=[FileHandler(...), StreamHandler()]</code> দিলে একই log ফাইল আর কনসোল দুই জায়গাতেই
+                    একসাথে যায়, আলাদা করে কল করা লাগে না।</div>
+
+                <a href="#logging" class="backtotop">↑ Back to top</a>
+            </section>
             <!-- SLOT:SECTION -->
 
 
