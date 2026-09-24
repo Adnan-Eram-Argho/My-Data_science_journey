@@ -43,6 +43,8 @@
                 <li><a href="#generators" class="nb-link"><span class="ico">▸</span>22 · Generators</a></li>
                 <li><a href="#decorators" class="nb-link"><span class="ico">▸</span>23 · Decorators</a></li>
                 <a href="#logging" class="nb-link"><span class="ico">▸</span>24 · Logging</a>
+                <a href="#multithreading" class="nb-link"><span class="ico">▸</span>24 · Multithreading</a>
+                <a href="#multiprocessing" class="nb-link"><span class="ico">▸</span>25 · Multiprocessing</a>
                 <!-- SLOT:NAV -->
 
             </nav>
@@ -2446,11 +2448,270 @@ div(10, 0)</pre>
 
                 <div class="box tip"><span class="tag">TIP</span>
                     <code>handlers=[FileHandler(...), StreamHandler()]</code> দিলে একই log ফাইল আর কনসোল দুই জায়গাতেই
-                    একসাথে যায়, আলাদা করে কল করা লাগে না।</div>
+                    একসাথে যায়, আলাদা করে কল করা লাগে না।
+                </div>
 
                 <a href="#logging" class="backtotop">↑ Back to top</a>
             </section>
-            <!-- SLOT:SECTION -->
+
+
+
+<section class="topic" id="multithreading">
+  <div class="topic-head"><span class="topic-num">24</span><h2>Multithreading</h2></div>
+  <p class="topic-sub">একটা প্রসেসের ভেতরে অনেকগুলো থ্রেড। I/O-bound কাজের (নেটওয়ার্ক কল, ফাইল পড়া, অপেক্ষা) জন্য সবচেয়ে ভালো, কারণ একটা থ্রেড অপেক্ষা করলে অন্য থ্রেড চলতে পারে।</p>
+
+  <h3 class="sub">1 · Basic threads: start() and join()</h3>
+  <div class="cell">
+    <div class="cell-in"><div class="prompt">In&nbsp;[ ]:</div><pre class="code"><span class="c-kw">import</span> threading
+<span class="c-kw">import</span> time
+
+<span class="c-kw">def</span> <span class="c-fn">print_numbers</span>():
+    <span class="c-kw">for</span> i <span class="c-kw">in</span> <span class="c-fn">range</span>(<span class="c-num">3</span>):
+        time.<span class="c-fn">sleep</span>(<span class="c-num">1</span>)                <span class="c-cm"># I/O-এর জন্য ১ সেকেন্ড অপেক্ষার ভান করছি</span>
+        <span class="c-fn">print</span>(<span class="c-str">f&quot;number: {i}\n&quot;</span>, end=<span class="c-str">&quot;&quot;</span>)   <span class="c-cm"># প্রতিটি লাইন একবারেই লেখা হয়, তাই দুই থ্রেডের আউটপুট মিশে যায় না</span>
+
+<span class="c-kw">def</span> <span class="c-fn">print_letters</span>():
+    <span class="c-kw">for</span> ch <span class="c-kw">in</span> <span class="c-str">&quot;abc&quot;</span>:
+        time.<span class="c-fn">sleep</span>(<span class="c-num">1</span>)
+        <span class="c-fn">print</span>(<span class="c-str">f&quot;letter: {ch}\n&quot;</span>, end=<span class="c-str">&quot;&quot;</span>)
+
+<span class="c-cm"># ---- ১) সাধারণ (sequential) নিয়ম: একটা কাজ শেষ হলে তবেই পরেরটা শুরু ----</span>
+start = time.<span class="c-fn">time</span>()
+<span class="c-fn">print_numbers</span>()
+<span class="c-fn">print_letters</span>()
+<span class="c-fn">print</span>(<span class="c-str">f&quot;Sequential: {time.time() - start:.2f}s&quot;</span>)    <span class="c-cm"># ~6s</span>
+
+<span class="c-cm"># ---- ২) Multithreading: দুটো কাজ একসাথে চলে ----</span>
+t1 = threading.<span class="c-fn">Thread</span>(target=print_numbers)  <span class="c-cm"># target-এ ফাংশনের শুধু নাম দিতে হয়, () দেওয়া যাবে না</span>
+t2 = threading.<span class="c-fn">Thread</span>(target=print_letters)
+
+start = time.<span class="c-fn">time</span>()
+t1.<span class="c-fn">start</span>()          <span class="c-cm"># থ্রেড চালু করো (সাথে সাথেই চলা শুরু করে)</span>
+t2.<span class="c-fn">start</span>()
+t1.<span class="c-fn">join</span>()           <span class="c-cm"># t1 শেষ না হওয়া পর্যন্ত মেইন থ্রেড এখানে অপেক্ষা করে</span>
+t2.<span class="c-fn">join</span>()           <span class="c-cm"># তারপর t2 শেষ হওয়া পর্যন্ত অপেক্ষা করে</span>
+<span class="c-fn">print</span>(<span class="c-str">f&quot;Threaded:   {time.time() - start:.2f}s&quot;</span>)    <span class="c-cm"># ~3s</span></pre></div>
+    <div class="cell-out"><div class="prompt">Out:</div><pre class="out">number: 0
+number: 1
+number: 2
+letter: a
+letter: b
+letter: c
+Sequential: 6.00s
+number: 0
+letter: a
+letter: b
+number: 1
+number: 2
+letter: c
+Threaded:   3.00s</pre></div>
+  </div>
+  <div class="box note"><span class="tag">NOTE</span> Sequential-এ দুই কাজের <b>যোগফল</b> সময় লাগে (~6s); থ্রেডে লাগে প্রায় <b>সবচেয়ে লম্বা</b> কাজের সমান (~3s)। print-এর ক্রম প্রতিবার আলাদা হতে পারে, কারণ কোন থ্রেড কখন চলবে তা OS ঠিক করে।</div>
+
+  <h3 class="sub">2 · Real use case: fetching web pages in parallel</h3>
+  <div class="cell">
+    <div class="cell-in"><div class="prompt">In&nbsp;[ ]:</div><pre class="code"><span class="c-kw">import</span> threading
+<span class="c-kw">import</span> requests
+<span class="c-kw">from</span> bs4 <span class="c-kw">import</span> BeautifulSoup
+
+urls = [
+    <span class="c-str">&quot;https://docs.langchain.com/oss/python/langchain/middleware/overview&quot;</span>,
+    <span class="c-str">&quot;https://docs.langchain.com/oss/python/releases/changelog&quot;</span>,
+    <span class="c-str">&quot;https://docs.langchain.com/oss/python/langchain/agents&quot;</span>,
+]
+
+<span class="c-kw">def</span> <span class="c-fn">fetch_content</span>(url):
+    response = requests.<span class="c-fn">get</span>(url, timeout=<span class="c-num">10</span>)    <span class="c-cm"># নেটওয়ার্কের জন্য অপেক্ষা = I/O-bound কাজ</span>
+    soup = <span class="c-fn">BeautifulSoup</span>(response.content, <span class="c-str">&quot;html.parser&quot;</span>)
+    <span class="c-fn">print</span>(<span class="c-str">f&quot;Fetched {len(soup.text)} characters from {url}&quot;</span>)
+
+threads = []
+<span class="c-kw">for</span> url <span class="c-kw">in</span> urls:
+    <span class="c-cm"># args অবশ্যই টাপল (tuple) হতে হবে, তাই একটা আর্গুমেন্ট হলেও শেষে কমা লাগে: (url,)</span>
+    thread = threading.<span class="c-fn">Thread</span>(target=fetch_content, args=(url,))
+    threads.<span class="c-fn">append</span>(thread)
+    thread.<span class="c-fn">start</span>()          <span class="c-cm"># ৩টা ডাউনলোড প্রায় একসাথে শুরু হয়</span>
+
+<span class="c-kw">for</span> thread <span class="c-kw">in</span> threads:
+    thread.<span class="c-fn">join</span>()           <span class="c-cm"># সব থ্রেড শেষ না হওয়া পর্যন্ত অপেক্ষা করো</span>
+
+<span class="c-fn">print</span>(<span class="c-str">&quot;All webpages fetched&quot;</span>)</pre></div>
+  </div>
+  <div class="box tip"><span class="tag">TIP</span> ডাউনলোডের বেশিরভাগ সময়ই সার্ভারের জন্য অপেক্ষা, তাই ৩টা থ্রেডে সময় লাগে সবচেয়ে ধীর পেজের সমান, তিনটার যোগফলের সমান নয়। আউটপুটের দৈর্ঘ্য পেজ আর তোমার ইন্টারনেটের উপর নির্ভর করে।</div>
+
+  <h3 class="sub">3 · ThreadPoolExecutor: the clean way</h3>
+  <div class="cell">
+    <div class="cell-in"><div class="prompt">In&nbsp;[ ]:</div><pre class="code"><span class="c-kw">from</span> concurrent.futures <span class="c-kw">import</span> ThreadPoolExecutor
+<span class="c-kw">import</span> time
+
+<span class="c-kw">def</span> <span class="c-fn">print_number</span>(number):
+    time.<span class="c-fn">sleep</span>(<span class="c-num">1</span>)
+    <span class="c-kw">return</span> <span class="c-str">f&quot;Number: {number}&quot;</span>
+
+numbers = [<span class="c-num">1</span>, <span class="c-num">2</span>, <span class="c-num">3</span>, <span class="c-num">4</span>, <span class="c-num">5</span>, <span class="c-num">6</span>, <span class="c-num">7</span>, <span class="c-num">8</span>, <span class="c-num">9</span>]
+
+start = time.<span class="c-fn">time</span>()
+<span class="c-cm"># max_workers=3 -&gt; একসাথে মাত্র ৩টা থ্রেড চলবে (৯টা কাজ ÷ ৩ ওয়ার্কার = ৩ রাউন্ড)।</span>
+<span class="c-cm"># &quot;with&quot; ব্লক সব কাজ শেষ হওয়া পর্যন্ত অপেক্ষা করে এবং পুল নিজে থেকেই বন্ধ করে দেয়।</span>
+<span class="c-kw">with</span> <span class="c-fn">ThreadPoolExecutor</span>(max_workers=<span class="c-num">3</span>) <span class="c-kw">as</span> executor:
+    results = executor.<span class="c-fn">map</span>(print_number, numbers)   <span class="c-cm"># রেজাল্ট ইনপুটের ক্রমেই ফেরত আসে</span>
+
+<span class="c-kw">for</span> result <span class="c-kw">in</span> results:
+    <span class="c-fn">print</span>(result)
+<span class="c-fn">print</span>(<span class="c-str">f&quot;Time: {time.time() - start:.2f}s&quot;</span>)    <span class="c-cm"># ~3s (sequential হলে লাগত ~9s)</span></pre></div>
+    <div class="cell-out"><div class="prompt">Out:</div><pre class="out">Number: 1
+Number: 2
+Number: 3
+Number: 4
+Number: 5
+Number: 6
+Number: 7
+Number: 8
+Number: 9
+Time: 3.00s</pre></div>
+  </div>
+  <div class="box tip"><span class="tag">TIP</span> অনেক কাজ থাকলে হাতে থ্রেড বানানোর চেয়ে <code>ThreadPoolExecutor</code> ব্যবহার করা ভালো: এটা নির্দিষ্ট সংখ্যক থ্রেড বারবার ব্যবহার করে, return value জমা করে দেয় এবং নিজেই join করে।</div>
+
+  <h3 class="sub">4 · submit() + as_completed()</h3>
+  <div class="cell">
+    <div class="cell-in"><div class="prompt">In&nbsp;[ ]:</div><pre class="code"><span class="c-kw">from</span> concurrent.futures <span class="c-kw">import</span> ThreadPoolExecutor, as_completed
+<span class="c-kw">import</span> time
+<span class="c-kw">import</span> random
+
+<span class="c-kw">def</span> <span class="c-fn">task</span>(n):
+    time.<span class="c-fn">sleep</span>(random.<span class="c-fn">random</span>())      <span class="c-cm"># এলোমেলো দেরি: ০ থেকে ১ সেকেন্ড</span>
+    <span class="c-kw">return</span> <span class="c-str">f&quot;task {n} done&quot;</span>
+
+<span class="c-kw">with</span> <span class="c-fn">ThreadPoolExecutor</span>(max_workers=<span class="c-num">3</span>) <span class="c-kw">as</span> executor:
+    <span class="c-cm"># submit() একটা কাজ জমা দেয় আর একটা Future ফেরত দেয় (রেজাল্ট পাওয়ার &quot;প্রতিশ্রুতি&quot;)</span>
+    futures = [executor.<span class="c-fn">submit</span>(task, n) <span class="c-kw">for</span> n <span class="c-kw">in</span> <span class="c-fn">range</span>(<span class="c-num">5</span>)]
+
+    <span class="c-cm"># as_completed() যে কাজ আগে শেষ হয় সেটাই আগে দেয়, জমা দেওয়ার ক্রমে নয়</span>
+    <span class="c-kw">for</span> future <span class="c-kw">in</span> <span class="c-fn">as_completed</span>(futures):
+        <span class="c-fn">print</span>(future.<span class="c-fn">result</span>())</pre></div>
+    <div class="cell-out"><div class="prompt">Out:</div><pre class="out">task 0 done
+task 2 done
+task 3 done
+task 1 done
+task 4 done</pre></div>
+  </div>
+  <div class="box warn"><span class="tag">WARN</span> সব থ্রেড একই মেমোরি শেয়ার করে। কয়েকটা থ্রেড একসাথে একটা ভ্যারিয়েবল বদলালে race condition হতে পারে। সেই অংশ <code>threading.Lock()</code> দিয়ে সুরক্ষিত রাখো। আর GIL-এর কারণে থ্রেড CPU-heavy হিসাব <b>দ্রুত করে না</b>; সেজন্য multiprocessing ব্যবহার করো।</div>
+
+  <a class="backtotop" href="#top">↑ Back to top</a>
+</section>
+
+<section class="topic" id="multiprocessing">
+  <div class="topic-head"><span class="topic-num">25</span><h2>Multiprocessing</h2></div>
+  <p class="topic-sub">অনেকগুলো আলাদা প্রসেস, প্রতিটার নিজস্ব Python interpreter ও মেমোরি, তাই GIL বাধা হয় না। CPU-bound কাজের (ভারী হিসাব, ডেটা প্রসেসিং, ইমেজ প্রসেসিং) জন্য সবচেয়ে ভালো।</p>
+
+  <h3 class="sub">1 · Process: two functions in parallel</h3>
+  <div class="cell">
+    <div class="cell-in"><div class="prompt">In&nbsp;[ ]:</div><pre class="code"><span class="c-kw">import</span> multiprocessing
+<span class="c-kw">import</span> time
+
+<span class="c-kw">def</span> <span class="c-fn">square_numbers</span>():
+    <span class="c-kw">for</span> i <span class="c-kw">in</span> <span class="c-fn">range</span>(<span class="c-num">3</span>):
+        time.<span class="c-fn">sleep</span>(<span class="c-num">1</span>)
+        <span class="c-fn">print</span>(<span class="c-str">f&quot;square {i * i}&quot;</span>)
+
+<span class="c-kw">def</span> <span class="c-fn">cube_numbers</span>():
+    <span class="c-kw">for</span> i <span class="c-kw">in</span> <span class="c-fn">range</span>(<span class="c-num">3</span>):
+        time.<span class="c-fn">sleep</span>(<span class="c-num">1.5</span>)
+        <span class="c-fn">print</span>(<span class="c-str">f&quot;cube {i * i * i}&quot;</span>)
+
+<span class="c-cm"># এই guard-টা বাধ্যতামূলক। Windows/macOS-এ নতুন প্রসেস এই ফাইলটা আবার import করে,</span>
+<span class="c-cm"># guard না থাকলে সে বারবার নতুন প্রসেস বানাতেই থাকত।</span>
+<span class="c-kw">if</span> __name__ == <span class="c-str">&quot;__main__&quot;</span>:
+    p1 = multiprocessing.<span class="c-fn">Process</span>(target=square_numbers)
+    p2 = multiprocessing.<span class="c-fn">Process</span>(target=cube_numbers)
+
+    start = time.<span class="c-fn">time</span>()
+    p1.<span class="c-fn">start</span>()      <span class="c-cm"># প্রতিটি Process আলাদা Python interpreter, তার নিজস্ব মেমোরি আছে</span>
+    p2.<span class="c-fn">start</span>()
+    p1.<span class="c-fn">join</span>()       <span class="c-cm"># দুটো প্রসেস শেষ হওয়া পর্যন্ত অপেক্ষা</span>
+    p2.<span class="c-fn">join</span>()
+    <span class="c-fn">print</span>(<span class="c-str">f&quot;Time taken: {time.time() - start:.2f}s&quot;</span>)   <span class="c-cm"># ~4.5s (সবচেয়ে লম্বা কাজের সমান), ৭.৫s নয়</span></pre></div>
+    <div class="cell-out"><div class="prompt">Out:</div><pre class="out">square 0
+cube 0
+square 1
+square 4
+cube 1
+cube 8
+Time taken: 4.51s</pre></div>
+  </div>
+  <div class="box warn"><span class="tag">WARN</span> প্রসেসের কোড সবসময় <code>if __name__ == "__main__":</code>-এর ভেতরে রাখো। Jupyter-এ ওয়ার্কার প্রসেসের ফাংশন pickle হতে সমস্যা করতে পারে, তাই ফাংশনগুলো <code>.py</code> ফাইলে রেখে চালাও।</div>
+
+  <h3 class="sub">2 · multiprocessing.Pool: CPU-heavy work</h3>
+  <div class="cell">
+    <div class="cell-in"><div class="prompt">In&nbsp;[ ]:</div><pre class="code"><span class="c-kw">import</span> multiprocessing
+<span class="c-kw">import</span> math
+<span class="c-kw">import</span> sys
+<span class="c-kw">import</span> time
+
+<span class="c-cm"># Python ডিফল্টভাবে ৪৩০০ ডিজিটের বেশি বড় int-কে str-এ রূপান্তর করতে দেয় না।</span>
+<span class="c-cm"># 5000!-এ প্রায় ১৬,০০০ ডিজিট, তাই str() চালাতে limit বাড়িয়ে নিলাম।</span>
+sys.<span class="c-fn">set_int_max_str_digits</span>(<span class="c-num">100000</span>)
+
+<span class="c-kw">def</span> <span class="c-fn">compute_factorial</span>(number):
+    result = math.<span class="c-fn">factorial</span>(number)                  <span class="c-cm"># CPU-heavy কাজ</span>
+    <span class="c-fn">print</span>(<span class="c-str">f&quot;Factorial of {number} has {len(str(result))} digits&quot;</span>)
+    <span class="c-kw">return</span> result
+
+<span class="c-kw">if</span> __name__ == <span class="c-str">&quot;__main__&quot;</span>:
+    numbers = [<span class="c-num">1000</span>, <span class="c-num">2000</span>, <span class="c-num">3000</span>, <span class="c-num">4000</span>, <span class="c-num">5000</span>]
+    start = time.<span class="c-fn">time</span>()
+
+    <span class="c-cm"># Pool()-এ কিছু না দিলে প্রতি CPU core-এর জন্য একটা ওয়ার্কার প্রসেস তৈরি হয়</span>
+    <span class="c-kw">with</span> multiprocessing.<span class="c-fn">Pool</span>() <span class="c-kw">as</span> pool:
+        <span class="c-cm"># map() লিস্টটা ওয়ার্কারদের মধ্যে ভাগ করে দেয় আর রেজাল্ট ইনপুটের ক্রমেই ফেরত দেয়</span>
+        results = pool.<span class="c-fn">map</span>(compute_factorial, numbers)
+
+    <span class="c-fn">print</span>(<span class="c-str">f&quot;Results computed: {len(results)}&quot;</span>)
+    <span class="c-fn">print</span>(<span class="c-str">f&quot;Time taken: {time.time() - start:.4f}s&quot;</span>)</pre></div>
+    <div class="cell-out"><div class="prompt">Out:</div><pre class="out">Factorial of 1000 has 2568 digits
+Factorial of 2000 has 5736 digits
+Factorial of 3000 has 9131 digits
+Factorial of 4000 has 12674 digits
+Factorial of 5000 has 16326 digits
+Results computed: 5
+Time taken: 0.0529s</pre></div>
+  </div>
+  <div class="box note"><span class="tag">NOTE</span> Speed-up নির্ভর করে তোমার CPU core সংখ্যার উপর। খুব ছোট কাজে প্রসেস চালু করার খরচই বেশি পড়ে, তখন পুল সাধারণ লুপের চেয়েও ধীর হতে পারে।</div>
+
+  <h3 class="sub">3 · ProcessPoolExecutor</h3>
+  <div class="cell">
+    <div class="cell-in"><div class="prompt">In&nbsp;[ ]:</div><pre class="code"><span class="c-kw">from</span> concurrent.futures <span class="c-kw">import</span> ProcessPoolExecutor
+<span class="c-kw">import</span> time
+
+<span class="c-kw">def</span> <span class="c-fn">square_number</span>(number):
+    time.<span class="c-fn">sleep</span>(<span class="c-num">1</span>)
+    <span class="c-kw">return</span> <span class="c-str">f&quot;square {number * number}&quot;</span>
+
+<span class="c-kw">if</span> __name__ == <span class="c-str">&quot;__main__&quot;</span>:           <span class="c-cm"># প্রসেসের ক্ষেত্রে এই guard থাকতেই হবে</span>
+    numbers = [<span class="c-num">1</span>, <span class="c-num">2</span>, <span class="c-num">3</span>, <span class="c-num">4</span>, <span class="c-num">5</span>, <span class="c-num">6</span>]
+
+    start = time.<span class="c-fn">time</span>()
+    <span class="c-cm"># ThreadPoolExecutor-এর মতোই API: শুধু ক্লাসের নাম বদলায়</span>
+    <span class="c-kw">with</span> <span class="c-fn">ProcessPoolExecutor</span>(max_workers=<span class="c-num">3</span>) <span class="c-kw">as</span> executor:
+        results = executor.<span class="c-fn">map</span>(square_number, numbers)
+
+    <span class="c-kw">for</span> result <span class="c-kw">in</span> results:
+        <span class="c-fn">print</span>(result)
+    <span class="c-fn">print</span>(<span class="c-str">f&quot;Time: {time.time() - start:.2f}s&quot;</span>)     <span class="c-cm"># ~2s (৬টা কাজ ÷ ৩ ওয়ার্কার)</span></pre></div>
+    <div class="cell-out"><div class="prompt">Out:</div><pre class="out">square 1
+square 4
+square 9
+square 16
+square 25
+square 36
+Time: 2.01s</pre></div>
+  </div>
+  <div class="box tip"><span class="tag">TIP</span> মোটামুটি নিয়ম: <b>I/O-bound</b> (অপেক্ষার কাজ) &rarr; থ্রেড। <b>CPU-bound</b> (হিসাবের কাজ) &rarr; প্রসেস। থ্রেড মেমোরি শেয়ার করে এবং হালকা; প্রসেস আলাদা আলাদা এবং চালু হতে বেশি খরচ হয়।</div>
+
+  <a class="backtotop" href="#top">↑ Back to top</a>
+</section>
+
+<!-- SLOT:SECTION -->
 
 
 
