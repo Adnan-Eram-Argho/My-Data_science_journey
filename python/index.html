@@ -18,6 +18,7 @@
                 <span class="sidebar-title">python_core.ipynb</span>
             </div>
             <nav class="nb-group" id="navlinks">
+                <a class="nb-link" href="../index.html"><span class="ico">◂</span> Home</a>
                 <a class="nb-link" href="#lists"><span class="ico">▸</span> 01 · Lists</a>
                 <a class="nb-link" href="#tuples"><span class="ico">▸</span> 02 · Tuples</a>
                 <a class="nb-link" href="#dicts"><span class="ico">▸</span> 03 · Dictionaries</a>
@@ -45,6 +46,7 @@
                 <a href="#logging" class="nb-link"><span class="ico">▸</span>24 · Logging</a>
                 <a href="#multithreading" class="nb-link"><span class="ico">▸</span>24 · Multithreading</a>
                 <a href="#multiprocessing" class="nb-link"><span class="ico">▸</span>25 · Multiprocessing</a>
+                <a href="#memory-management" class="nb-link"><span class="ico">▸</span>24 · Memory Management</a>
                 <!-- SLOT:NAV -->
 
             </nav>
@@ -2456,13 +2458,19 @@ div(10, 0)</pre>
 
 
 
-<section class="topic" id="multithreading">
-  <div class="topic-head"><span class="topic-num">24</span><h2>Multithreading</h2></div>
-  <p class="topic-sub">একটা প্রসেসের ভেতরে অনেকগুলো থ্রেড। I/O-bound কাজের (নেটওয়ার্ক কল, ফাইল পড়া, অপেক্ষা) জন্য সবচেয়ে ভালো, কারণ একটা থ্রেড অপেক্ষা করলে অন্য থ্রেড চলতে পারে।</p>
+            <section class="topic" id="multithreading">
+                <div class="topic-head"><span class="topic-num">24</span>
+                    <h2>Multithreading</h2>
+                </div>
+                <p class="topic-sub">একটা প্রসেসের ভেতরে অনেকগুলো থ্রেড। I/O-bound কাজের (নেটওয়ার্ক কল, ফাইল পড়া,
+                    অপেক্ষা) জন্য সবচেয়ে ভালো, কারণ একটা থ্রেড অপেক্ষা করলে অন্য থ্রেড চলতে পারে।</p>
 
-  <h3 class="sub">1 · Basic threads: start() and join()</h3>
-  <div class="cell">
-    <div class="cell-in"><div class="prompt">In&nbsp;[ ]:</div><pre class="code"><span class="c-kw">import</span> threading
+                <h3 class="sub">1 · Basic threads: start() and join()</h3>
+                <div class="cell">
+                    <div class="cell-in">
+                        <div class="prompt">In&nbsp;[ ]:</div>
+                        <pre
+                            class="code"><span class="c-kw">import</span> threading
 <span class="c-kw">import</span> time
 
 <span class="c-kw">def</span> <span class="c-fn">print_numbers</span>():
@@ -2490,8 +2498,11 @@ t1.<span class="c-fn">start</span>()          <span class="c-cm"># থ্রে�
 t2.<span class="c-fn">start</span>()
 t1.<span class="c-fn">join</span>()           <span class="c-cm"># t1 শেষ না হওয়া পর্যন্ত মেইন থ্রেড এখানে অপেক্ষা করে</span>
 t2.<span class="c-fn">join</span>()           <span class="c-cm"># তারপর t2 শেষ হওয়া পর্যন্ত অপেক্ষা করে</span>
-<span class="c-fn">print</span>(<span class="c-str">f&quot;Threaded:   {time.time() - start:.2f}s&quot;</span>)    <span class="c-cm"># ~3s</span></pre></div>
-    <div class="cell-out"><div class="prompt">Out:</div><pre class="out">number: 0
+<span class="c-fn">print</span>(<span class="c-str">f&quot;Threaded:   {time.time() - start:.2f}s&quot;</span>)    <span class="c-cm"># ~3s</span></pre>
+                    </div>
+                    <div class="cell-out">
+                        <div class="prompt">Out:</div>
+                        <pre class="out">number: 0
 number: 1
 number: 2
 letter: a
@@ -2504,13 +2515,18 @@ letter: b
 number: 1
 number: 2
 letter: c
-Threaded:   3.00s</pre></div>
-  </div>
-  <div class="box note"><span class="tag">NOTE</span> Sequential-এ দুই কাজের <b>যোগফল</b> সময় লাগে (~6s); থ্রেডে লাগে প্রায় <b>সবচেয়ে লম্বা</b> কাজের সমান (~3s)। print-এর ক্রম প্রতিবার আলাদা হতে পারে, কারণ কোন থ্রেড কখন চলবে তা OS ঠিক করে।</div>
+Threaded:   3.00s</pre>
+                    </div>
+                </div>
+                <div class="box note"><span class="tag">NOTE</span> Sequential-এ দুই কাজের <b>যোগফল</b> সময় লাগে (~6s);
+                    থ্রেডে লাগে প্রায় <b>সবচেয়ে লম্বা</b> কাজের সমান (~3s)। print-এর ক্রম প্রতিবার আলাদা হতে পারে,
+                    কারণ কোন থ্রেড কখন চলবে তা OS ঠিক করে।</div>
 
-  <h3 class="sub">2 · Real use case: fetching web pages in parallel</h3>
-  <div class="cell">
-    <div class="cell-in"><div class="prompt">In&nbsp;[ ]:</div><pre class="code"><span class="c-kw">import</span> threading
+                <h3 class="sub">2 · Real use case: fetching web pages in parallel</h3>
+                <div class="cell">
+                    <div class="cell-in">
+                        <div class="prompt">In&nbsp;[ ]:</div>
+                        <pre class="code"><span class="c-kw">import</span> threading
 <span class="c-kw">import</span> requests
 <span class="c-kw">from</span> bs4 <span class="c-kw">import</span> BeautifulSoup
 
@@ -2535,13 +2551,19 @@ threads = []
 <span class="c-kw">for</span> thread <span class="c-kw">in</span> threads:
     thread.<span class="c-fn">join</span>()           <span class="c-cm"># সব থ্রেড শেষ না হওয়া পর্যন্ত অপেক্ষা করো</span>
 
-<span class="c-fn">print</span>(<span class="c-str">&quot;All webpages fetched&quot;</span>)</pre></div>
-  </div>
-  <div class="box tip"><span class="tag">TIP</span> ডাউনলোডের বেশিরভাগ সময়ই সার্ভারের জন্য অপেক্ষা, তাই ৩টা থ্রেডে সময় লাগে সবচেয়ে ধীর পেজের সমান, তিনটার যোগফলের সমান নয়। আউটপুটের দৈর্ঘ্য পেজ আর তোমার ইন্টারনেটের উপর নির্ভর করে।</div>
+<span class="c-fn">print</span>(<span class="c-str">&quot;All webpages fetched&quot;</span>)</pre>
+                    </div>
+                </div>
+                <div class="box tip"><span class="tag">TIP</span> ডাউনলোডের বেশিরভাগ সময়ই সার্ভারের জন্য অপেক্ষা, তাই
+                    ৩টা থ্রেডে সময় লাগে সবচেয়ে ধীর পেজের সমান, তিনটার যোগফলের সমান নয়। আউটপুটের দৈর্ঘ্য পেজ আর তোমার
+                    ইন্টারনেটের উপর নির্ভর করে।</div>
 
-  <h3 class="sub">3 · ThreadPoolExecutor: the clean way</h3>
-  <div class="cell">
-    <div class="cell-in"><div class="prompt">In&nbsp;[ ]:</div><pre class="code"><span class="c-kw">from</span> concurrent.futures <span class="c-kw">import</span> ThreadPoolExecutor
+                <h3 class="sub">3 · ThreadPoolExecutor: the clean way</h3>
+                <div class="cell">
+                    <div class="cell-in">
+                        <div class="prompt">In&nbsp;[ ]:</div>
+                        <pre
+                            class="code"><span class="c-kw">from</span> concurrent.futures <span class="c-kw">import</span> ThreadPoolExecutor
 <span class="c-kw">import</span> time
 
 <span class="c-kw">def</span> <span class="c-fn">print_number</span>(number):
@@ -2558,8 +2580,11 @@ start = time.<span class="c-fn">time</span>()
 
 <span class="c-kw">for</span> result <span class="c-kw">in</span> results:
     <span class="c-fn">print</span>(result)
-<span class="c-fn">print</span>(<span class="c-str">f&quot;Time: {time.time() - start:.2f}s&quot;</span>)    <span class="c-cm"># ~3s (sequential হলে লাগত ~9s)</span></pre></div>
-    <div class="cell-out"><div class="prompt">Out:</div><pre class="out">Number: 1
+<span class="c-fn">print</span>(<span class="c-str">f&quot;Time: {time.time() - start:.2f}s&quot;</span>)    <span class="c-cm"># ~3s (sequential হলে লাগত ~9s)</span></pre>
+                    </div>
+                    <div class="cell-out">
+                        <div class="prompt">Out:</div>
+                        <pre class="out">Number: 1
 Number: 2
 Number: 3
 Number: 4
@@ -2568,13 +2593,18 @@ Number: 6
 Number: 7
 Number: 8
 Number: 9
-Time: 3.00s</pre></div>
-  </div>
-  <div class="box tip"><span class="tag">TIP</span> অনেক কাজ থাকলে হাতে থ্রেড বানানোর চেয়ে <code>ThreadPoolExecutor</code> ব্যবহার করা ভালো: এটা নির্দিষ্ট সংখ্যক থ্রেড বারবার ব্যবহার করে, return value জমা করে দেয় এবং নিজেই join করে।</div>
+Time: 3.00s</pre>
+                    </div>
+                </div>
+                <div class="box tip"><span class="tag">TIP</span> অনেক কাজ থাকলে হাতে থ্রেড বানানোর চেয়ে
+                    <code>ThreadPoolExecutor</code> ব্যবহার করা ভালো: এটা নির্দিষ্ট সংখ্যক থ্রেড বারবার ব্যবহার করে,
+                    return value জমা করে দেয় এবং নিজেই join করে।</div>
 
-  <h3 class="sub">4 · submit() + as_completed()</h3>
-  <div class="cell">
-    <div class="cell-in"><div class="prompt">In&nbsp;[ ]:</div><pre class="code"><span class="c-kw">from</span> concurrent.futures <span class="c-kw">import</span> ThreadPoolExecutor, as_completed
+                <h3 class="sub">4 · submit() + as_completed()</h3>
+                <div class="cell">
+                    <div class="cell-in">
+                        <div class="prompt">In&nbsp;[ ]:</div>
+                        <pre class="code"><span class="c-kw">from</span> concurrent.futures <span class="c-kw">import</span> ThreadPoolExecutor, as_completed
 <span class="c-kw">import</span> time
 <span class="c-kw">import</span> random
 
@@ -2588,25 +2618,38 @@ Time: 3.00s</pre></div>
 
     <span class="c-cm"># as_completed() যে কাজ আগে শেষ হয় সেটাই আগে দেয়, জমা দেওয়ার ক্রমে নয়</span>
     <span class="c-kw">for</span> future <span class="c-kw">in</span> <span class="c-fn">as_completed</span>(futures):
-        <span class="c-fn">print</span>(future.<span class="c-fn">result</span>())</pre></div>
-    <div class="cell-out"><div class="prompt">Out:</div><pre class="out">task 0 done
+        <span class="c-fn">print</span>(future.<span class="c-fn">result</span>())</pre>
+                    </div>
+                    <div class="cell-out">
+                        <div class="prompt">Out:</div>
+                        <pre class="out">task 0 done
 task 2 done
 task 3 done
 task 1 done
-task 4 done</pre></div>
-  </div>
-  <div class="box warn"><span class="tag">WARN</span> সব থ্রেড একই মেমোরি শেয়ার করে। কয়েকটা থ্রেড একসাথে একটা ভ্যারিয়েবল বদলালে race condition হতে পারে। সেই অংশ <code>threading.Lock()</code> দিয়ে সুরক্ষিত রাখো। আর GIL-এর কারণে থ্রেড CPU-heavy হিসাব <b>দ্রুত করে না</b>; সেজন্য multiprocessing ব্যবহার করো।</div>
+task 4 done</pre>
+                    </div>
+                </div>
+                <div class="box warn"><span class="tag">WARN</span> সব থ্রেড একই মেমোরি শেয়ার করে। কয়েকটা থ্রেড একসাথে
+                    একটা ভ্যারিয়েবল বদলালে race condition হতে পারে। সেই অংশ <code>threading.Lock()</code> দিয়ে
+                    সুরক্ষিত রাখো। আর GIL-এর কারণে থ্রেড CPU-heavy হিসাব <b>দ্রুত করে না</b>; সেজন্য multiprocessing
+                    ব্যবহার করো।</div>
 
-  <a class="backtotop" href="#top">↑ Back to top</a>
-</section>
+                <a class="backtotop" href="#top">↑ Back to top</a>
+            </section>
 
-<section class="topic" id="multiprocessing">
-  <div class="topic-head"><span class="topic-num">25</span><h2>Multiprocessing</h2></div>
-  <p class="topic-sub">অনেকগুলো আলাদা প্রসেস, প্রতিটার নিজস্ব Python interpreter ও মেমোরি, তাই GIL বাধা হয় না। CPU-bound কাজের (ভারী হিসাব, ডেটা প্রসেসিং, ইমেজ প্রসেসিং) জন্য সবচেয়ে ভালো।</p>
+            <section class="topic" id="multiprocessing">
+                <div class="topic-head"><span class="topic-num">25</span>
+                    <h2>Multiprocessing</h2>
+                </div>
+                <p class="topic-sub">অনেকগুলো আলাদা প্রসেস, প্রতিটার নিজস্ব Python interpreter ও মেমোরি, তাই GIL বাধা
+                    হয় না। CPU-bound কাজের (ভারী হিসাব, ডেটা প্রসেসিং, ইমেজ প্রসেসিং) জন্য সবচেয়ে ভালো।</p>
 
-  <h3 class="sub">1 · Process: two functions in parallel</h3>
-  <div class="cell">
-    <div class="cell-in"><div class="prompt">In&nbsp;[ ]:</div><pre class="code"><span class="c-kw">import</span> multiprocessing
+                <h3 class="sub">1 · Process: two functions in parallel</h3>
+                <div class="cell">
+                    <div class="cell-in">
+                        <div class="prompt">In&nbsp;[ ]:</div>
+                        <pre
+                            class="code"><span class="c-kw">import</span> multiprocessing
 <span class="c-kw">import</span> time
 
 <span class="c-kw">def</span> <span class="c-fn">square_numbers</span>():
@@ -2630,20 +2673,29 @@ task 4 done</pre></div>
     p2.<span class="c-fn">start</span>()
     p1.<span class="c-fn">join</span>()       <span class="c-cm"># দুটো প্রসেস শেষ হওয়া পর্যন্ত অপেক্ষা</span>
     p2.<span class="c-fn">join</span>()
-    <span class="c-fn">print</span>(<span class="c-str">f&quot;Time taken: {time.time() - start:.2f}s&quot;</span>)   <span class="c-cm"># ~4.5s (সবচেয়ে লম্বা কাজের সমান), ৭.৫s নয়</span></pre></div>
-    <div class="cell-out"><div class="prompt">Out:</div><pre class="out">square 0
+    <span class="c-fn">print</span>(<span class="c-str">f&quot;Time taken: {time.time() - start:.2f}s&quot;</span>)   <span class="c-cm"># ~4.5s (সবচেয়ে লম্বা কাজের সমান), ৭.৫s নয়</span></pre>
+                    </div>
+                    <div class="cell-out">
+                        <div class="prompt">Out:</div>
+                        <pre class="out">square 0
 cube 0
 square 1
 square 4
 cube 1
 cube 8
-Time taken: 4.51s</pre></div>
-  </div>
-  <div class="box warn"><span class="tag">WARN</span> প্রসেসের কোড সবসময় <code>if __name__ == "__main__":</code>-এর ভেতরে রাখো। Jupyter-এ ওয়ার্কার প্রসেসের ফাংশন pickle হতে সমস্যা করতে পারে, তাই ফাংশনগুলো <code>.py</code> ফাইলে রেখে চালাও।</div>
+Time taken: 4.51s</pre>
+                    </div>
+                </div>
+                <div class="box warn"><span class="tag">WARN</span> প্রসেসের কোড সবসময়
+                    <code>if __name__ == "__main__":</code>-এর ভেতরে রাখো। Jupyter-এ ওয়ার্কার প্রসেসের ফাংশন pickle হতে
+                    সমস্যা করতে পারে, তাই ফাংশনগুলো <code>.py</code> ফাইলে রেখে চালাও।</div>
 
-  <h3 class="sub">2 · multiprocessing.Pool: CPU-heavy work</h3>
-  <div class="cell">
-    <div class="cell-in"><div class="prompt">In&nbsp;[ ]:</div><pre class="code"><span class="c-kw">import</span> multiprocessing
+                <h3 class="sub">2 · multiprocessing.Pool: CPU-heavy work</h3>
+                <div class="cell">
+                    <div class="cell-in">
+                        <div class="prompt">In&nbsp;[ ]:</div>
+                        <pre
+                            class="code"><span class="c-kw">import</span> multiprocessing
 <span class="c-kw">import</span> math
 <span class="c-kw">import</span> sys
 <span class="c-kw">import</span> time
@@ -2667,20 +2719,28 @@ sys.<span class="c-fn">set_int_max_str_digits</span>(<span class="c-num">100000<
         results = pool.<span class="c-fn">map</span>(compute_factorial, numbers)
 
     <span class="c-fn">print</span>(<span class="c-str">f&quot;Results computed: {len(results)}&quot;</span>)
-    <span class="c-fn">print</span>(<span class="c-str">f&quot;Time taken: {time.time() - start:.4f}s&quot;</span>)</pre></div>
-    <div class="cell-out"><div class="prompt">Out:</div><pre class="out">Factorial of 1000 has 2568 digits
+    <span class="c-fn">print</span>(<span class="c-str">f&quot;Time taken: {time.time() - start:.4f}s&quot;</span>)</pre>
+                    </div>
+                    <div class="cell-out">
+                        <div class="prompt">Out:</div>
+                        <pre class="out">Factorial of 1000 has 2568 digits
 Factorial of 2000 has 5736 digits
 Factorial of 3000 has 9131 digits
 Factorial of 4000 has 12674 digits
 Factorial of 5000 has 16326 digits
 Results computed: 5
-Time taken: 0.0529s</pre></div>
-  </div>
-  <div class="box note"><span class="tag">NOTE</span> Speed-up নির্ভর করে তোমার CPU core সংখ্যার উপর। খুব ছোট কাজে প্রসেস চালু করার খরচই বেশি পড়ে, তখন পুল সাধারণ লুপের চেয়েও ধীর হতে পারে।</div>
+Time taken: 0.0529s</pre>
+                    </div>
+                </div>
+                <div class="box note"><span class="tag">NOTE</span> Speed-up নির্ভর করে তোমার CPU core সংখ্যার উপর। খুব
+                    ছোট কাজে প্রসেস চালু করার খরচই বেশি পড়ে, তখন পুল সাধারণ লুপের চেয়েও ধীর হতে পারে।</div>
 
-  <h3 class="sub">3 · ProcessPoolExecutor</h3>
-  <div class="cell">
-    <div class="cell-in"><div class="prompt">In&nbsp;[ ]:</div><pre class="code"><span class="c-kw">from</span> concurrent.futures <span class="c-kw">import</span> ProcessPoolExecutor
+                <h3 class="sub">3 · ProcessPoolExecutor</h3>
+                <div class="cell">
+                    <div class="cell-in">
+                        <div class="prompt">In&nbsp;[ ]:</div>
+                        <pre
+                            class="code"><span class="c-kw">from</span> concurrent.futures <span class="c-kw">import</span> ProcessPoolExecutor
 <span class="c-kw">import</span> time
 
 <span class="c-kw">def</span> <span class="c-fn">square_number</span>(number):
@@ -2697,21 +2757,334 @@ Time taken: 0.0529s</pre></div>
 
     <span class="c-kw">for</span> result <span class="c-kw">in</span> results:
         <span class="c-fn">print</span>(result)
-    <span class="c-fn">print</span>(<span class="c-str">f&quot;Time: {time.time() - start:.2f}s&quot;</span>)     <span class="c-cm"># ~2s (৬টা কাজ ÷ ৩ ওয়ার্কার)</span></pre></div>
-    <div class="cell-out"><div class="prompt">Out:</div><pre class="out">square 1
+    <span class="c-fn">print</span>(<span class="c-str">f&quot;Time: {time.time() - start:.2f}s&quot;</span>)     <span class="c-cm"># ~2s (৬টা কাজ ÷ ৩ ওয়ার্কার)</span></pre>
+                    </div>
+                    <div class="cell-out">
+                        <div class="prompt">Out:</div>
+                        <pre class="out">square 1
 square 4
 square 9
 square 16
 square 25
 square 36
-Time: 2.01s</pre></div>
-  </div>
-  <div class="box tip"><span class="tag">TIP</span> মোটামুটি নিয়ম: <b>I/O-bound</b> (অপেক্ষার কাজ) &rarr; থ্রেড। <b>CPU-bound</b> (হিসাবের কাজ) &rarr; প্রসেস। থ্রেড মেমোরি শেয়ার করে এবং হালকা; প্রসেস আলাদা আলাদা এবং চালু হতে বেশি খরচ হয়।</div>
+Time: 2.01s</pre>
+                    </div>
+                </div>
+                <div class="box tip"><span class="tag">TIP</span> মোটামুটি নিয়ম: <b>I/O-bound</b> (অপেক্ষার কাজ) &rarr;
+                    থ্রেড। <b>CPU-bound</b> (হিসাবের কাজ) &rarr; প্রসেস। থ্রেড মেমোরি শেয়ার করে এবং হালকা; প্রসেস আলাদা
+                    আলাদা এবং চালু হতে বেশি খরচ হয়।</div>
 
-  <a class="backtotop" href="#top">↑ Back to top</a>
-</section>
+                <a class="backtotop" href="#top">↑ Back to top</a>
+            </section>
 
-<!-- SLOT:SECTION -->
+            <section class="topic" id="memory-management">
+                <div class="topic-head">
+                    <span class="topic-num">24</span>
+                    <h2>Memory Management</h2>
+                </div>
+                <p class="topic-sub">পাইথন কীভাবে অবজেক্টের মেমোরি ম্যানেজ করে, কখন একটা অবজেক্ট মেমোরি থেকে মুছে যায়,
+                    সার্কুলার রেফারেন্স কীভাবে হ্যান্ডেল হয়, আর বড় ডেটা নিয়ে কাজ করার সময় মেমোরি কীভাবে বাঁচানো যায়
+                    — এই সেকশনে তাই নিয়ে আলোচনা।</p>
+
+                <h3 class="sub">রেফারেন্স কাউন্টিং (Reference Counting)</h3>
+                <p>পাইথনের প্রতিটা অবজেক্টের একটা <strong>রেফারেন্স কাউন্ট</strong> থাকে — কতগুলো জায়গা থেকে ঐ
+                    অবজেক্টটাকে পয়েন্ট করা হচ্ছে তার সংখ্যা। এই কাউন্ট শূন্যে নামলেই CPython অবজেক্টটাকে মেমোরি থেকে
+                    মুছে ফেলে।</p>
+
+                <div class="cell">
+                    <div class="cell-in">
+                        <span class="prompt">In</span>
+                        <pre class="code"><span class="c-kw">import</span> sys
+
+a = []
+sys.<span class="c-fn">getrefcount</span>(a)</pre>
+                    </div>
+                    <div class="cell-out">
+                        <span class="prompt">Out</span>
+                        <pre class="out"><span class="c-num">2</span></pre>
+                    </div>
+                </div>
+                <p class="note-line">২ আসছে — একটা রেফারেন্স আসে ভ্যারিয়েবল <code>a</code> থেকে, আরেকটা আসে
+                    <code>getrefcount()</code> ফাংশনের নিজের আর্গুমেন্ট হিসেবে পাস হওয়ার কারণে।</p>
+
+                <div class="cell">
+                    <div class="cell-in">
+                        <span class="prompt">In</span>
+                        <pre class="code">b = a
+<span class="c-fn">print</span>(sys.<span class="c-fn">getrefcount</span>(b))</pre>
+                    </div>
+                    <div class="cell-out">
+                        <span class="prompt">Out</span>
+                        <pre class="out"><span class="c-num">3</span></pre>
+                    </div>
+                </div>
+                <p class="note-line"><code>b = a</code> করায় এখন দুইটা ভ্যারিয়েবল (<code>a</code>, <code>b</code>) একই
+                    অবজেক্টকে পয়েন্ট করছে — কাউন্ট বেড়ে ৩।</p>
+
+                <div class="cell">
+                    <div class="cell-in">
+                        <span class="prompt">In</span>
+                        <pre class="code"><span class="c-kw">del</span> b
+<span class="c-fn">print</span>(sys.<span class="c-fn">getrefcount</span>(a))</pre>
+                    </div>
+                    <div class="cell-out">
+                        <span class="prompt">Out</span>
+                        <pre class="out"><span class="c-num">2</span></pre>
+                    </div>
+                </div>
+
+                <div class="box note">
+                    <span class="tag">NOTE</span>
+                    <code>del</code> সরাসরি অবজেক্ট মুছে না — শুধু ঐ নামের রেফারেন্সটা সরিয়ে দেয়। রেফারেন্স কাউন্ট ০
+                    হলে তবেই মেমোরি আসলে ফ্রি হয়।
+                </div>
+
+                <h3 class="sub">গার্বেজ কালেকশন (Garbage Collection)</h3>
+                <p>শুধু রেফারেন্স কাউন্টিং দিয়ে সব মেমোরি ক্লিনআপ সম্ভব না — বিশেষ করে সার্কুলার রেফারেন্সের ক্ষেত্রে।
+                    তাই পাইথনের <code>gc</code> মডিউল আলাদা একটা <strong>generational garbage collector</strong> চালায়,
+                    যেটা পর্যায়ক্রমে মেমোরি স্ক্যান করে অব্যবহৃত অবজেক্ট খুঁজে বের করে মুছে দেয়।</p>
+
+                <div class="cell">
+                    <div class="cell-in">
+                        <span class="prompt">In</span>
+                        <pre class="code"><span class="c-kw">import</span> gc
+
+# গার্বেজ কালেকশন চালু করা
+gc.<span class="c-fn">enable</span>()
+
+# gc.disable() দিয়ে বন্ধ করা যায়</pre>
+                    </div>
+                </div>
+
+                <div class="cell">
+                    <div class="cell-in">
+                        <span class="prompt">In</span>
+                        <pre class="code">gc.<span class="c-fn">collect</span>()</pre>
+                    </div>
+                    <div class="cell-out">
+                        <span class="prompt">Out</span>
+                        <pre class="out"><span class="c-num">536</span></pre>
+                    </div>
+                </div>
+                <p class="note-line"><code>gc.collect()</code> ম্যানুয়ালি কালেকশন চালায়, আর কতগুলো অবজেক্ট কালেক্ট হলো
+                    সেই সংখ্যা রিটার্ন করে।</p>
+
+                <div class="cell">
+                    <div class="cell-in">
+                        <span class="prompt">In</span>
+                        <pre class="code"># গার্বেজ কালেকশন স্ট্যাটস দেখা
+<span class="c-fn">print</span>(gc.<span class="c-fn">get_stats</span>())</pre>
+                    </div>
+                    <div class="cell-out">
+                        <span class="prompt">Out</span>
+                        <pre class="out">[{'collections': 242, 'collected': 1578, 'uncollectable': 0},
+ {'collections': 22, 'collected': 829, 'uncollectable': 0},
+ {'collections': 2, 'collected': 564, 'uncollectable': 0}]</pre>
+                    </div>
+                </div>
+                <p class="note-line">তিনটা ডিকশনারি তিনটা <strong>জেনারেশন</strong> (0, 1, 2) এর হিসাব — নতুন অবজেক্ট
+                    জেনারেশন 0 তে শুরু হয়, বেশিদিন টিকে থাকলে ধাপে ধাপে উপরের জেনারেশনে ওঠে। পুরনো জেনারেশন কম বার
+                    স্ক্যান হয়, তাই দ্রুত।</p>
+
+                <h3 class="sub">সার্কুলার রেফারেন্স (Circular References)</h3>
+                <p>দুইটা অবজেক্ট যদি একে অপরকে রেফারেন্স করে (obj1 → obj2, obj2 → obj1), বাইরে থেকে কেউ ব্যবহার না করলেও
+                    তাদের রেফারেন্স কাউন্ট কখনো শূন্যে নামে না। একে বলে <strong>reference cycle</strong>। এখানেই
+                    <code>gc</code> মডিউল দরকার — cyclic garbage collector এই সাইকেল খুঁজে বের করে মুছে ফেলতে পারে।</p>
+
+                <div class="cell">
+                    <div class="cell-in">
+                        <span class="prompt">In</span>
+                        <pre class="code"><span class="c-kw">import</span> gc
+
+<span class="c-kw">class</span> <span class="c-fn">MyObject</span>:
+    <span class="c-kw">def</span> <span class="c-fn">__init__</span>(self, name):
+        self.name = name
+        <span class="c-fn">print</span>(<span class="c-str">f"{self.name} is created"</span>)
+
+    <span class="c-kw">def</span> <span class="c-fn">__del__</span>(self):
+        <span class="c-fn">print</span>(<span class="c-str">f"{self.name} is deleted"</span>)
+
+obj1 = <span class="c-fn">MyObject</span>(<span class="c-str">"obj1"</span>)
+obj2 = <span class="c-fn">MyObject</span>(<span class="c-str">"obj2"</span>)
+
+obj1.ref = obj2
+obj2.ref = obj1
+
+<span class="c-kw">del</span> obj1
+<span class="c-kw">del</span> obj2
+
+gc.<span class="c-fn">collect</span>()</pre>
+                    </div>
+                    <div class="cell-out">
+                        <span class="prompt">Out</span>
+                        <pre class="out">obj1 is created
+obj2 is created
+obj1 is deleted
+obj2 is deleted
+<span class="c-num">2</span></pre>
+                    </div>
+                </div>
+                <p class="note-line">খেয়াল করো — <code>del obj1</code>, <code>del obj2</code> করার সাথে সাথেই
+                    <code>__del__</code> কল হয়নি, কারণ তারা তখনো একে অপরকে রেফারেন্স করছিল (কাউন্ট শূন্য হয়নি)।
+                    <code>gc.collect()</code> কল করার পরই সাইকেলটা ধরা পড়ে, দুইটাই ডিলিট হয়, আর কালেক্ট হওয়া অবজেক্ট
+                    সংখ্যা (২) রিটার্ন হয়।</p>
+
+                <div class="cell">
+                    <div class="cell-in">
+                        <span class="prompt">In</span>
+                        <pre
+                            class="code"><span class="c-fn">print</span>(<span class="c-str">f"All the garbage collected are {gc.garbage}"</span>)</pre>
+                    </div>
+                    <div class="cell-out">
+                        <span class="prompt">Out</span>
+                        <pre class="out">All the garbage collected are []</pre>
+                    </div>
+                </div>
+                <p class="note-line"><code>gc.garbage</code> — যেসব অবজেক্ট গার্বেজ কালেক্টর খুঁজে পেয়েছে কিন্তু ফ্রি
+                    করতে পারেনি (uncollectable) সেগুলোর লিস্ট। খালি লিস্ট মানে সবকিছু ঠিকভাবে ক্লিন হয়ে গেছে।</p>
+
+                <h3 class="sub">মেমোরি-এফিশিয়েন্ট জেনারেটর (Generators for Memory Efficiency)</h3>
+                <p>সাধারণ ফাংশন <code>return</code> করলে পুরো রেজাল্ট একবারে মেমোরিতে বানিয়ে রিটার্ন করে —
+                    <code>list(range(1000000))</code> করলে ১০ লাখ সংখ্যা একসাথে মেমোরিতে বসে যায়। কিন্তু
+                    <code>yield</code> ব্যবহার করলে ফাংশনটা <strong>generator</strong> হয়ে যায় — এটা একবারে একটা
+                    ভ্যালু তৈরি করে, ফাংশনের অবস্থা (state) মনে রাখে, আর পরের ভ্যালু চাওয়া হলে ঠিক যেখানে থেমেছিল সেখান
+                    থেকে আবার শুরু করে। একে বলে <strong>lazy evaluation</strong> — দরকার হওয়ার আগে কিছু তৈরি হয় না।
+                </p>
+
+                <div class="cell">
+                    <div class="cell-in">
+                        <span class="prompt">In</span>
+                        <pre class="code"><span class="c-kw">def</span> <span class="c-fn">generate_num</span>(n):
+    <span class="c-kw">for</span> i <span class="c-kw">in</span> <span class="c-fn">range</span>(n):
+        <span class="c-kw">yield</span> i
+
+# generator ব্যবহার করা — ১০ লাখ সংখ্যা একসাথে মেমোরিতে লোড হয় না
+<span class="c-kw">for</span> num <span class="c-kw">in</span> <span class="c-fn">generate_num</span>(<span class="c-num">1000000</span>):
+    <span class="c-fn">print</span>(num)
+    <span class="c-kw">if</span> num > <span class="c-num">10</span>:
+        <span class="c-kw">break</span></pre>
+                    </div>
+                    <div class="cell-out">
+                        <span class="prompt">Out</span>
+                        <pre class="out"><span class="c-num">0</span>
+<span class="c-num">1</span>
+<span class="c-num">2</span>
+...
+<span class="c-num">11</span></pre>
+                    </div>
+                </div>
+
+                <div class="cell">
+                    <div class="cell-in">
+                        <span class="prompt">In</span>
+                        <pre
+                            class="code"><span class="c-kw">import</span> sys
+
+gen = <span class="c-fn">generate_num</span>(<span class="c-num">1000000</span>)
+lst = <span class="c-fn">list</span>(<span class="c-fn">range</span>(<span class="c-num">1000000</span>))
+
+<span class="c-fn">print</span>(<span class="c-str">"generator size:"</span>, sys.<span class="c-fn">getsizeof</span>(gen), <span class="c-str">"bytes"</span>)
+<span class="c-fn">print</span>(<span class="c-str">"list size:"</span>, sys.<span class="c-fn">getsizeof</span>(lst), <span class="c-str">"bytes"</span>)</pre>
+                    </div>
+                    <div class="cell-out">
+                        <span class="prompt">Out</span>
+                        <pre class="out">generator size: <span class="c-num">200</span> bytes
+list size: <span class="c-num">8000056</span> bytes</pre>
+                    </div>
+                </div>
+
+                <div class="box tip">
+                    <span class="tag">TIP</span>
+                    generator এর সাইজ প্রায় সবসময় একই (এখানে ২০০ বাইট), n যতই বড় হোক — কারণ এটা ভ্যালু আগে থেকে
+                    বানিয়ে রাখে না, শুধু "পরের ভ্যালু কীভাবে বের করতে হবে" মনে রাখে। এইজন্যই বড় ফাইল লাইন-বাই-লাইন
+                    পড়ার সময়, বড় ডেটাসেট প্রসেস করার সময়, বা API থেকে paginated ডেটা আনার সময় generator ব্যবহার করা
+                    হয় — পুরো ডেটা মেমোরিতে না রেখে দরকারমতো একটা একটা করে প্রসেস করা যায়।
+                </div>
+
+                <h3 class="sub">tracemalloc দিয়ে মেমোরি প্রোফাইলিং</h3>
+                <p><code>tracemalloc</code> পাইথনের বিল্ট-ইন মডিউল যা প্রোগ্রাম চলাকালীন <strong>কোন লাইনের কোড কতটুকু
+                        মেমোরি এলোকেট করছে</strong> তা ট্র্যাক করে। মূলত ব্যবহার হয়:</p>
+                <ul>
+                    <li><strong>মেমোরি লিক খুঁজে বের করা</strong> — লম্বা সময় ধরে চলা অ্যাপ্লিকেশনে (যেমন সার্ভার)
+                        মেমোরি ইউজেজ ধীরে ধীরে বাড়তে থাকলে, ঠিক কোন লাইন/ফাংশন বেশি মেমোরি ধরে রাখছে তা বের করা।</li>
+                    <li><strong>অপটিমাইজেশন</strong> — কোন ডেটা স্ট্রাকচার বা কোন অংশ সবচেয়ে বেশি মেমোরি খাচ্ছে চিহ্নিত
+                        করে অপটিমাইজ করা।</li>
+                    <li><strong>দুইটা মুহূর্ত তুলনা করা</strong> — দুইটা <code>snapshot</code> নিয়ে
+                        <code>snapshot.compare_to()</code> দিয়ে দেখা যায় সময়ের সাথে মেমোরি ইউজেজ ঠিক কোথায় বেড়েছে।
+                    </li>
+                </ul>
+
+                <div class="cell">
+                    <div class="cell-in">
+                        <span class="prompt">In</span>
+                        <pre class="code"><span class="c-kw">import</span> tracemalloc
+
+<span class="c-kw">def</span> <span class="c-fn">create_list</span>():
+    <span class="c-kw">return</span> [i <span class="c-kw">for</span> i <span class="c-kw">in</span> <span class="c-fn">range</span>(<span class="c-num">1000000</span>)]
+
+<span class="c-kw">def</span> <span class="c-fn">main</span>():
+    tracemalloc.<span class="c-fn">start</span>()  # ট্র্যাকিং শুরু
+
+    create_list()  # রিটার্ন ভ্যালু কোথাও রাখা হচ্ছে না
+
+    snapshot = tracemalloc.<span class="c-fn">take_snapshot</span>()
+    top_stats = snapshot.<span class="c-fn">statistics</span>(<span class="c-str">'lineno'</span>)
+
+    <span class="c-fn">print</span>(<span class="c-str">"[ Top 10 ]"</span>)
+    <span class="c-kw">for</span> stat <span class="c-kw">in</span> top_stats[:<span class="c-num">10</span>]:
+        <span class="c-fn">print</span>(stat)
+
+<span class="c-fn">main</span>()</pre>
+                    </div>
+                    <div class="cell-out">
+                        <span class="prompt">Out</span>
+                        <pre class="out">[ Top 10 ]
+threading.py:313: size=120 B, count=2, average=60 B
+traitlets.py:749: size=74 B, count=1, average=74 B
+traitlets.py:1550: size=72 B, count=1, average=72 B
+threading.py:604: size=64 B, count=1, average=64 B</pre>
+                    </div>
+                </div>
+
+                <div class="box warn">
+                    <span class="tag">WARN</span>
+                    বড় লিস্টটার allocation (৪০ লাখ+ বাইট) stats এ দেখাচ্ছে না! কারণ <code>create_list()</code> এর
+                    রিটার্ন ভ্যালুকে কোনো ভ্যারিয়েবলে রাখা হয়নি — তাই স্ন্যাপশট নেওয়ার আগেই লিস্টের রেফারেন্স কাউন্ট
+                    শূন্যে নেমে সেটা মেমোরি থেকে মুছে গেছে। ঠিকভাবে ট্র্যাক করতে হলে যে অবজেক্টের মেমোরি দেখতে চাও,
+                    সেটার রেফারেন্স স্ন্যাপশট নেওয়া পর্যন্ত ধরে রাখতে হবে।
+                </div>
+
+                <div class="cell">
+                    <div class="cell-in">
+                        <span class="prompt">In</span>
+                        <pre class="code"><span class="c-kw">def</span> <span class="c-fn">main</span>():
+    tracemalloc.<span class="c-fn">start</span>()
+
+    data = <span class="c-fn">create_list</span>()  # এবার রেফারেন্স ধরে রাখা হচ্ছে
+
+    snapshot = tracemalloc.<span class="c-fn">take_snapshot</span>()
+    top_stats = snapshot.<span class="c-fn">statistics</span>(<span class="c-str">'lineno'</span>)
+
+    <span class="c-fn">print</span>(<span class="c-str">"[ Top 3 ]"</span>)
+    <span class="c-kw">for</span> stat <span class="c-kw">in</span> top_stats[:<span class="c-num">3</span>]:
+        <span class="c-fn">print</span>(stat)
+
+    tracemalloc.<span class="c-fn">stop</span>()
+
+<span class="c-fn">main</span>()</pre>
+                    </div>
+                    <div class="cell-out">
+                        <span class="prompt">Out</span>
+                        <pre class="out">[ Top 3 ]
+your_script.py:4: size=38.6 MiB, count=999744, average=40 B</pre>
+                    </div>
+                </div>
+                <p class="note-line">এবার ঠিকঠাক দেখা যাচ্ছে — লাইন ৪ (<code>[i for i in range(1000000)]</code>) প্রায়
+                    ৩৮.৬ MB মেমোরি নিয়েছে, ৯,৯৯,৭৪৪টা ইন্টিজার অবজেক্ট মিলিয়ে।</p>
+
+                <a href="#top" class="backtotop">↑ উপরে ফিরে যাও</a>
+            </section>
+            <!-- SLOT:SECTION -->
 
 
 

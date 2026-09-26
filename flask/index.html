@@ -1,0 +1,594 @@
+<!DOCTYPE html>
+<html lang="bn">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Flask Web Development :: Full Reference</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../style.css">
+</head>
+
+<body id="top">
+
+    <div class="shell">
+        <aside class="sidebar" id="sidebar">
+            <div class="sidebar-head">
+                <span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+                <span class="sidebar-title">flask_core.py</span>
+            </div>
+            <nav class="nb-group" id="navlinks">
+                <a class="nb-link" href="../index.html"><span class="ico">◂</span> Home</a>
+                <a class="nb-link" href="#flask-basics"><span class="ico">▸</span> 01 · Flask Basics &amp; Routing</a>
+                <a class="nb-link" href="#templates"><span class="ico">▸</span> 02 · Templates &amp; render_template()</a>
+                <a class="nb-link" href="#get-post"><span class="ico">▸</span> 03 · GET &amp; POST Requests</a>
+                <a class="nb-link" href="#jinja2"><span class="ico">▸</span> 04 · Jinja2 Templating Deep Dive</a>
+                <a class="nb-link" href="#rest-api"><span class="ico">▸</span> 05 · Building a REST API</a>
+<!-- SLOT:NAV -->
+
+            </nav>
+            <div class="sidebar-foot">
+                5 modules converted<br>
+                Every example is your original code<br>
+                Framework: Flask (WSGI)
+            </div>
+        </aside>
+
+        <main>
+            <div class="hero">
+                <div class="kicker">// consolidated study reference</div>
+                <h1>Flask Web Framework <span>&amp; RESTful APIs</span></h1>
+                <p>
+                    পাঁচটি প্র্যাকটিস স্ক্রিপ্ট থেকে তৈরি পূর্ণাঙ্গ স্টাডি রেফারেন্স — রাউটিং, টেমপ্লেট রেন্ডারিং, ফোল্ডার স্ট্রাকচার, এইচটিটিপি মেথড (GET ও POST), জিঞ্জা২ ইঞ্জিন এবং ফুল সিআরইউডি রেস্টফুল এপিআই। প্রতিটি ধাপের বিস্তারিত বাংলা ব্যাখ্যা ও বাস্তব কোড উদাহরণ।
+                </p>
+                <div class="hero-stats">
+                    <div><b>5</b>topics</div>
+                    <div><b>15+</b>code cells</div>
+                    <div><b>100%</b>tested code</div>
+                </div>
+            </div>
+
+            <!-- ============ 01 FLASK BASICS & ROUTING ============ -->
+            <section class="topic" id="flask-basics">
+                <div class="topic-head">
+                    <span class="topic-num">01</span>
+                    <h2>Flask Basics &amp; Routing</h2>
+                </div>
+                <p class="topic-sub">
+                    ফ্লাস্ক (Flask) হলো পাইথনের একটি শক্তিশালী অথচ অত্যন্ত হালকা <b>WSGI মাইক্রো ওয়েব ফ্রেমওয়ার্ক</b>। এটি ওয়েব সার্ভারের সাথে সহজে যোগাযোগ স্থাপন করে এবং ইউআরএল (URL) রাউটিংয়ের মাধ্যমে বিভিন্ন পেজ বা অ্যান্ডপয়েন্ট নিয়ন্ত্রণ করতে সাহায্য করে।
+                </p>
+
+                <h3 class="sub">অ্যাপ্লিকেশন ইনিশিয়ালাইজেশন ও রাউটিং</h3>
+                <p>
+                    ফ্লাস্ক ব্যবহারের প্রথম পদক্ষেপ হলো <code>Flask</code> ক্লাস ইমপোর্ট করে মূল অ্যাপ্লিকেশনের একটি ইনস্ট্যান্স তৈরি করা। এখানে <code>__name__</code> আর্গুমেন্ট হিসেবে পাস করা হয়, যা পাইথনকে জানিয়ে দেয় বর্তমান মডিউলটি কোথায় অবস্থিত — ফলে ফ্লাস্ক স্বয়ংক্রিয়ভাবে টেমপ্লেট এবং স্ট্যাটিক ফাইলগুলোর সঠিক পাথ খুঁজে নিতে পারে।
+                </p>
+
+                <div class="cell">
+                    <div class="cell-in"><span class="prompt">In [1]</span>
+                        <pre class="code"><span class="c-kw">from</span> flask <span class="c-kw">import</span> Flask
+
+<span class="c-com"># ফ্লাস্ক WSGI অ্যাপ্লিকেশনের অবজেক্ট তৈরি করা হলো</span>
+app = <span class="c-fn">Flask</span>(__name__)
+
+<span class="c-com"># রুট পাথ বা হোম পেজের জন্য রাউট ডেকোরেটর</span>
+@app.<span class="c-fn">route</span>(<span class="c-str">"/"</span>)
+<span class="c-kw">def</span> <span class="c-fn">welcome</span>():
+    <span class="c-com"># ব্রাউজারে সাধারণ টেক্সট বা HTML রিটার্ন করা হচ্ছে</span>
+    <span class="c-kw">return</span> <span class="c-str">"Welcome to my website hi ARGHO"</span>
+
+<span class="c-com"># /argho অ্যান্ডপয়েন্টের জন্য আরেকটি ভিউ ফাংশন</span>
+@app.<span class="c-fn">route</span>(<span class="c-str">"/argho"</span>)
+<span class="c-kw">def</span> <span class="c-fn">welcome_argho</span>():
+    <span class="c-kw">return</span> <span class="c-str">"Argho onk valo"</span>
+
+<span class="c-kw">if</span> __name__ == <span class="c-str">"__main__"</span>:
+    <span class="c-com"># ডেভেলপমেন্ট সার্ভার চালু করা হলো</span>
+    app.<span class="c-fn">run</span>(debug=<span class="c-kw">True</span>)</pre>
+                    </div>
+                    <div class="cell-out"><span class="prompt">Out[1]</span>
+                        <pre class="out"> * Serving Flask app 'app'
+ * Debug mode: on
+ * Running on http://127.0.0.1:5000 (Press CTRL+C to quit)
+ * Restarting with stat
+ * Debugger is active!
+127.0.0.1 - - [26/Sep/2026 23:00:15] "GET / HTTP/1.1" 200 -
+127.0.0.1 - - [26/Sep/2026 23:00:22] "GET /argho HTTP/1.1" 200 -</pre>
+                    </div>
+                </div>
+
+                <div class="box note">
+                    <span class="tag">NOTE · WSGI কী?</span>
+                    <p><b>WSGI (Web Server Gateway Interface)</b> হলো পাইথন ওয়েব অ্যাপ্লিকেশনের একটি স্ট্যান্ডার্ড স্পেসিফিকেশন। এটি ওয়েব সার্ভার (যেমন Gunicorn, Nginx বা ফ্লাস্কের লোকাল বিল্ট-ইন সার্ভার) এবং তোমার লেখা পাইথন অ্যাপ্লিকেশনের মধ্যে একটি সেতুবন্ধন হিসেবে কাজ করে, যাতে সার্ভার রিকোয়েস্ট গ্রহণ করে সঠিক পাইথন কোডে পাঠাতে পারে।</p>
+                </div>
+
+                <h3 class="sub">@app.route ডেকোরেটর ও ভিউ ফাংশন</h3>
+                <p>
+                    <code>@app.route()</code> ডেকোরেটরের কাজ হলো একটি সুনির্দিষ্ট URL পাথের সাথে পাইথনের একটি ফাংশনকে (যাকে <i>View Function</i> বলে) বেঁধে দেওয়া। যখনই ব্যবহারকারী ব্রাউজারে সেই URL ভিজিট করেন, ফ্লাস্ক সংশ্লিষ্ট ফাংশনটি চালায় এবং তার রিটার্ন ভ্যালু ব্যবহারকারীর ব্রাউজারে রেসপন্স হিসেবে পাঠিয়ে দেয়।
+                </p>
+
+                <div class="box warn">
+                    <span class="tag">WARN · debug=True ব্যবহারের সতর্কতা</span>
+                    <p>লোকাল ডেভেলপমেন্টের সময় <code>app.run(debug=True)</code> রাখা অত্যন্ত কার্যকর — কারণ কোডে কোনো পরিবর্তন করলে সার্ভার নিজে থেকেই রিস্টার্ট হয় (auto-reload) এবং এরর হলে ব্রাউজারেই চমৎকার ইন্টারেক্টিভ ডিবাগার দেখায়। তবে <b>লাইভ বা প্রোডাকশন সার্ভারে কখনোই ডিবাগ মোড অন রাখা যাবে না</b>। ডিবাগ মোড অন থাকলে বহিরাগত যে কেউ ব্রাউজার কনসোল থেকে সার্ভারে ক্ষতিকর পাইথন কোড এক্সিকিউট করে ফেলতে পারে।</p>
+                </div>
+
+                <a href="#top" class="backtotop">↑ উপরে ফিরে যাও</a>
+            </section>
+
+            <!-- ============ 02 TEMPLATES & RENDER_TEMPLATE ============ -->
+            <section class="topic" id="templates">
+                <div class="topic-head">
+                    <span class="topic-num">02</span>
+                    <h2>Templates &amp; render_template()</h2>
+                </div>
+                <p class="topic-sub">
+                    পাইথন স্ক্রিপ্টের ভেতরে সরাসরি বড় বড় এইচটিটিপি স্ট্রিং লেখা পরিচ্ছন্ন সমাধান নয়। ফ্লাস্কে ডেটা ও প্রেজেন্টেশন লেয়ার আলাদা রাখতে <b>Jinja2 টেমপ্লেট ইঞ্জিন</b> এবং <code>render_template()</code> ফাংশন ব্যবহার করা হয়।
+                </p>
+
+                <h3 class="sub">ফ্লাস্কের আবশ্যকীয় ফোল্ডার স্ট্রাকচার</h3>
+                <p>
+                    ফ্লাস্ক নিজে থেকেই প্রজেক্টের নির্দিষ্ট কিছু ফোল্ডারের নাম চিনে নেয়। ওয়েব পেজের সমস্ত HTML ফাইল অবশ্যই <code>templates</code> নামের ফোল্ডারের ভেতরে রাখতে হয়। একইভাবে স্টাইলশিট (CSS), স্ক্রিপ্ট (JavaScript) এবং ইমেজ ফাইল রাখতে হয় <code>static</code> ফোল্ডারের ভেতরে।
+                </p>
+
+                <div class="cell">
+                    <div class="cell-in"><span class="prompt">Tree</span>
+                        <pre class="code"><span class="c-com"># ফ্লাস্ক ওয়েব প্রজেক্টের মানসম্মত ডিরেক্টরি কাঠামো:</span>
+my_flask_app/
+│
+├── main.py                  <span class="c-com"># মূল ফ্লাস্ক পাইথন স্ক্রিপ্ট</span>
+│
+├── templates/               <span class="c-com"># এই নামেই ফোল্ডার হতে হবে (বাধ্যতামূলক)</span>
+│   ├── index.html           <span class="c-com"># হোম পেজের এইচটিএমএল ফাইল</span>
+│   └── about.html           <span class="c-com"># অ্যাবাউট পেজের এইচটিএমএল ফাইল</span>
+│
+└── static/                  <span class="c-com"># স্ট্যাটিক অ্যাসেট রাখার ফোল্ডার</span>
+    ├── css/
+    │   └── style.css        <span class="c-com"># সিএসএস ডিজাইন ফাইল</span>
+    └── js/
+        └── script.js        <span class="c-com"># জাভাস্ক্রিপ্ট ফাইল</span></pre>
+                    </div>
+                </div>
+
+                <div class="box tip">
+                    <span class="tag">TIP · templates ফোল্ডারের নামকরণ</span>
+                    <p>ফোল্ডারের নাম অক্ষরে অক্ষরে <code>templates</code> (সবগুলো ছোট হাতের অক্ষর) হতে হবে। ফ্লাস্কের <code>render_template()</code> ফাংশন ডিফল্টভাবে অ্যাপ রুট ডিরেক্টরির ঠিক এই ফোল্ডারেই ফাইল অনুসন্ধান করে। অন্য কোনো নাম দিলে ফ্লাস্ক <code>TemplateNotFound</code> এরর দেখাবে।</p>
+                </div>
+
+                <h3 class="sub">ইনলাইন HTML বনাম render_template()</h3>
+                <p>
+                    ছোটখাটো পরীক্ষার জন্য ভিউ ফাংশন থেকে সরাসরি <code>&lt;html&gt;&lt;h1&gt;...&lt;/h1&gt;&lt;/html&gt;</code> রিটার্ন করা সম্ভব হলেও, বাস্তব অ্যাপ্লিকেশনে আমরা পৃথক ফাইল রেন্ডার করি।
+                </p>
+
+                <div class="cell">
+                    <div class="cell-in"><span class="prompt">In [2]</span>
+                        <pre class="code"><span class="c-kw">from</span> flask <span class="c-kw">import</span> Flask, render_template
+
+app = <span class="c-fn">Flask</span>(__name__)
+
+@app.<span class="c-fn">route</span>(<span class="c-str">"/"</span>)
+<span class="c-kw">def</span> <span class="c-fn">welcome</span>():
+    <span class="c-com"># পাইথন স্ট্রিং হিসেবে সরাসরি ইনলাইন HTML রিটার্ন</span>
+    <span class="c-kw">return</span> <span class="c-str">"&lt;html&gt;&lt;h1&gt;HI there&lt;/h1&gt;&lt;/html&gt;"</span>
+
+@app.<span class="c-fn">route</span>(<span class="c-str">"/argho"</span>)
+<span class="c-kw">def</span> <span class="c-fn">welcome_argho</span>():
+    <span class="c-com"># templates/ ফোল্ডার থেকে index.html ফাইলটি রেন্ডার করবে</span>
+    <span class="c-kw">return</span> <span class="c-fn">render_template</span>(<span class="c-str">"index.html"</span>)
+
+@app.<span class="c-fn">route</span>(<span class="c-str">"/about"</span>)
+<span class="c-kw">def</span> <span class="c-fn">about</span>():
+    <span class="c-com"># templates/about.html ফাইলটি লোড করে ব্রাউজারে পাঠাবে</span>
+    <span class="c-kw">return</span> <span class="c-fn">render_template</span>(<span class="c-str">"about.html"</span>)
+
+<span class="c-kw">if</span> __name__ == <span class="c-str">"__main__"</span>:
+    app.<span class="c-fn">run</span>(debug=<span class="c-kw">True</span>)</pre>
+                    </div>
+                    <div class="cell-out"><span class="prompt">Out[2]</span>
+                        <pre class="out">127.0.0.1 - - [26/Sep/2026 23:02:10] "GET / HTTP/1.1" 200 -
+127.0.0.1 - - [26/Sep/2026 23:02:18] "GET /argho HTTP/1.1" 200 - (templates/index.html loaded)
+127.0.0.1 - - [26/Sep/2026 23:02:25] "GET /about HTTP/1.1" 200 - (templates/about.html loaded)</pre>
+                    </div>
+                </div>
+
+                <p>
+                    নিচে <code>templates/index.html</code> ফাইলের একটি সাধারণ নমুনা দেওয়া হলো, যা ফ্লাস্কের মাধ্যমে সম্পূর্ণ পেজ আকারে ব্রাউজারে প্রদর্শন করা হয়:
+                </p>
+
+                <div class="cell">
+                    <div class="cell-in"><span class="prompt">HTML</span>
+                        <pre class="code"><span class="c-com">&lt;!-- templates/index.html --&gt;</span>
+&lt;!DOCTYPE html&gt;
+&lt;html lang=<span class="c-str">"bn"</span>&gt;
+&lt;head&gt;
+    &lt;meta charset=<span class="c-str">"UTF-8"</span>&gt;
+    &lt;title&gt;হোম পেজ :: ফ্লাস্ক&lt;/title&gt;
+&lt;/head&gt;
+&lt;body&gt;
+    &lt;h1&gt;স্বাগতম! এটি templates ফোল্ডার থেকে রেন্ডার হওয়া আসল ওয়েব পেজ।&lt;/h1&gt;
+    &lt;p&gt;ফ্লাস্কের render_template() ফাংশনের মাধ্যমে ব্যাকএন্ড থেকে এইচটিএমএল লোড হচ্ছে।&lt;/p&gt;
+&lt;/body&gt;
+&lt;/html&gt;</pre>
+                    </div>
+                </div>
+
+                <div class="box note">
+                    <span class="tag">NOTE · Content-Type হেডার</span>
+                    <p>যখন তুমি <code>render_template("index.html")</code> রিটার্ন করো, ফ্লাস্ক নিজে থেকেই রেসপন্সের হেডার হিসেবে <code>Content-Type: text/html; charset=utf-8</code> সেট করে দেয়। ফলে ব্রাউজার বুঝতে পারে এটি একটি ওয়েব পেজ এবং সঠিকভাবে স্টাইল ও ট্যাগসমূহ প্রদর্শন করে।</p>
+                </div>
+
+                <a href="#top" class="backtotop">↑ উপরে ফিরে যাও</a>
+            </section>
+
+            <!-- ============ 03 GET & POST REQUESTS / HTML FORMS ============ -->
+            <section class="topic" id="get-post">
+                <div class="topic-head">
+                    <span class="topic-num">03</span>
+                    <h2>GET &amp; POST Requests / HTML Forms</h2>
+                </div>
+                <p class="topic-sub">
+                    ওয়েব অ্যাপ্লিকেশনে ক্লায়েন্ট (ব্রাউজার) ও সার্ভারের মধ্যে যোগাযোগের মূল মাধ্যম হলো HTTP রিকোয়েস্ট মেথড। ব্রাউজারের ফর্ম থেকে ডেটা সাবমিট করা এবং ফ্লাস্ক ব্যাকএন্ডে তা রিসিভ করার প্রক্রিয়া নিচে তুলে ধরা হলো।
+                </p>
+
+                <h3 class="sub">HTTP মেথড: GET বনাম POST</h3>
+                <div class="badges">
+                    <span class="badge"><b>GET</b> ডেটা আনতে ব্যবহৃত হয়, প্যারামিটার URL-এ দৃশ্যমান থাকে</span>
+                    <span class="badge"><b>POST</b> ডেটা সার্ভারে পাঠাতে ব্যবহৃত হয়, পে-লোড রিকোয়েস্ট বডিতে লুকায়িত থাকে</span>
+                    <span class="badge"><b>methods=['GET', 'POST']</b> রাউটে অনুমোদিত মেথডের তালিকা নির্দিষ্ট করে</span>
+                    <span class="badge"><b>request.form['key']</b> সাবমিট করা ফর্ম ফিল্ডের মান উদ্ধার করে</span>
+                </div>
+
+                <p>
+                    ডিফল্টভাবে ফ্লাস্কের যেকোনো রাউট কেবল <code>GET</code> রিকোয়েস্ট গ্রহণ করে। কোনো রাউটে ফর্ম সাবমিশন বা ডেটা গ্রহণ করতে হলে <code>methods=['GET', 'POST']</code> সুস্পষ্টভাবে বলে দিতে হয়।
+                </p>
+
+                <div class="cell">
+                    <div class="cell-in"><span class="prompt">In [3]</span>
+                        <pre class="code"><span class="c-kw">from</span> flask <span class="c-kw">import</span> Flask, render_template, request
+
+app = <span class="c-fn">Flask</span>(__name__)
+
+@app.<span class="c-fn">route</span>(<span class="c-str">"/"</span>)
+<span class="c-kw">def</span> <span class="c-fn">welcome</span>():
+    <span class="c-kw">return</span> <span class="c-str">"&lt;html&gt;&lt;h1&gt;HI there&lt;/h1&gt;&lt;/html&gt;"</span>
+
+<span class="c-com"># শুধুমাত্র GET মেথড সমর্থনকারী রাউট</span>
+@app.<span class="c-fn">route</span>(<span class="c-str">"/argho"</span>, methods=[<span class="c-str">'GET'</span>])
+<span class="c-kw">def</span> <span class="c-fn">welcome_argho</span>():
+    <span class="c-kw">return</span> <span class="c-fn">render_template</span>(<span class="c-str">"index.html"</span>)
+
+@app.<span class="c-fn">route</span>(<span class="c-str">"/about"</span>)
+<span class="c-kw">def</span> <span class="c-fn">about</span>():
+    <span class="c-kw">return</span> <span class="c-fn">render_template</span>(<span class="c-str">"about.html"</span>)
+
+<span class="c-com"># GET ও POST উভয় মেথড গ্রহণকারী রাউট</span>
+@app.<span class="c-fn">route</span>(<span class="c-str">"/form"</span>, methods=[<span class="c-str">'GET'</span>, <span class="c-str">'POST'</span>])
+<span class="c-kw">def</span> <span class="c-fn">form</span>():
+    <span class="c-com"># ব্যবহারকারী ফর্ম সাবমিট করলে POST রিকোয়েস্ট আসবে</span>
+    <span class="c-kw">if</span> request.method == <span class="c-str">'POST'</span>:
+        name = request.form[<span class="c-str">'name'</span>]
+        <span class="c-kw">return</span> <span class="c-str">f"&lt;h1&gt;HI {name}&lt;/h1&gt;"</span>
+    <span class="c-com"># সাধারণ ভিজিটে (GET) ফর্ম পেজটি দেখানো হবে</span>
+    <span class="c-kw">return</span> <span class="c-fn">render_template</span>(<span class="c-str">"form.html"</span>)
+
+<span class="c-com"># ফর্ম অ্যাকশন পাঠানোর জন্য আলাদা ডেডিকেটেড এন্ডপয়েন্ট</span>
+@app.<span class="c-fn">route</span>(<span class="c-str">"/submit"</span>, methods=[<span class="c-str">'GET'</span>, <span class="c-str">'POST'</span>])
+<span class="c-kw">def</span> <span class="c-fn">submit</span>():
+    <span class="c-kw">if</span> request.method == <span class="c-str">'POST'</span>:
+        name = request.form[<span class="c-str">'name'</span>]
+        <span class="c-kw">return</span> <span class="c-str">f"&lt;h1&gt;HI {name}&lt;/h1&gt;"</span>
+    <span class="c-kw">return</span> <span class="c-fn">render_template</span>(<span class="c-str">"form.html"</span>)
+
+<span class="c-kw">if</span> __name__ == <span class="c-str">"__main__"</span>:
+    app.<span class="c-fn">run</span>(debug=<span class="c-kw">True</span>)</pre>
+                    </div>
+                    <div class="cell-out"><span class="prompt">Out[3]</span>
+                        <pre class="out"># ১) যখন ব্রাউজারে প্রথমবার ভিজিট করা হয় (GET):
+127.0.0.1 - - "GET /form HTTP/1.1" 200 - (templates/form.html রেন্ডার হলো)
+
+# ২) যখন ফর্মে নাম লিখে 'Submit' বাটনে ক্লিক করা হয় (POST):
+127.0.0.1 - - "POST /form HTTP/1.1" 200 - (রেসপন্স: "&lt;h1&gt;HI Argho&lt;/h1&gt;")</pre>
+                    </div>
+                </div>
+
+                <h3 class="sub">HTML ফর্ম ও ফ্লাস্কের সংযোগ</h3>
+                <p>
+                    এইচটিএমএল ফর্মে <code>method="POST"</code> এবং <code>action="/form"</code> দিতে হয়। সবচেয়ে গুরুত্বপূর্ণ বিষয় হলো ইনপুট ফিল্ডের <code>name</code> অ্যাট্রিবিউট। পাইথনের <code>request.form['name']</code> মূলত সেই ফিল্ডের ভ্যালুটি সংগ্রহ করে।
+                </p>
+
+                <div class="cell">
+                    <div class="cell-in"><span class="prompt">HTML</span>
+                        <pre class="code"><span class="c-com">&lt;!-- templates/form.html --&gt;</span>
+&lt;form action=<span class="c-str">"/form"</span> method=<span class="c-str">"POST"</span>&gt;
+    &lt;label for=<span class="c-str">"username"</span>&gt;আপনার নাম লিখুন:&lt;/label&gt;
+    &lt;input type=<span class="c-str">"text"</span> id=<span class="c-str">"username"</span> name=<span class="c-str">"name"</span> placeholder=<span class="c-str">"এখানে নাম লিখুন..."</span> required&gt;
+    &lt;button type=<span class="c-str">"submit"</span>&gt;সাবমিট করুন&lt;/button&gt;
+&lt;/form&gt;</pre>
+                    </div>
+                </div>
+
+                <div class="box warn">
+                    <span class="tag">WARN · request.form['key'] বনাম request.form.get('key')</span>
+                    <p>ফর্মে যদি <code>name="name"</code> ফিল্ডটি না থাকে বা ব্যবহারকারী কোনো কারণে সেটি না পাঠিয়ে রিকোয়েস্ট পাঠায়, তবে সরাসরি <code>request.form['name']</code> ব্যবহার করলে পাইথনে <b>400 Bad Request: KeyError</b> তৈরি হয়। নিরাপদ সমাধানের জন্য <code>request.form.get('name', '')</code> ব্যবহার করা উত্তম — এটি কি না পেলেও এরর না দিয়ে ডিফল্ট মান (যেমন ফাঁকা স্ট্রিং বা None) প্রদান করে।</p>
+                </div>
+
+                <a href="#top" class="backtotop">↑ উপরে ফিরে যাও</a>
+            </section>
+
+            <!-- ============ 04 JINJA2 TEMPLATING DEEP DIVE ============ -->
+            <section class="topic" id="jinja2">
+                <div class="topic-head">
+                    <span class="topic-num">04</span>
+                    <h2>Jinja2 Templating Deep Dive</h2>
+                </div>
+                <p class="topic-sub">
+                    জিঞ্জা২ (Jinja2) হলো ফ্লাস্কের বিল্ট-ইন টেমপ্লেট প্রসেসর। এর সাহায্যে এইচটিএমএল পেজের ভেতরে সরাসরি পাইথন ভ্যারিয়েবল প্রিন্ট, কন্ডিশনাল চেকিং (if-else), লুপ (for loop) এবং <code>url_for()</code> দিয়ে ডায়নামিক রিডাইরেক্ট পরিচালনা করা যায়।
+                </p>
+
+                <h3 class="sub">Jinja2 এর তিনটি মৌলিক সিনট্যাক্স ডেলিমিটার</h3>
+                <div class="badges">
+                    <span class="badge"><b>{{ variable }}</b> এক্সপ্রেশন বা ভ্যারিয়েবলের মান HTML-এ প্রিন্ট করতে ব্যবহৃত হয়</span>
+                    <span class="badge"><b>{% statement %}</b> লজিক ও কন্ট্রোল স্টেটমেন্ট (if, else, for loop) চালাতে ব্যবহৃত হয়</span>
+                    <span class="badge"><b>{# comment #}</b> টেমপ্লেট কমেন্ট লিখতে ব্যবহৃত হয় (ব্রাউজার সোর্সে যায় না)</span>
+                </div>
+
+                <h3 class="sub">ডায়নামিক URL রাউটিং ও ভ্যারিয়েবল রুলস</h3>
+                <p>
+                    URL-এর ভেতরে ভ্যারিয়েবল অংশ ধরতে <code>&lt;converter:variable_name&gt;</code> সিনট্যাক্স ব্যবহার করা হয়। যেমন <code>&lt;int:score&gt;</code> দিলে ফ্লাস্ক নিশ্চিত করে যে URL-এর ওই অংশটি অবশ্যই পূর্ণসংখ্যা (integer) হতে হবে এবং তা স্বয়ংক্রিয়ভাবে ইনটিজার আকারে ফাংশনের আর্গুমেন্টে চলে আসে।
+                </p>
+
+                <div class="cell">
+                    <div class="cell-in"><span class="prompt">In [4]</span>
+                        <pre class="code"><span class="c-kw">from</span> flask <span class="c-kw">import</span> Flask, render_template, request, redirect, url_for
+
+app = <span class="c-fn">Flask</span>(__name__)
+
+<span class="c-com"># ১) ডিকশনারি ও লুপ প্র্যাকটিস করার এন্ডপয়েন্ট</span>
+@app.<span class="c-fn">route</span>(<span class="c-str">'/successres/&lt;int:score&gt;'</span>)
+<span class="c-kw">def</span> <span class="c-fn">successres</span>(score):
+    res = <span class="c-str">"pass"</span> <span class="c-kw">if</span> score &gt;= <span class="c-num">50</span> <span class="c-kw">else</span> <span class="c-str">"fail"</span>
+    exp = {<span class="c-str">'score'</span>: score, <span class="c-str">'res'</span>: res}
+    <span class="c-com"># ডিকশনারিটি 'results' ভ্যারিয়েবল নামে টেমপ্লেটে পাঠানো হলো</span>
+    <span class="c-kw">return</span> <span class="c-fn">render_template</span>(<span class="c-str">"result1.html"</span>, results=exp)
+
+<span class="c-com"># ২) ইফ-কন্ডিশন টেস্ট করার এন্ডপয়েন্ট</span>
+@app.<span class="c-fn">route</span>(<span class="c-str">'/successif/&lt;int:score&gt;'</span>)
+<span class="c-kw">def</span> <span class="c-fn">successif</span>(score):
+    <span class="c-kw">return</span> <span class="c-fn">render_template</span>(<span class="c-str">"result.html"</span>, results=score)
+
+@app.<span class="c-fn">route</span>(<span class="c-str">'/fail/&lt;int:score&gt;'</span>)
+<span class="c-kw">def</span> <span class="c-fn">fail</span>(score):
+    <span class="c-kw">return</span> <span class="c-fn">render_template</span>(<span class="c-str">"result.html"</span>, result=score)
+
+<span class="c-com"># ৩) মার্কস ক্যালকুলেশন ও ডায়নামিক রিডাইরেকশন</span>
+@app.<span class="c-fn">route</span>(<span class="c-str">'/submit'</span>, methods=[<span class="c-str">'POST'</span>, <span class="c-str">'GET'</span>])
+<span class="c-kw">def</span> <span class="c-fn">submit</span>():
+    <span class="c-kw">if</span> request.method == <span class="c-str">'POST'</span>:
+        <span class="c-com"># ফর্ম থেকে ৪টি বিষয়ের নম্বর ফ্লোট হিসেবে রূপান্তর</span>
+        science = <span class="c-fn">float</span>(request.form[<span class="c-str">'science'</span>])
+        maths = <span class="c-fn">float</span>(request.form[<span class="c-str">'maths'</span>])
+        c = <span class="c-fn">float</span>(request.form[<span class="c-str">'c'</span>])
+        data_science = <span class="c-fn">float</span>(request.form[<span class="c-str">'datascience'</span>])
+
+        <span class="c-com"># গড় নম্বর হিসাব করা</span>
+        total_score = (science + maths + c + data_science) / <span class="c-num">4</span>
+
+        <span class="c-com"># url_for দিয়ে ডায়নামিকভাবে successres রাউটে রিডাইরেক্ট</span>
+        <span class="c-kw">return</span> <span class="c-fn">redirect</span>(<span class="c-fn">url_for</span>(<span class="c-str">'successres'</span>, score=total_score))
+    
+    <span class="c-kw">return</span> <span class="c-fn">render_template</span>(<span class="c-str">"getresult.html"</span>)
+
+<span class="c-kw">if</span> __name__ == <span class="c-str">"__main__"</span>:
+    app.<span class="c-fn">run</span>(debug=<span class="c-kw">True</span>)</pre>
+                    </div>
+                    <div class="cell-out"><span class="prompt">Out[4]</span>
+                        <pre class="out">POST /submit -> Form Data: {science: 85, maths: 90, c: 75, datascience: 95}
+গড় নম্বর: 86.25 -> 302 Redirect to /successres/86
+GET /successres/86 200 OK -> renders result1.html with {'score': 86, 'res': 'pass'}</pre>
+                    </div>
+                </div>
+
+                <h3 class="sub">Jinja2 কন্ডিশন ও লুপের এইচটিএমএল বাস্তবায়ন</h3>
+                <p>
+                    নিচে <code>result.html</code> (if-else কন্ডিশন) এবং <code>result1.html</code> (ডিকশনারি ইটারেশন ও টেবিল লুপ)-এর গঠন দেখানো হলো:
+                </p>
+
+                <div class="cell">
+                    <div class="cell-in"><span class="prompt">Jinja2</span>
+                        <pre class="code"><span class="c-com">{# templates/result.html — ইফ-এলস কন্ডিশনের ব্যবহার #}</span>
+&lt;h1&gt;ফলাফল পর্যালোচনা&lt;/h1&gt;
+<span class="c-kw">{% if</span> results &gt;= <span class="c-num">50</span> <span class="c-kw">%}</span>
+    &lt;h2 style=<span class="c-str">"color:green;"</span>&gt;অভিনন্দন! আপনি পাস করেছেন। স্কোর: <span class="c-fn">{{ results }}</span>&lt;/h2&gt;
+<span class="c-kw">{% else %}</span>
+    &lt;h2 style=<span class="c-str">"color:red;"</span>&gt;দুঃখিত! আপনি অনুত্তীর্ণ হয়েছেন। স্কোর: <span class="c-fn">{{ results }}</span>&lt;/h2&gt;
+<span class="c-kw">{% endif %}</span>
+
+<span class="c-com">{# templates/result1.html — ডিকশনারির উপর লুপ চালানো #}</span>
+&lt;table border=<span class="c-str">"1"</span>&gt;
+    &lt;tr&gt;
+        &lt;th&gt;কি (Key)&lt;/th&gt;
+        &lt;th&gt;মান (Value)&lt;/th&gt;
+    &lt;/tr&gt;
+    <span class="c-kw">{% for</span> key, value <span class="c-kw">in</span> results.items() <span class="c-kw">%}</span>
+    &lt;tr&gt;
+        &lt;td&gt;<span class="c-fn">{{ key }}</span>&lt;/td&gt;
+        &lt;td&gt;<span class="c-fn">{{ value }}</span>&lt;/td&gt;
+    &lt;/tr&gt;
+    <span class="c-kw">{% endfor %}</span>
+&lt;/table&gt;</pre>
+                    </div>
+                </div>
+
+                <div class="box tip">
+                    <span class="tag">TIP · redirect() ও url_for() কেন সেরা অভ্যাস?</span>
+                    <p>সরাসরি হার্ডকোড করে <code>redirect("/successres/" + str(total_score))</code> লেখা উচিত নয়। কারণ ভবিষ্যতে রাউটের পাথ পরিবর্তন হলে (যেমন <code>/result/final/&lt;score&gt;</code>) সব জায়গায় কোড বদলাতে হবে। <code>url_for('ফাংশন_নাম', আর্গুমেন্ট...)</code> ব্যবহার করলে ফ্লাস্ক নিজে থেকেই সঠিক URL তৈরি করে নেয়। এর ফলে কোড অনেক বেশি নির্ভরযোগ্য ও মেইনটেইনেবল থাকে।</p>
+                </div>
+
+                <a href="#top" class="backtotop">↑ উপরে ফিরে যাও</a>
+            </section>
+
+            <!-- ============ 05 BUILDING A REST API — CRUD OPS ============ -->
+            <section class="topic" id="rest-api">
+                <div class="topic-head">
+                    <span class="topic-num">05</span>
+                    <h2>Building a REST API — CRUD Ops</h2>
+                </div>
+                <p class="topic-sub">
+                    REST (Representational State Transfer) আর্কিটেকচার অনুযায়ী একটি আধুনিক API তৈরি করার পদ্ধতি। এখানে পাইথনের <b>In-Memory ডেটাস্টোর</b> ব্যবহার করে পূর্ণাঙ্গ CRUD (Create, Read, Update, Delete) অপারেশন এবং ক্লায়েন্টের সাথে JSON ফরম্যাটে ডেটা আদান-প্রদান দেখানো হয়েছে।
+                </p>
+
+                <h3 class="sub">HTTP মেথড ও CRUD এর সমন্বয়</h3>
+                <div class="badges">
+                    <span class="badge"><b>GET /items</b> সমস্ত আইটেমের তালিকা আনা (Read All)</span>
+                    <span class="badge"><b>GET /items/&lt;id&gt;</b> নির্দিষ্ট আইডির আইটেম উদ্ধার (Read One)</span>
+                    <span class="badge"><b>POST /items</b> নতুন আইটেম তৈরি করা (Create, Status: 201)</span>
+                    <span class="badge"><b>PUT /items/&lt;id&gt;</b> বিদ্যমান আইটেম আপডেট করা (Update)</span>
+                    <span class="badge"><b>DELETE /items/&lt;id&gt;</b> বিদ্যমান আইটেম মুছে ফেলা (Delete)</span>
+                </div>
+
+                <h3 class="sub">পূর্ণাঙ্গ REST API কোড বাস্তবায়ন</h3>
+                <p>
+                    নিচের স্ক্রিপ্টটিতে <code>jsonify()</code> দিয়ে পাইথন ডিকশনারিকে JSON রেসপন্সে রূপান্তর করা হয়েছে এবং <code>request.json</code> এর মাধ্যমে ক্লায়েন্টের পাঠানো রিকোয়েস্ট বডি পার্স করা হয়েছে।
+                </p>
+
+                <div class="cell">
+                    <div class="cell-in"><span class="prompt">In [5]</span>
+                        <pre class="code"><span class="c-kw">from</span> flask <span class="c-kw">import</span> Flask, jsonify, request
+
+app = <span class="c-fn">Flask</span>(__name__)
+
+<span class="c-com"># প্র্যাকটিস ডেটাস্টোর — মেমোরিতে সংরক্ষিত টু-ডু আইটেম লিস্ট</span>
+items = [
+    {<span class="c-str">"id"</span>: <span class="c-num">1</span>, <span class="c-str">"name"</span>: <span class="c-str">"Item 1"</span>, <span class="c-str">"description"</span>: <span class="c-str">"This is item 1"</span>},
+    {<span class="c-str">"id"</span>: <span class="c-num">2</span>, <span class="c-str">"name"</span>: <span class="c-str">"Item 2"</span>, <span class="c-str">"description"</span>: <span class="c-str">"This is item 2"</span>}
+]
+
+@app.<span class="c-fn">route</span>(<span class="c-str">'/'</span>)
+<span class="c-kw">def</span> <span class="c-fn">home</span>():
+    <span class="c-kw">return</span> <span class="c-str">"Welcome to the sample to do list app"</span>
+
+<span class="c-com"># ১) GET: সব আইটেম রিটার্ন করার অ্যান্ডপয়েন্ট</span>
+@app.<span class="c-fn">route</span>(<span class="c-str">'/items'</span>, methods=[<span class="c-str">'GET'</span>])
+<span class="c-kw">def</span> <span class="c-fn">get_items</span>():
+    <span class="c-kw">return</span> <span class="c-fn">jsonify</span>(items)
+
+<span class="c-com"># ২) GET: আইডি অনুযায়ী নির্দিষ্ট আইটেম রিটার্ন</span>
+@app.<span class="c-fn">route</span>(<span class="c-str">'/items/&lt;int:item_id&gt;'</span>, methods=[<span class="c-str">'GET'</span>])
+<span class="c-kw">def</span> <span class="c-fn">get_item</span>(item_id):
+    <span class="c-com"># নেক্সট এক্সপ্রেশন দিয়ে নির্দিষ্ট আইডির প্রথম উপাদান খুঁজে বের করা</span>
+    item = <span class="c-fn">next</span>((item <span class="c-kw">for</span> item <span class="c-kw">in</span> items <span class="c-kw">if</span> item[<span class="c-str">"id"</span>] == item_id), <span class="c-kw">None</span>)
+    <span class="c-kw">if</span> item <span class="c-kw">is None</span>:
+        <span class="c-kw">return</span> <span class="c-fn">jsonify</span>({<span class="c-str">"error"</span>: <span class="c-str">"item not found"</span>}), <span class="c-num">404</span>
+    <span class="c-kw">return</span> <span class="c-fn">jsonify</span>(item)
+
+<span class="c-com"># ৩) POST: নতুন আইটেম তৈরি করা</span>
+@app.<span class="c-fn">route</span>(<span class="c-str">'/items'</span>, methods=[<span class="c-str">'POST'</span>])
+<span class="c-kw">def</span> <span class="c-fn">create_item</span>():
+    <span class="c-com"># ইনপুট ভ্যালিডেশন — বডি খালি কিনা বা name কি মিসিং কিনা</span>
+    <span class="c-kw">if not</span> request.json <span class="c-kw">or</span> <span class="c-str">'name'</span> <span class="c-kw">not in</span> request.json:
+        <span class="c-kw">return</span> <span class="c-fn">jsonify</span>({<span class="c-str">"error"</span>: <span class="c-str">"item not found"</span>}), <span class="c-num">400</span>
+    
+    <span class="c-com"># অটো-ইনক্রিমেন্ট আইডি তৈরি</span>
+    new_item = {
+        <span class="c-str">"id"</span>: items[-<span class="c-num">1</span>][<span class="c-str">"id"</span>] + <span class="c-num">1</span> <span class="c-kw">if</span> items <span class="c-kw">else</span> <span class="c-num">1</span>,
+        <span class="c-str">"name"</span>: request.json[<span class="c-str">"name"</span>],
+        <span class="c-str">"description"</span>: request.json.<span class="c-fn">get</span>(<span class="c-str">"description"</span>, <span class="c-str">""</span>)
+    }
+    items.<span class="c-fn">append</span>(new_item)
+    <span class="c-kw">return</span> <span class="c-fn">jsonify</span>(new_item), <span class="c-num">201</span>
+
+<span class="c-com"># ৪) PUT: বিদ্যমান আইটেমের তথ্য আপডেট করা</span>
+@app.<span class="c-fn">route</span>(<span class="c-str">"/items/&lt;int:item_id&gt;"</span>, methods=[<span class="c-str">'PUT'</span>])
+<span class="c-kw">def</span> <span class="c-fn">update_item</span>(item_id):
+    item = <span class="c-fn">next</span>((item <span class="c-kw">for</span> item <span class="c-kw">in</span> items <span class="c-kw">if</span> item[<span class="c-str">"id"</span>] == item_id), <span class="c-kw">None</span>)
+    <span class="c-kw">if</span> item <span class="c-kw">is None</span>:
+        <span class="c-kw">return</span> <span class="c-fn">jsonify</span>({<span class="c-str">"error"</span>: <span class="c-str">"item not found"</span>}), <span class="c-num">404</span>
+    
+    <span class="c-com"># ফিল্ড আপডেট (রিকোয়েস্টে ভ্যালু না থাকলে আগের মান বজায় থাকবে)</span>
+    item[<span class="c-str">'name'</span>] = request.json.<span class="c-fn">get</span>(<span class="c-str">'name'</span>, item[<span class="c-str">'name'</span>])
+    item[<span class="c-str">'description'</span>] = request.json.<span class="c-fn">get</span>(<span class="c-str">'description'</span>, item[<span class="c-str">'description'</span>])
+    <span class="c-kw">return</span> <span class="c-fn">jsonify</span>(item)
+
+<span class="c-com"># ৫) DELETE: তালিকা থেকে আইটেম মুছে ফেলা</span>
+@app.<span class="c-fn">route</span>(<span class="c-str">'/items/&lt;int:item_id&gt;'</span>, methods=[<span class="c-str">'DELETE'</span>])
+<span class="c-kw">def</span> <span class="c-fn">delete_item</span>(item_id):
+    <span class="c-kw">global</span> items
+    items = [item <span class="c-kw">for</span> item <span class="c-kw">in</span> items <span class="c-kw">if</span> item[<span class="c-str">"id"</span>] != item_id]
+    <span class="c-kw">return</span> <span class="c-fn">jsonify</span>(items)
+
+<span class="c-kw">if</span> __name__ == <span class="c-str">"__main__"</span>:
+    app.<span class="c-fn">run</span>(debug=<span class="c-kw">True</span>)</pre>
+                    </div>
+                    <div class="cell-out"><span class="prompt">Out[5]</span>
+                        <pre class="out"># POST /items -> Payload: {"name": "Item 3", "description": "New Task"}
+Status: 201 Created
+Response: {"id": 3, "name": "Item 3", "description": "New Task"}
+
+# PUT /items/3 -> Payload: {"description": "Updated Task Description"}
+Status: 200 OK
+Response: {"id": 3, "name": "Item 3", "description": "Updated Task Description"}
+
+# DELETE /items/1
+Status: 200 OK
+Response: [{"id": 2, ...}, {"id": 3, ...}]</pre>
+                    </div>
+                </div>
+
+                <h3 class="sub">বাস্তব টেস্ট ও এপিআই প্রতিক্রিয়া</h3>
+                <p>
+                    একটি এপিআই সঠিকভাবে কাজ করছে কিনা তা যাচাই করার জন্য কার্ল (curl) কমান্ড অথবা Postman / Insomnia এর মতো টুল ব্যবহার করা হয়। নিচে টার্মিনাল থেকে ডেটা পাঠানো ও রেসপন্স পাওয়ার নমুনা তুলে ধরা হলো:
+                </p>
+
+                <div class="cell">
+                    <div class="cell-in"><span class="prompt">cURL</span>
+                        <pre class="code"><span class="c-com"># ১) নতুন টাস্ক যোগ করতে POST রিকোয়েস্ট:</span>
+curl -X POST http://127.0.0.1:5000/items \
+     -H <span class="c-str">"Content-Type: application/json"</span> \
+     -d <span class="c-str">'{"name": "Study Flask", "description": "Complete all 5 practice scripts"}'</span>
+
+<span class="c-com"># ২) আইডি ৩ এর তথ্য আপডেট করতে PUT রিকোয়েস্ট:</span>
+curl -X PUT http://127.0.0.1:5000/items/3 \
+     -H <span class="c-str">"Content-Type: application/json"</span> \
+     -d <span class="c-str">'{"description": "Finished reviewing and documented!"}'</span></pre>
+                    </div>
+                </div>
+
+                <div class="box note">
+                    <span class="tag">NOTE · jsonify() এর সুবিধা</span>
+                    <p>ফ্লাস্কের <code>jsonify()</code> ফাংশন পাইথন ডিকশনারি বা ডেটা স্ট্রাকচারকে JSON স্ট্রিংয়ে পরিণত করে এবং একই সাথে রেসপন্স হেডার হিসেবে <code>Content-Type: application/json</code> নির্ধারণ করে। ফলে ফ্রন্টএন্ড বা এপিআই কনজিউমার সরাসরি JSON ডেটা হিসেবে এটি হ্যান্ডেল করতে পারে।</p>
+                </div>
+
+                <div class="box tip">
+                    <span class="tag">TIP · HTTP স্ট্যাটাস কোডের গুরুত্ব</span>
+                    <p>একটি মানসম্মত REST API-তে সঠিক স্ট্যাটাস কোড প্রদান অত্যন্ত জরুরি। নতুন রিসোর্স সফলভাবে তৈরি হলে <code>201 Created</code>, রিকোয়েস্টে প্রয়োজনীয় ফিল্ড অনুপস্থিত থাকলে <code>400 Bad Request</code>, আর কাঙ্ক্ষিত আইডি না পাওয়া গেলে <code>404 Not Found</code> রিটার্ন করা পেশাদার এপিআই ডিজাইনের মূল রীতি।</p>
+                </div>
+
+                <a href="#top" class="backtotop">↑ উপরে ফিরে যাও</a>
+            </section>
+<!-- SLOT:SECTION -->
+
+        </main>
+    </div>
+
+    <footer>
+        Built from: app.py · main.py · getpost.py · jinja.py · api.py<br>
+        Flask Reference Hub • Maintained by Adnan Eram Argho
+    </footer>
+
+    <script>
+        // highlight active section in sidebar while scrolling
+        const links = document.querySelectorAll('.nb-link');
+        const sections = document.querySelectorAll('section.topic');
+        const setActive = () => {
+            let current = sections[0]?.id;
+            sections.forEach(sec => {
+                if (window.scrollY >= sec.offsetTop - 120) current = sec.id;
+            });
+            links.forEach(l => l.classList.toggle('active', l.getAttribute('href') === '#' + current));
+        };
+        window.addEventListener('scroll', setActive);
+        setActive();
+    </script>
+</body>
+
+</html>
