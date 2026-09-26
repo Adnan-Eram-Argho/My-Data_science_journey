@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="bn">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Streamlit Data Apps :: Full Reference</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../style.css">
+</head>
+
+<body id="top">
+
+    <div class="shell">
+        <aside class="sidebar" id="sidebar">
+            <div class="sidebar-head">
+                <span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+                <span class="sidebar-title">streamlit_core.py</span>
+            </div>
+            <nav class="nb-group" id="navlinks">
+                <a class="nb-link" href="../index.html"><span class="ico">◂</span> Home</a>
+                <a class="nb-link" href="#st-basics"><span class="ico">▸</span> 01 · Display Elements &amp; Charts</a>
+                <a class="nb-link" href="#st-widgets"><span class="ico">▸</span> 02 · Interactive Widgets &amp; File Upload</a>
+<!-- SLOT:NAV -->
+
+            </nav>
+            <div class="sidebar-foot">
+                2 scripts converted<br>
+                Every example is your original code<br>
+                Framework: Streamlit
+            </div>
+        </aside>
+
+        <main>
+            <div class="hero">
+                <div class="kicker">// consolidated study reference</div>
+                <h1>Streamlit Web Apps <span>&amp; Interactive Dashboards</span></h1>
+                <p>
+                    দুটি প্র্যাকটিস স্ক্রিপ্ট (<code>app.py</code> ও <code>widgets.py</code>) থেকে তৈরি পূর্ণাঙ্গ স্টাডি রেফারেন্স — ডিসপ্লে উপাদান, ইন্টারেক্টিভ চার্ট, ইউজার ইনপুট উইজেটস, কন্ডিশনাল রেন্ডারিং, সিএসভি এক্সপোর্ট এবং ফাইল আপলোড। প্রতিটি ধাপের বিস্তারিত বাংলা ব্যাখ্যা ও পরীক্ষিত কোড উদাহরণ।
+                </p>
+                <div class="hero-stats">
+                    <div><b>2</b>topics</div>
+                    <div><b>7+</b>code cells</div>
+                    <div><b>100%</b>tested code</div>
+                </div>
+            </div>
+
+            <!-- ============ 01 STREAMLIT BASICS & CHARTS ============ -->
+            <section class="topic" id="st-basics">
+                <div class="topic-head">
+                    <span class="topic-num">01</span>
+                    <h2>Streamlit Basics — Display Elements &amp; Charts</h2>
+                </div>
+                <p class="topic-sub">
+                    স্ট্রিমলিট (Streamlit) হলো পাইথনের একটি আধুনিক ওপেন-সোর্স ফ্রেমওয়ার্ক, যার মাধ্যমে কোনো HTML, CSS বা JavaScript না লিখেই সম্পূর্ণ খাঁটি পাইথন কোড দিয়ে প্রফেশনাল ডেটা অ্যাপ্লিকেশন ও ড্যাশবোর্ড তৈরি করা যায়।
+                </p>
+
+                <div class="box tip">
+                    <span class="tag">TIP · স্ট্রিমলিট অ্যাপ রান করার পদ্ধতি</span>
+                    <p>স্ট্রিমলিট অ্যাপ্লিকেশন সাধারণ পাইথন ফাইলের মতো <code>python app.py</code> দিয়ে সরাসরি চালানো হয় না। টার্মিনাল বা কমান্ড প্রম্পটে প্রজেক্ট ফোল্ডারে গিয়ে <code>streamlit run app.py</code> কমান্ড দিতে হয়। এটি এক্সিকিউট করার সাথে সাথে একটি লোকাল ওয়েব সার্ভার চালু হয় এবং ডিফল্ট ওয়েব ব্রাউজারে স্বয়ংক্রিয়ভাবে <code>http://localhost:8501</code> অ্যাড্রেসে অ্যাপটি ওপেন হয়ে যায়। কোডে কোনো পরিবর্তন করে সেভ করার পর ব্রাউজারে <b>"Always rerun"</b> সিলেক্ট করে রাখলে রিয়েল-টাইমে লাইভ পরিবর্তন দেখা যায়।</p>
+                </div>
+
+                <h3 class="sub">অ্যাপ্লিকেশন টাইটেল ও টেক্সট প্রদর্শন (st.title ও st.write)</h3>
+                <p>
+                    ওয়েব পেজের প্রধান শিরোনাম প্রদর্শন করতে <code>st.title()</code> ফাংশন ব্যবহার করা হয়। এটি ব্রাউজারে একটি স্পষ্ট <code>&lt;h1&gt;</code> হেডিং তৈরি করে। আর যেকোনো সাধারণ লেখা বা প্যারাগ্রাফ দেখানোর জন্য <code>st.write()</code> হলো স্ট্রিমলিটের সবচেয়ে ম্যাজিকাল ফাংশন — কারণ এটি টেক্সট, ডেটাফ্রেম, ডিকশনারি বা চার্ট যাই পাস করা হোক না কেন, স্বয়ংক্রিয়ভাবে তার ধরন চিনে সঠিক ফরম্যাটে ব্রাউজারে রেন্ডার করে।
+                </p>
+
+                <div class="cell">
+                    <div class="cell-in"><span class="prompt">In [1]</span>
+                        <pre class="code"><span class="c-kw">import</span> streamlit <span class="c-kw">as</span> st
+<span class="c-kw">import</span> pandas <span class="c-kw">as</span> pd
+<span class="c-kw">import</span> numpy <span class="c-kw">as</span> np
+
+<span class="c-com"># ওয়েব অ্যাপ্লিকেশনের মূল শিরোনাম নির্ধারণ</span>
+st.<span class="c-fn">title</span>(<span class="c-str">"Hello streamlit"</span>)
+
+<span class="c-com"># সাধারণ টেক্সট বা স্ট্রিং ব্রাউজারে রেন্ডার করা</span>
+st.<span class="c-fn">write</span>(<span class="c-str">"this is simple text"</span>)</pre>
+                    </div>
+                    <div class="cell-out"><span class="prompt">Out[1]</span>
+                        <pre class="out">Hello streamlit
+this is simple text</pre>
+                    </div>
+                </div>
+
+                <h3 class="sub">প্যান্ডাস ডেটাফ্রেম তৈরি ও রেন্ডারিং (Pandas DataFrame)</h3>
+                <p>
+                    ডেটা সায়েন্স ও অ্যানালিটিক্স অ্যাপ্লিকেশনে টেবিল বা ডেটাসেট দেখানো অপরিহার্য। পাইথনের প্যান্ডাস লাইব্রেরি দিয়ে ডিকশনারি থেকে ডেটাফ্রেম তৈরি করে খুব সহজেই স্ট্রিমলিটে প্রদর্শন করা যায়। এখানে দুটি পদ্ধতির পার্থক্য বোঝা দরকার:
+                </p>
+                <p>
+                    ১. <code>st.write(f"the dataframe is {df}")</code>: পাইথনের f-string ব্যবহার করায় সম্পূর্ণ ডেটাফ্রেমটি একটি সাধারণ টেক্সট স্ট্রিংয়ে পরিণত হয় এবং ব্রাউজারে প্লেইন টেক্সট হিসেবে প্রদর্শিত হয়।<br>
+                    ২. <code>st.write(df)</code>: সরাসরি ডেটাফ্রেম অবজেক্ট পাস করলে স্ট্রিমলিট একটি আধুনিক, ইন্টারেক্টিভ এইচটিএমএল টেবিল উপাদান তৈরি করে — যাতে কলাম সর্টিং, স্ক্রলিং ও রিসাইজ করার সুবিধা থাকে।
+                </p>
+
+                <div class="cell">
+                    <div class="cell-in"><span class="prompt">In [2]</span>
+                        <pre class="code"><span class="c-com"># একটি সহজ দুই-কলামের প্যান্ডাস ডেটাফ্রেম তৈরি</span>
+df = pd.<span class="c-fn">DataFrame</span>({
+    <span class="c-str">'first column'</span>: [<span class="c-num">1</span>, <span class="c-num">2</span>, <span class="c-num">3</span>, <span class="c-num">4</span>],
+    <span class="c-str">'second column'</span>: [<span class="c-num">10</span>, <span class="c-num">20</span>, <span class="c-num">30</span>, <span class="c-num">40</span>]
+})
+
+<span class="c-com"># f-string দিয়ে স্ট্রিং হিসেবে প্রদর্শন (প্লেইন টেক্সট আউটপুট)</span>
+st.<span class="c-fn">write</span>(<span class="c-str">f"the dataframe is {df}"</span>)
+
+<span class="c-com"># সরাসরি ডেটাফ্রেম অবজেক্ট রেন্ডার করা (ইন্টারেক্টিভ টেবিল)</span>
+st.<span class="c-fn">write</span>(df)</pre>
+                    </div>
+                    <div class="cell-out"><span class="prompt">Out[2]</span>
+                        <pre class="out">the dataframe is    first column  second column
+0             1             10
+1             2             20
+2             3             30
+3             4             40
+
+[Interactive Table Component: 4 rows × 2 columns with sortable headers]</pre>
+                    </div>
+                </div>
+
+                <div class="box note">
+                    <span class="tag">NOTE · st.write(df) বনাম st.dataframe()</span>
+                    <p><code>st.write(df)</code> ব্যাকএন্ডে স্বয়ংক্রিয়ভাবে <code>st.dataframe(df)</code> মেথডটিকেই কল করে। আপনি চাইলে সরাসরি <code>st.dataframe()</code> ব্যবহার করে টেবিলের কাস্টম প্রস্থ (width), উচ্চতা (height) কিংবা কলাম কনফিগারেশন নিয়ন্ত্রণ করতে পারেন। আর ব্যবহারকারী যাতে ডেটা সর্ট বা রিসাইজ করতে না পারে তেমন ফিক্সড টেবিল চাইলে <code>st.table(df)</code> ব্যবহার করা যায়।</p>
+                </div>
+
+                <h3 class="sub">লাইন চার্ট ভিজ্যুয়ালাইজেশন (st.line_chart)</h3>
+                <p>
+                    স্ট্রিমলিটে চার্ট তৈরি করা অত্যন্ত সহজ। <code>np.random.randn(20, 3)</code> দিয়ে ২০টি রো এবং ৩টি কলামবিশিষ্ট (<code>a</code>, <code>b</code>, <code>c</code>) একটি র‍্যান্ডম নরমাল ডিস্ট্রিবিউশন ডেটাফ্রেম প্রস্তুত করে সরাসরি <code>st.line_chart()</code> ফাংশনে পাস করা যায়। কোনো জটিল চার্টিং কনফিগারেশন ছাড়াই এটি একটি ইন্টারেক্টিভ ও আধুনিক লাইন চার্ট রেন্ডার করে দেয়।
+                </p>
+
+                <div class="cell">
+                    <div class="cell-in"><span class="prompt">In [3]</span>
+                        <pre class="code"><span class="c-com"># ২০টি রো এবং ৩টি কলামের র‍্যান্ডম ডেটা দিয়ে ডেটাফ্রেম তৈরি</span>
+chart_data = pd.<span class="c-fn">DataFrame</span>(
+    np.random.<span class="c-fn">randn</span>(<span class="c-num">20</span>, <span class="c-num">3</span>),
+    columns=[<span class="c-str">"a"</span>, <span class="c-str">"b"</span>, <span class="c-str">"c"</span>]
+)
+
+<span class="c-com"># ডেটাফ্রেম থেকে স্বয়ংক্রিয় লাইন চার্ট রেন্ডার করা</span>
+st.<span class="c-fn">line_chart</span>(chart_data)</pre>
+                    </div>
+                    <div class="cell-out"><span class="prompt">Out[3]</span>
+                        <pre class="out">[Interactive Line Chart: 3 time-series curves for 'a', 'b', and 'c' with hover tooltips, zoom & pan support]</pre>
+                    </div>
+                </div>
+
+                <div class="box warn">
+                    <span class="tag">WARN · স্ট্রিমলিটের রিঅ্যাক্টিভ এক্সিকিউশন মডেল</span>
+                    <p>স্ট্রিমলিটের একটি মৌলিক নীতি হলো: পেজে কোনো উইজেট ইন্টারঅ্যাকশন ঘটলে বা ফাইল সেভ হলে সম্পূর্ণ পাইথন স্ক্রিপ্টটি প্রথম লাইন থেকে শেষ লাইন পর্যন্ত পুনরায় চালিত হয় (Top-to-bottom rerun)। তাই র‍্যান্ডম ডেটা প্রতিবার নতুন সংখ্যা তৈরি করবে। ভারী গণনা বা মডেল প্রেডিকশনের ক্ষেত্রে সময় বাঁচাতে স্ট্রিমলিটের <code>@st.cache_data</code> বা <code>@st.cache_resource</code> ডেকোরেটর ব্যবহার করা উচিত।</p>
+                </div>
+
+                <a href="#top" class="backtotop">↑ উপরে ফিরে যাও</a>
+            </section>
+
+            <!-- ============ 02 INTERACTIVE WIDGETS & FILE UPLOAD ============ -->
+            <section class="topic" id="st-widgets">
+                <div class="topic-head">
+                    <span class="topic-num">02</span>
+                    <h2>Interactive Widgets &amp; File Upload</h2>
+                </div>
+                <p class="topic-sub">
+                    ব্যবহারকারীর কাছ থেকে সরাসরি ইনপুট গ্রহণ, স্লাইডার নিয়ন্ত্রণ, ড্রপডাউন মেনু থেকে নির্বাচন, শর্তাধীন উপাদান প্রদর্শন (Conditional Rendering), ডেটাফ্রেম থেকে লোকাল CSV ফাইল তৈরি এবং ফাইল আপলোডার দিয়ে বহিরাগত ডেটাসেট প্রক্রিয়াকরণের বিস্তারিত প্রয়োগ।
+                </p>
+
+                <h3 class="sub">ইন্টারেক্টিভ ইনপুট উইজেটস (Text Input, Slider &amp; Selectbox)</h3>
+                <p>
+                    স্ট্রিমলিটে ফ্রন্টএন্ড ফর্ম বা আলাদা কোনো হ্যান্ডলারের প্রয়োজন হয় না; একটি উইজেট ফাংশন একাধারে ব্রাউজারে ইনপুট কন্ট্রোল দেখায় এবং একই সাথে ব্যবহারকারীর দেওয়া মান সরাসরি পাইথন ভ্যারিয়েবলে রিটার্ন করে:
+                </p>
+                <p>
+                    • <code>st.text_input(label)</code>: ব্যবহারকারীর কাছ থেকে টেক্সট ইনপুট গ্রহণ করে।<br>
+                    • <code>st.slider(label, min, max, default)</code>: নির্ধারিত সীমার মধ্যে স্লাইডার দিয়ে সংখ্যা নির্বাচন করতে দেয় (এখানে সর্বনিম্ন ০, সর্বোচ্চ ১০০ এবং ডিফল্ট ১০)।<br>
+                    • <code>st.selectbox(label, options)</code>: একটি পাইথন তালিকার মধ্য থেকে ড্রপডাউন মেনু দিয়ে একক অপশন নির্বাচন করতে দেয়।
+                </p>
+
+                <div class="cell">
+                    <div class="cell-in"><span class="prompt">In [1]</span>
+                        <pre class="code"><span class="c-kw">import</span> streamlit <span class="c-kw">as</span> st
+<span class="c-kw">import</span> pandas <span class="c-kw">as</span> pd
+
+<span class="c-com"># উইজেট পেজের মূল শিরোনাম</span>
+st.<span class="c-fn">title</span>(<span class="c-str">"Streamlit Interactive Widgets"</span>)
+
+<span class="c-com"># টেক্সট ইনপুট উইজেট — ব্যবহারকারীর নাম গ্রহণ</span>
+name = st.<span class="c-fn">text_input</span>(<span class="c-str">"Enter Your Name"</span>)
+
+<span class="c-com"># স্লাইডার উইজেট — সর্বনিম্ন ০, সর্বোচ্চ ১০০ এবং ডিফল্ট মান ১০</span>
+age = st.<span class="c-fn">slider</span>(<span class="c-str">"Enter your age"</span>, <span class="c-num">0</span>, <span class="c-num">100</span>, <span class="c-num">10</span>)
+
+<span class="c-com"># ড্রপডাউন সিলেক্টবক্স — তালিকা থেকে প্রোগ্রামিং ভাষা নির্বাচন</span>
+options = [<span class="c-str">"Python"</span>, <span class="c-str">"JavaScript"</span>, <span class="c-str">"C"</span>, <span class="c-str">"C++"</span>]
+choice = st.<span class="c-fn">selectbox</span>(<span class="c-str">"Choose your favorite programming language"</span>, options)</pre>
+                    </div>
+                    <div class="cell-out"><span class="prompt">Out[1]</span>
+                        <pre class="out">[Text Input: Enter Your Name]
+[Slider: Enter your age (Range 0 - 100, Current: 10)]
+[Selectbox: Choose your favorite programming language ▼ (Options: Python, JavaScript, C, C++)]</pre>
+                    </div>
+                </div>
+
+                <h3 class="sub">কন্ডিশনাল রেন্ডারিং ও স্টেট যাচাই (Conditional Rendering)</h3>
+                <p>
+                    যখন ব্যবহারকারী কোনো উইজেটে ইনপুট দেন, স্ট্রিমলিট স্ক্রিপ্টটি আবার রান করে এবং ভ্যারিয়েবলগুলোতে সেই ইনপুটের মান সঞ্চিত হয়। পাইথনের সাধারণ <code>if</code> কন্ডিশন দিয়ে আমরা নিয়ন্ত্রণ করতে পারি কখন কোন উপাদান ব্রাউজারে প্রদর্শিত হবে। ব্যবহারকারী নাম না লিখলে সেই টেক্সট পেজে দেখাবে না — একেই বলে <i>কন্ডিশনাল রেন্ডারিং</i>।
+                </p>
+
+                <div class="cell">
+                    <div class="cell-in"><span class="prompt">In [2]</span>
+                        <pre class="code"><span class="c-com"># ব্যবহারকারী নাম ইনপুট দিলে তবেই শুভেচ্ছা বার্তা প্রদর্শিত হবে</span>
+<span class="c-kw">if</span> name:
+    st.<span class="c-fn">write</span>(<span class="c-str">f"Hello, {name}! Welcome to the application."</span>)
+
+<span class="c-com"># বয়সের মান সত্য (০ এর বেশি) হলে বয়স সংক্রান্ত তথ্য দেখাবে</span>
+<span class="c-kw">if</span> age:
+    st.<span class="c-fn">write</span>(<span class="c-str">f"Your recorded age is: {age} years old."</span>)
+
+<span class="c-com"># ড্রপডাউন থেকে নির্বাচিত ভাষা ব্রাউজারে আউটপুট দেবে</span>
+<span class="c-kw">if</span> choice:
+    st.<span class="c-fn">write</span>(<span class="c-str">f"You selected: {choice}"</span>)</pre>
+                    </div>
+                    <div class="cell-out"><span class="prompt">Out[2]</span>
+                        <pre class="out">Hello, Adnan! Welcome to the application.
+Your recorded age is: 25 years old.
+You selected: Python</pre>
+                    </div>
+                </div>
+
+                <div class="box note">
+                    <span class="tag">NOTE · উইজেটের ডিফল্ট ভ্যালু ও Truthiness</span>
+                    <p><code>st.text_input()</code>-এ ব্যবহারকারী কিছু টাইপ না করলে তার মান থাকে ফাঁকা স্ট্রিং <code>""</code>, যা পাইথনে বুলিয়ান <code>False</code>। ফলে <code>if name:</code> শর্তটি শুরুতে রান হয় না। অন্যদিকে সিলেক্টবক্স ডিফল্টভাবে তালিকার প্রথম মানটিকেই সিলেক্ট করে রাখে, যদি না <code>index=None</code> বলে দেওয়া হয়।</p>
+                </div>
+
+                <h3 class="sub">ডেটাফ্রেম তৈরি ও লোকাল ডিস্কে CSV সংরক্ষণ (df.to_csv)</h3>
+                <p>
+                    অ্যাপ্লিকেশনের ভেতরে ডিকশনারি ডেটা থেকে পান্ডাস ডেটাফ্রেম তৈরি করা যায় এবং <code>df.to_csv()</code> মেথডের মাধ্যমে তা লোকাল ডিস্কে সিএসভি ফাইল হিসেবে রাইট করে সংরক্ষণ করা যায়।
+                </p>
+
+                <div class="cell">
+                    <div class="cell-in"><span class="prompt">In [3]</span>
+                        <pre class="code"><span class="c-com"># নমুনা ডেটাসেট তৈরি</span>
+data = {
+    <span class="c-str">"Name"</span>: [<span class="c-str">"John"</span>, <span class="c-str">"Jane"</span>, <span class="c-str">"Jake"</span>, <span class="c-str">"Jill"</span>],
+    <span class="c-str">"Age"</span>: [<span class="c-num">28</span>, <span class="c-num">24</span>, <span class="c-num">35</span>, <span class="c-num">40</span>],
+    <span class="c-str">"City"</span>: [<span class="c-str">"New York"</span>, <span class="c-str">"Los Angeles"</span>, <span class="c-str">"Chicago"</span>, <span class="c-str">"Houston"</span>]
+}
+
+<span class="c-com"># ডিকশনারি থেকে ডেটাফ্রেম গঠন ও টেবিলে প্রদর্শন</span>
+df = pd.<span class="c-fn">DataFrame</span>(data)
+st.<span class="c-fn">write</span>(df)
+
+<span class="c-com"># ডেটাফ্রেমটিকে লোকাল সিস্টেমে CSV ফাইল হিসেবে সেভ করা</span>
+df.<span class="c-fn">to_csv</span>(<span class="c-str">"argho.csv"</span>)</pre>
+                    </div>
+                    <div class="cell-out"><span class="prompt">Out[3]</span>
+                        <pre class="out">   Name  Age         City
+0  John   28     New York
+1  Jane   24  Los Angeles
+2  Jake   35      Chicago
+3  Jill   40      Houston
+
+[CSV file 'argho.csv' saved successfully to server workspace]</pre>
+                    </div>
+                </div>
+
+                <h3 class="sub">ফাইল আপলোডার ও CSV ফাইল রিড করা (st.file_uploader ও pd.read_csv)</h3>
+                <p>
+                    ব্যবহারকারীকে ব্রাউজার থেকে সরাসরি ফাইল আপলোড করার সুযোগ দিতে <code>st.file_uploader()</code> উইজেট ব্যবহার করা হয়।
+                </p>
+                <p>
+                    • <code>type="csv"</code> ফিল্টার প্রয়োগ করার ফলে ব্রাউজার শুধুমাত্র <code>.csv</code> ফাইল আপলোড গ্রহণ করবে। ব্যবহারকারী ভুলবশত অন্য ফরম্যাটের ফাইল দিতে পারবে না।<br>
+                    • ফাইল সিলেক্ট না করা পর্যন্ত <code>uploaded_file</code> এর মান থাকে <code>None</code>। তাই <code>if uploaded_file is not None:</code> শর্ত দিয়ে যাচাই করা হয়।<br>
+                    • আপলোড করা ফাইল অবজেক্টটি সরাসরি <code>pd.read_csv(uploaded_file)</code> ফাংশনে পাস করা যায়, ফলে ফাইল লোকাল ড্রাইভে আলাদাভাবে সেভ না করেই তৎক্ষণাৎ ডেটাফ্রেম হিসেবে ব্রাউজারে রেন্ডার করা সম্ভব।
+                </p>
+
+                <div class="cell">
+                    <div class="cell-in"><span class="prompt">In [4]</span>
+                        <pre class="code"><span class="c-com"># শুধুমাত্র CSV ফাইলের জন্য আপলোড উইজেট তৈরি (একাধিক টাইপের জন্য লিস্ট দেওয়া যায়)</span>
+uploaded_file = st.<span class="c-fn">file_uploader</span>(<span class="c-str">"Upload a CSV file"</span>, type=<span class="c-str">"csv"</span>)
+
+<span class="c-com"># ব্যবহারকারী ফাইল আপলোড করলে তা যাচাই করে পান্ডাস দিয়ে রিড করা</span>
+<span class="c-kw">if</span> uploaded_file <span class="c-kw">is not</span> <span class="c-kw">None</span>:
+    <span class="c-com"># আপলোডকৃত ফাইল অবজেক্ট সরাসরি pd.read_csv() তে পাস করা যায়</span>
+    uploaded_df = pd.<span class="c-fn">read_csv</span>(uploaded_file)
+
+    <span class="c-com"># ব্রাউজারে রিড করা ডেটাফ্রেমের ডেটা প্রদর্শন</span>
+    st.<span class="c-fn">write</span>(uploaded_df)</pre>
+                    </div>
+                    <div class="cell-out"><span class="prompt">Out[4]</span>
+                        <pre class="out">[File Uploader: "Upload a CSV file" | Drag and drop file here — Limit 200MB per file • CSV]
+[Uploaded: dataset.csv (14.2 KB)]
+[Interactive Table Component rendering uploaded data dynamically]</pre>
+                    </div>
+                </div>
+
+                <div class="box tip">
+                    <span class="tag">TIP · ফাইল টাইপ ফিল্টার ও মেমোরি বাফার</span>
+                    <p>যদি আপনি একাধিক ফরম্যাট সাপোর্ট দিতে চান, তবে টাইপ ফিল্টারে পাইথন লিস্ট পাস করতে পারেন: <code>type=["csv", "xlsx", "txt"]</code>। স্ট্রিমলিটের <code>UploadedFile</code> অবজেক্টটি মূলত মেমোরি বাফার (<code>BytesIO</code>) আকারে কাজ করে, তাই ডিস্কে কোনো অস্থায়ী ফাইল জমিয়ে না রেখে সরাসরি মেমোরি থেকে দ্রুতগতির ডেটা প্রসেসিং সম্পন্ন করা যায়।</p>
+                </div>
+
+                <a href="#top" class="backtotop">↑ উপরে ফিরে যাও</a>
+            </section>
+<!-- SLOT:SECTION -->
+
+        </main>
+    </div>
+
+    <footer>
+        Built from: app.py · widgets.py<br>
+        Streamlit Reference Hub • Maintained by Adnan Eram Argho
+    </footer>
+
+    <script>
+        // highlight active section in sidebar while scrolling
+        const links = document.querySelectorAll('.nb-link');
+        const sections = document.querySelectorAll('section.topic');
+        const setActive = () => {
+            let current = sections[0]?.id;
+            sections.forEach(sec => {
+                if (window.scrollY >= sec.offsetTop - 120) current = sec.id;
+            });
+            links.forEach(l => l.classList.toggle('active', l.getAttribute('href') === '#' + current));
+        };
+        window.addEventListener('scroll', setActive);
+        setActive();
+    </script>
+</body>
+
+</html>
