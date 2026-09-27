@@ -1,6 +1,6 @@
 # My Data Science Journey & Study Reference
 
-A structured, web-based study reference hub built from hands-on Jupyter Notebooks. Covers **Python Core**, **NumPy**, **Pandas**, **Data Manipulation**, **Data Visualization** (Matplotlib & Seaborn), and **SQL (SQLite)** — all from Krish Naik's Udemy Data Science course.
+A structured, web-based study reference hub built from hands-on Jupyter Notebooks, original research notes, and core mathematics & statistics foundations. Covers **Python Core**, **NumPy**, **Pandas**, **Data Manipulation**, **Data Visualization** (Matplotlib & Seaborn), **SQL (SQLite)**, **Flask**, **Streamlit**, and **Descriptive Statistics** — all with tested code examples and detailed explanations in Bengali.
 
 ## 🌐 Live Website
 
@@ -13,15 +13,21 @@ Access the interactive study reference dashboard online:
 
 ```
 Website-root/
-├── index.html              ← Landing page & Quick Topic Index (77 topics)
+├── index.html              ← Landing page & Quick Topic Index (94 topics)
 ├── style.css               ← Shared dark-mode design system
 ├── .nojekyll               ← GitHub Pages static site config
 ├── python/
 │   └── index.html          ← Python Core (23 topics)
 ├── numpy/
 │   └── index.html          ← NumPy + Pandas + Data Manipulation + Visualization (47 topics)
-└── sql/
-    └── index.html          ← SQL / SQLite via Python (7 topics)
+├── sql/
+│   └── index.html          ← SQL / SQLite via Python (7 topics)
+├── flask/
+│   └── index.html          ← Flask Web Development (5 topics)
+├── streamlit/
+│   └── index.html          ← Streamlit Data Apps (2 topics)
+└── statistics/
+    └── index.html          ← Descriptive Statistics (10 topics) ← NEW
 ```
 
 ---
@@ -119,15 +125,62 @@ Website-root/
 
 ---
 
+### 🌶️ Flask Web Development
+> `flask/index.html` · **5 topics** · **20+ code cells**
+
+| # | Topic |
+|---|---|
+| 01 | Flask Basics & Routing |
+| 02 | Templates & render_template() |
+| 03 | GET & POST Requests |
+| 04 | Jinja2 Templating Deep Dive |
+| 05 | Building a REST API |
+
+---
+
+### 🎈 Streamlit Data Apps
+> `streamlit/index.html` · **2 topics** · **7+ code cells**
+
+| # | Topic |
+|---|---|
+| 01 | Display Elements & Charts |
+| 02 | Interactive Widgets & File Upload |
+
+---
+
+### 📊 Descriptive Statistics ← NEW
+> `statistics/index.html` · **10 topics** · **20+ formulae** · **সম্পূর্ণ বাংলা**
+
+| # | Topic | Key Concepts |
+|---|---|---|
+| 01 | Statistics কী | Descriptive vs Inferential — সংজ্ঞা ও পার্থক্য |
+| 02 | Central Tendency | Mean (μ, x̄), Median (position formula), Mode |
+| 03 | Variance & SD | Population/Sample সূত্র, Bessel's Correction (n−1) |
+| 04 | Variable প্রকারভেদ | Qualitative/Quantitative, Nominal/Ordinal/Interval/Ratio |
+| 05 | Random Variable | Discrete vs Continuous, PMF vs PDF |
+| 06 | Histogram | সংজ্ঞা, Bar Chart থেকে পার্থক্য, inline SVG chart |
+| 07 | Percentile & Quartile | Position সূত্র, interpolation পদ্ধতি, Q1/Q2/Q3 |
+| 08 | 5 Number Summary & Box Plot | IQR, Fence Value, outlier detection, inline SVG |
+| 09 | Covariance | Population/Sample সূত্র, Cov(X,X) = Var, advantages/disadvantages |
+| 10 | Correlation | Pearson (r) ও Spearman (ρ) — দুটি সমতুল্য সূত্র সহ |
+
+> **Note:** কাঠামো এমন রাখা হয়েছে যাতে পরে **Inferential Statistics** একই `index.html`-এ সহজে যোগ করা যায়।
+
+---
+
 ## 🚀 Features
 
-- **77 Topics** across 3 active modules with **160+ tested code examples**
+- **94 Topics** across 6 active modules with **180+ tested code examples**
 - **Consolidated Notebooks**: Multiple Jupyter notebooks integrated into single, searchable web pages
 - **Quick Topic Index**: Jump to any topic across all modules from the homepage
+- **Inline SVG Visualizations**: Histogram, Box Plot, Scatter Plot, Variable hierarchy diagram, Correlation scale — all embedded as responsive SVG
+- **Dual-language Content**: Technical terms in English, detailed explanations in Bengali (বাংলা)
+- **Mathematical Formulae**: Every formula verified and presented with numeric examples
 - **Detailed Nuances**: Syntax explanations, edge-case warnings (⚠), tips (💡), and notes (📝)
-- **Original Code Preserved**: All Banglish comments from original notebooks kept intact
+- **Original Code Preserved**: All comments from original notebooks kept intact
 - **Modern Dark UI**: JetBrains Mono code font, responsive grid layout, sidebar navigation with scroll-highlight
 - **Mobile Responsive**: Collapsible sidebar with toggle, stacked cards on small screens
+- **Slot-comment Workflow**: `<!-- SLOT:NAV -->` and `<!-- SLOT:SECTION -->` markers for easy content expansion
 
 ---
 
@@ -137,15 +190,17 @@ Website-root/
 |---|---|
 | Structure | HTML5 (semantic) |
 | Styling | Vanilla CSS (custom dark theme) |
+| Charts | Inline SVG (no external library) |
 | Fonts | Google Fonts — Inter + JetBrains Mono |
 | Hosting | GitHub Pages |
-| Source | Jupyter Notebooks (Krish Naik's Udemy Course) |
+| Source | Jupyter Notebooks + Study Notes |
 
 ---
 
 ## 📌 Planned Modules
 
 - 🤖 **Machine Learning** — Scikit-Learn, Regression, Classification, Model Tuning
+- 📈 **Inferential Statistics** — Hypothesis Testing, Confidence Intervals, p-value, Distributions
 
 ---
 
