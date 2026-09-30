@@ -69,6 +69,20 @@
                 <a class="nb-link" href="#pdf"><span class="ico">▸</span> 20 · PDF</a>
                 <a class="nb-link" href="#cdf"><span class="ico">▸</span> 21 · CDF</a>
 
+                <div class="nav-group-label">Probability Distributions</div>
+                <a class="nb-link" href="#prob-dist-intro"><span class="ico">▸</span> 22 · Distribution কী</a>
+                <a class="nb-link" href="#bernoulli"><span class="ico">▸</span> 23 · Bernoulli</a>
+                <a class="nb-link" href="#binomial"><span class="ico">▸</span> 24 · Binomial</a>
+                <a class="nb-link" href="#poisson"><span class="ico">▸</span> 25 · Poisson</a>
+                <a class="nb-link" href="#uniform-dist"><span class="ico">▸</span> 26 · Uniform</a>
+                <a class="nb-link" href="#normal-dist"><span class="ico">▸</span> 27 · Normal</a>
+                <a class="nb-link" href="#standard-normal"><span class="ico">▸</span> 28 · Z-score</a>
+                <a class="nb-link" href="#log-normal"><span class="ico">▸</span> 29 · Log-Normal</a>
+                <a class="nb-link" href="#pareto-dist"><span class="ico">▸</span> 30 · Power Law ও Pareto</a>
+                <a class="nb-link" href="#clt"><span class="ico">▸</span> 31 · CLT</a>
+                <a class="nb-link" href="#dist-comparison"><span class="ico">▸</span> 32 · তুলনা সারণি</a>
+<!-- SLOT:NAV3 -->
+
             </nav>
             <div class="sidebar-foot">
                 Descriptive Statistics<br>
@@ -1709,6 +1723,1113 @@ Scipy  Spearman ρ = 0.8208</pre>
             </section>
 
 
+            <!-- ============ 22 PROBABILITY DISTRIBUTION কী ============ -->
+            <section class="topic" id="prob-dist-intro">
+                <div class="topic-head"><span class="topic-num">22</span>
+                    <h2>Probability Distribution কী</h2>
+                </div>
+                <p class="topic-sub">
+                    একটি <b>Random Variable</b> এর কোন মান কতটা সম্ভাব্য — তার পুরো চিত্রই হলো
+                    <b>Probability Distribution</b>। এটি বলে দেয় প্রতিটি সম্ভাব্য মানের (বা মানের
+                    ব্যবধানের) সাথে কতটুকু probability যুক্ত।
+                </p>
+
+                <h3 class="sub">Discrete বনাম Continuous Distribution</h3>
+                <p>Variable যদি <b>discrete</b> (গণনাযোগ্য, যেমন coin toss এ head এর সংখ্যা) হয়,
+                    তাহলে probability নির্ধারণ করে <b>PMF (Probability Mass Function)</b> — এটি
+                    bar chart এ দেখানো হয়।<br>
+                    Variable যদি <b>continuous</b> (মাপের মান, যেমন উচ্চতা) হয়, তাহলে ব্যবহার হয়
+                    <b>PDF (Probability Density Function)</b> — এটি একটি মসৃণ curve, যেখানে
+                    curve এর নিচের area = probability। Continuous distribution এ কোনো
+                    <b>নির্দিষ্ট একটি মানের</b> probability সবসময় শূন্য (0); probability শুধু
+                    interval এ (a থেকে b পর্যন্ত) থাকে।</p>
+
+                <h3 class="sub">CDF — সঞ্চয়ী সম্ভাব্যতা</h3>
+                <p><b>CDF (Cumulative Distribution Function)</b> বলে: "এই মান পর্যন্ত মোট
+                    কতটুকু probability জমা হলো" — F(x) = P(X ≤ x)। Discrete ও Continuous
+                    উভয় ক্ষেত্রে CDF কাজ করে।</p>
+
+                <h3 class="sub">Distribution পরিবারের সম্পর্ক</h3>
+                <div class="box note">
+                    <span class="tag">সম্পর্কের সারাংশ</span>
+                    <p><b>Bernoulli</b> → একই পরীক্ষা n বার করলে → <b>Binomial</b><br>
+                       Binomial এ n বড় ও p ছোট হলে → <b>Poisson</b> (λ = np)<br>
+                       Binomial / Poisson এ n বা λ বড় হলে bell আকার আসে → <b>Normal</b><br>
+                       ln(x) যদি Normal হয়, তাহলে x → <b>Log-Normal</b><br>
+                       অল্প কিছুর হাতে বেশিরভাগ → <b>Pareto</b> (ভারী tail)</p>
+                </div>
+
+                <div class="box tip">
+                    <span class="tag">কেন distribution শিখবে?</span>
+                    <p>Data Science এ model বানানোর আগে data কোন distribution অনুসরণ করে
+                       সেটা বুঝতে হয়। ভুল distribution ধরলে prediction, hypothesis test,
+                       confidence interval — সবকিছু ভুল হবে। প্রতিটি distribution এর নিজস্ব
+                       গাণিতিক বৈশিষ্ট্য আছে যা সরাসরি formula তে ব্যবহার হয়।</p>
+                </div>
+
+                <a href="#top" class="backtotop">↑ উপরে ফিরে যাও</a>
+            </section>
+
+            <!-- ============ 23 BERNOULLI ============ -->
+            <section class="topic" id="bernoulli">
+                <div class="topic-head"><span class="topic-num">23</span>
+                    <h2>Bernoulli Distribution</h2>
+                </div>
+                <p class="topic-sub">
+                    সবচেয়ে সহজ distribution — ফল মাত্র <b>দুটো</b>: সফল অথবা ব্যর্থ।
+                    পরীক্ষায় পাস/ফেল, একটি বীজ গজাবে/গজাবে না, একটি ইমেইল spam/না-spam —
+                    এরকম যেকোনো হ্যাঁ/না পরিস্থিতি Bernoulli।
+                </p>
+
+                <h3 class="sub">Definition ও Notation</h3>
+                <p>একটিমাত্র পরীক্ষা (trial), যার ফল দুটো: <b>সফল (1)</b> probability p তে,
+                    <b>ব্যর্থ (0)</b> probability q = 1−p তে। Random Variable
+                    X ∈ {0, 1}।</p>
+
+                <h3 class="sub">Parameter Table</h3>
+                <table class="cmp">
+                    <tr><th>Symbol</th><th>মানে</th><th>সীমা</th></tr>
+                    <tr><td>p</td><td>সফলের probability</td><td>0 ≤ p ≤ 1</td></tr>
+                    <tr><td>q</td><td>ব্যর্থের probability (1−p)</td><td>0 ≤ q ≤ 1</td></tr>
+                    <tr><td>k</td><td>ফল (সফল=1, ব্যর্থ=0)</td><td>k ∈ {0, 1}</td></tr>
+                </table>
+
+                <h3 class="sub">বৈশিষ্ট্য</h3>
+                <p>• ধরন: <b>Discrete</b><br>
+                   • সম্ভাব্য মান: শুধু 0 এবং 1<br>
+                   • এটি Binomial(n=1, p) এর বিশেষ ক্ষেত্র</p>
+
+                <h3 class="sub">PMF (Probability Mass Function)</h3>
+                <div class="formula-block">
+                    <span class="lbl">Bernoulli PMF</span>
+                    P(X = k) = p<sup>k</sup> · (1−p)<sup>(1−k)</sup>
+                </div>
+                <p>k = 1 বসালে: p<sup>1</sup> · q<sup>0</sup> = <b>p</b><br>
+                   k = 0 বসালে: p<sup>0</sup> · q<sup>1</sup> = <b>q = 1−p</b></p>
+
+                <h3 class="sub">Mean, Median, Mode, Variance, SD</h3>
+                <div class="formula-block">
+                    <span class="lbl">Mean (প্রত্যাশিত মান)</span>
+                    E(X) = 0·q + 1·p = <b>p</b>
+                </div>
+                <p><b>Median:</b> p < ½ হলে 0; p = ½ হলে 0.5 (convention); p > ½ হলে 1।<br>
+                   <b>Mode:</b> p > q হলে 1; p < q হলে 0; <b>p = q (= 0.5) হলে 0 ও 1 দুটোই mode</b> (bimodal)।</p>
+
+                <div class="formula-block">
+                    <span class="lbl">Variance ও SD</span>
+                    E(X²) = 0²·q + 1²·p = p<br>
+                    Var(X) = E(X²) − [E(X)]² = p − p² = <b>p·q = p(1−p)</b><br>
+                    SD = σ = √(p·q)
+                </div>
+                <div class="box note">
+                    <span class="tag">Variance কখন সবচেয়ে বেশি?</span>
+                    <p>p = 0.5 এ variance সর্বোচ্চ (0.25) — কারণ তখন অনিশ্চয়তা সবচেয়ে বেশি,
+                       দুই ফলের সম্ভাবনা সমান। p = 0 বা 1 এ variance শূন্য — ফল নিশ্চিত,
+                       কোনো অনিশ্চয়তা নেই।</p>
+                </div>
+
+                <h3 class="sub">উদাহরণ — ধাপে ধাপে</h3>
+                <p>নতুন smartphone 'A' ব্যবহার করবে ৬০% (p = 0.6), করবে না ৪০% (q = 0.4)।</p>
+                <div class="formula-block">
+                    <span class="lbl">ধাপ ১ — Mean</span>
+                    E(X) = 0×0.4 + 1×0.6 = <b>0.6</b>
+                </div>
+                <div class="formula-block">
+                    <span class="lbl">ধাপ ২ — Median</span>
+                    p = 0.6 > 0.5, তাই Median = <b>1</b>
+                </div>
+                <div class="formula-block">
+                    <span class="lbl">ধাপ ৩ — Mode</span>
+                    p = 0.6 > q = 0.4, তাই Mode = <b>1</b>
+                </div>
+                <div class="formula-block">
+                    <span class="lbl">ধাপ ৪ — Variance</span>
+                    Var = 0.4×(0−0.6)² + 0.6×(1−0.6)²<br>
+                    &emsp;&emsp;= 0.4×0.36 + 0.6×0.16<br>
+                    &emsp;&emsp;= 0.144 + 0.096 = <b>0.24</b><br>
+                    যাচাই: p·q = 0.6×0.4 = 0.24 ✓
+                </div>
+                <div class="formula-block">
+                    <span class="lbl">ধাপ ৫ — SD</span>
+                    σ = √0.24 ≈ <b>0.4899</b>
+                </div>
+
+                <h3 class="sub">Python কোড</h3>
+                <div class="cell">
+                    <div class="cell-in"><span class="prompt">In [B1]</span>
+                        <pre class="code"><span class="c-kw">from</span> scipy.stats <span class="c-kw">import</span> bernoulli
+
+p = <span class="c-num">0.6</span>
+<span class="c-com"># k=0 এ PMF → q, k=1 এ PMF → p</span>
+<span class="c-fn">print</span>(<span class="c-str">f"P(X=0) = {round(bernoulli.pmf(0, p), 4)}"</span>)
+<span class="c-fn">print</span>(<span class="c-str">f"P(X=1) = {round(bernoulli.pmf(1, p), 4)}"</span>)
+<span class="c-fn">print</span>(<span class="c-str">f"Mean   = {round(bernoulli.mean(p), 4)}"</span>)
+<span class="c-fn">print</span>(<span class="c-str">f"Var    = {round(bernoulli.var(p), 4)}"</span>)</pre>
+                    </div>
+                    <div class="cell-out"><span class="prompt">Out[B1]</span>
+                        <pre class="out">P(X=0) = 0.4
+P(X=1) = 0.6
+Mean   = 0.6
+Var    = 0.24</pre>
+                    </div>
+                </div>
+
+                <h3 class="sub">Graph</h3>
+                <p style="margin-bottom:4px;"><b>(ক) PMF Bar Chart</b> — x = 0 ও 1 এ probability (p = 0.6)</p>
+                <canvas id="bernoulliPMF" width="500" height="300" style="max-width:100%;background:var(--panel);border-radius:10px;"></canvas>
+                <p style="font-size:13px;color:var(--muted);margin-top:4px;">x = 0 এ 0.4, x = 1 এ 0.6 — দেখো p > 0.5 হলে 1 এর bar বেশি উঁচু।</p>
+
+                <p style="margin-bottom:4px;margin-top:20px;"><b>(খ) Variance p(1−p) বনাম p</b> — p = 0.5 এ সর্বোচ্চ</p>
+                <canvas id="bernoulliVar" width="500" height="300" style="max-width:100%;background:var(--panel);border-radius:10px;"></canvas>
+                <p style="font-size:13px;color:var(--muted);margin-top:4px;">Variance = p(1−p) একটি parabola — p = 0.5 এ সর্বোচ্চ 0.25, দুই প্রান্তে শূন্য।</p>
+
+                <div class="box warn">
+                    <span class="tag">⚠ সাধারণ ভুল</span>
+                    <p>১) Bernoulli শুধু <b>একবারের</b> পরীক্ষা। একাধিকবার করলে সেটা Binomial।<br>
+                       ২) Mean = 0.6 মানে এই নয় যে ফল 0.6 আসবে — mean হলো দীর্ঘমেয়াদী গড়।<br>
+                       ৩) p + q = 1 হতেই হবে, নইলে এটি valid distribution নয়।</p>
+                </div>
+
+                <h3 class="sub">কোথায় ব্যবহার হয়?</h3>
+                <p>• Spam detection (spam / not-spam)<br>
+                   • Medical test (positive / negative)<br>
+                   • Quality control (defective / non-defective)<br>
+                   • A/B testing (click / no-click)</p>
+
+                <a href="#top" class="backtotop">↑ উপরে ফিরে যাও</a>
+            </section>
+
+            <!-- ============ 24 BINOMIAL ============ -->
+            <section class="topic" id="binomial">
+                <div class="topic-head"><span class="topic-num">24</span>
+                    <h2>Binomial Distribution</h2>
+                </div>
+                <p class="topic-sub">
+                    n টি স্বাধীন Bernoulli পরীক্ষায় <b>মোট কতবার সফল</b> হলো, তার distribution।
+                    যেমন: ১০ বার coin ছুঁড়ে কতবার head এলো, ২০টি বীজের কয়টি গজালো।
+                </p>
+
+                <h3 class="sub">চার শর্ত</h3>
+                <p>১) n (পরীক্ষার সংখ্যা) নির্দিষ্ট<br>
+                   ২) প্রতিবার ফল দুটো (সফল/ব্যর্থ)<br>
+                   ৩) প্রতিবার সফলের probability p একই<br>
+                   ৪) পরীক্ষাগুলো পরস্পর স্বাধীন (একটির ফল অন্যটিকে প্রভাবিত করে না)</p>
+
+                <h3 class="sub">Notation ও Parameter Table</h3>
+                <table class="cmp">
+                    <tr><th>Symbol</th><th>মানে</th><th>সীমা</th></tr>
+                    <tr><td>n</td><td>মোট পরীক্ষার সংখ্যা</td><td>ধনাত্মক পূর্ণসংখ্যা (1, 2, 3, …)</td></tr>
+                    <tr><td>p</td><td>প্রতিবার সফলের probability</td><td>0 ≤ p ≤ 1</td></tr>
+                    <tr><td>q</td><td>ব্যর্থের probability (1−p)</td><td>0 ≤ q ≤ 1</td></tr>
+                    <tr><td>k</td><td>সফলের সংখ্যা (আমরা যা খুঁজছি)</td><td>k ∈ {0, 1, 2, …, n}</td></tr>
+                </table>
+                <p>Notation: <b>B(n, p)</b> বা X ~ Bin(n, p)। n = 1 হলে এটি Bernoulli(p)।</p>
+
+                <h3 class="sub">বৈশিষ্ট্য</h3>
+                <p>• ধরন: <b>Discrete</b><br>
+                   • সম্ভাব্য মান: k = 0, 1, 2, …, n (মোট n+1 টি মান)<br>
+                   • p = 0.5 হলে symmetric; p ≠ 0.5 হলে skewed; n বাড়লে bell আকার আসে</p>
+
+                <h3 class="sub">PMF</h3>
+                <div class="formula-block">
+                    <span class="lbl">Binomial PMF</span>
+                    P(X = k) = <sup>n</sup>C<sub>k</sub> · p<sup>k</sup> · (1−p)<sup>(n−k)</sup>
+                </div>
+                <div class="formula-block">
+                    <span class="lbl">Combination (ⁿCₖ)</span>
+                    <sup>n</sup>C<sub>k</sub> = n! / (k! · (n−k)!)
+                </div>
+                <p><b>বোঝানো:</b><br>
+                   • <sup>n</sup>C<sub>k</sub> = k টি সফল n টি জায়গায় কত ভাবে বসানো যায় (ক্রম বিবেচ্য নয়)<br>
+                   • p<sup>k</sup> = k টি সফলের probability গুণ হয়ে<br>
+                   • q<sup>(n−k)</sup> = বাকি (n−k) টি ব্যর্থের probability গুণ হয়ে<br>
+                   • সব মিলিয়ে: "কত ভাবে" × "একটি ক্রমের probability"</p>
+
+                <h3 class="sub">Mean, Variance, SD</h3>
+                <div class="formula-block">
+                    <span class="lbl">Mean, Variance, SD</span>
+                    Mean = n·p<br>
+                    Variance = n·p·q = n·p·(1−p)<br>
+                    SD = √(n·p·q)
+                </div>
+                <div class="box note">
+                    <span class="tag">কেন Mean = np?</span>
+                    <p>Binomial হলো n টি স্বাধীন Bernoulli এর <b>যোগফল</b>। প্রতিটি Bernoulli এর
+                       mean = p, variance = pq। স্বাধীন variable এর যোগফলের mean = mean এর যোগ
+                       = n×p; variance = variance এর যোগ = n×pq।</p>
+                </div>
+
+                <h3 class="sub">উদাহরণ — ধাপে ধাপে</h3>
+                <p>৫ বার coin ছুঁড়লে <b>ঠিক ৩ টি</b> head আসার probability কত? (n=5, k=3, p=0.5)</p>
+                <div class="formula-block">
+                    <span class="lbl">ধাপ ১ — Combination</span>
+                    <sup>5</sup>C<sub>3</sub> = 5! / (3!·2!) = 120 / (6×2) = 120/12 = <b>10</b>
+                </div>
+                <div class="formula-block">
+                    <span class="lbl">ধাপ ২ — p<sup>k</sup></span>
+                    (0.5)<sup>3</sup> = <b>0.125</b>
+                </div>
+                <div class="formula-block">
+                    <span class="lbl">ধাপ ৩ — q<sup>(n−k)</sup></span>
+                    (0.5)<sup>2</sup> = <b>0.25</b>
+                </div>
+                <div class="formula-block">
+                    <span class="lbl">ধাপ ৪ — গুণ</span>
+                    P(X=3) = 10 × 0.125 × 0.25 = 10 × 0.03125 = <b>0.3125</b> (৩১.২৫%)
+                </div>
+
+                <p><b>পুরো distribution (k = 0 থেকে 5):</b></p>
+                <table class="cmp">
+                    <tr><th>k</th><th>0</th><th>1</th><th>2</th><th>3</th><th>4</th><th>5</th></tr>
+                    <tr><td><b>P(X=k)</b></td><td>1/32</td><td>5/32</td><td>10/32</td><td>10/32</td><td>5/32</td><td>1/32</td></tr>
+                </table>
+                <p>Mean = 5×0.5 = <b>2.5</b>; Variance = 5×0.5×0.5 = <b>1.25</b>; SD = √1.25 ≈ <b>1.118</b></p>
+
+                <h3 class="sub">Python কোড</h3>
+                <div class="cell">
+                    <div class="cell-in"><span class="prompt">In [B2]</span>
+                        <pre class="code"><span class="c-kw">from</span> scipy.stats <span class="c-kw">import</span> binom
+
+<span class="c-com"># ৫ বার coin ছুঁড়ে ঠিক ৩ বার head</span>
+<span class="c-fn">print</span>(<span class="c-str">f"P(X=3) = {round(binom.pmf(3, 5, 0.5), 4)}"</span>)
+<span class="c-fn">print</span>(<span class="c-str">f"Mean   = {round(binom.mean(5, 0.5), 4)}"</span>)
+<span class="c-fn">print</span>(<span class="c-str">f"Var    = {round(binom.var(5, 0.5), 4)}"</span>)</pre>
+                    </div>
+                    <div class="cell-out"><span class="prompt">Out[B2]</span>
+                        <pre class="out">P(X=3) = 0.3125
+Mean   = 2.5
+Var    = 1.25</pre>
+                    </div>
+                </div>
+
+                <h3 class="sub">Graph — Interactive</h3>
+                <p style="margin-bottom:4px;">n ও p বদলাও, দেখো distribution কীভাবে বদলায়। k = 3 হাইলাইট।</p>
+                <div style="display:flex;gap:20px;flex-wrap:wrap;align-items:center;margin-bottom:10px;">
+                    <label style="font-family:var(--mono);font-size:13px;color:var(--muted);">n = <span id="binN">5</span>
+                        <input type="range" id="binNslider" min="1" max="30" value="5" style="vertical-align:middle;width:120px;">
+                    </label>
+                    <label style="font-family:var(--mono);font-size:13px;color:var(--muted);">p = <span id="binP">0.50</span>
+                        <input type="range" id="binPslider" min="0" max="100" value="50" style="vertical-align:middle;width:120px;">
+                    </label>
+                </div>
+                <canvas id="binomialPMF" width="600" height="320" style="max-width:100%;background:var(--panel);border-radius:10px;"></canvas>
+                <p style="font-size:13px;color:var(--muted);margin-top:4px;">p ≠ 0.5 হলে distribution skewed হয়; n বাড়লে ধীরে ধীরে bell আকার আসে।</p>
+
+                <div class="box warn">
+                    <span class="tag">⚠ সাধারণ ভুল</span>
+                    <p>১) পরীক্ষাগুলো যদি <b>নির্ভরশীল</b> হয় (যেমন ফেরত না দিয়ে বাক্স থেকে বল
+                       তোলা) তাহলে Binomial <b>প্রযোজ্য নয়</b> — সেক্ষেত্রে Hypergeometric ব্যবহার হয়।<br>
+                       ২) <sup>n</sup>C<sub>k</sub> ভুলে গেলে শুধু p<sup>k</sup>·q<sup>(n−k)</sup>
+                       দিলে মান অনেক কম আসবে — সেটা শুধু <b>একটি নির্দিষ্ট ক্রমের</b> probability।</p>
+                </div>
+
+                <h3 class="sub">কোথায় ব্যবহার হয়?</h3>
+                <p>• ২০ টি বীজের কয়টি গজালো<br>
+                   • ১০০ জনের কয়জন product কিনলো<br>
+                   • ৫০ টি product এ কয়টি defective<br>
+                   • MCQ পরীক্ষায় random guess এ কয়টি সঠিক হবে</p>
+
+                <a href="#top" class="backtotop">↑ উপরে ফিরে যাও</a>
+            </section>
+
+            <!-- ============ 25 POISSON ============ -->
+            <section class="topic" id="poisson">
+                <div class="topic-head"><span class="topic-num">25</span>
+                    <h2>Poisson Distribution</h2>
+                </div>
+                <p class="topic-sub">
+                    নির্দিষ্ট <b>সময় বা জায়গার</b> মধ্যে একটি ঘটনা <b>কতবার</b> ঘটে, তার সংখ্যা
+                    গণনা করে Poisson distribution। যেমন: প্রতি ঘণ্টায় হাসপাতালে কতজন রোগী
+                    আসে, প্রতি পাতায় কয়টি ভুল আছে।
+                </p>
+
+                <h3 class="sub">শর্তসমূহ</h3>
+                <p>১) ঘটনাগুলো পরস্পর <b>স্বাধীন</b> (একটি ঘটলে অন্যটির probability বদলায় না)<br>
+                   ২) গড় হার (rate) <b>স্থির</b> — সময়ের সাথে পরিবর্তন হয় না<br>
+                   ৩) একই মুহূর্তে দুটি ঘটনা ঘটে না</p>
+
+                <h3 class="sub">Notation ও Parameter Table</h3>
+                <table class="cmp">
+                    <tr><th>Symbol</th><th>মানে</th><th>সীমা</th></tr>
+                    <tr><td>λ (lambda)</td><td>প্রতি interval এ গড় ঘটনার সংখ্যা</td><td>λ > 0</td></tr>
+                    <tr><td>t</td><td>interval এর দৈর্ঘ্য (সময়, দূরত্ব ইত্যাদি)</td><td>t > 0 (সাধারণত 1)</td></tr>
+                    <tr><td>x</td><td>ঘটনার সংখ্যা</td><td>x ∈ {0, 1, 2, 3, …} (উপরে সীমা নেই)</td></tr>
+                    <tr><td>e</td><td>Euler's number</td><td>≈ 2.71828</td></tr>
+                </table>
+
+                <h3 class="sub">বৈশিষ্ট্য</h3>
+                <p>• ধরন: <b>Discrete</b> (ঘটনার সংখ্যা গোনা যায়)<br>
+                   • সম্ভাব্য মান: 0, 1, 2, 3, … (তাত্ত্বিকভাবে অসীম পর্যন্ত)<br>
+                   • λ ছোট হলে ডানে ঢেলে (right-skewed); λ বাড়লে bell আকার আসে</p>
+
+                <h3 class="sub">PMF</h3>
+                <div class="formula-block">
+                    <span class="lbl">Poisson PMF</span>
+                    P(X = x) = e<sup>−λ</sup> · λ<sup>x</sup> / x!
+                </div>
+                <p><b>প্রতিটি অংশ:</b><br>
+                   • e<sup>−λ</sup> = base probability (λ বড় হলে এটি ছোট হয়)<br>
+                   • λ<sup>x</sup> = "গড় হার" x বার গুণ হয়ে<br>
+                   • x! = x factorial — ক্রম গুরুত্বপূর্ণ নয় বলে ভাগ করা হয়<br>
+                   • interval এর দৈর্ঘ্য t ≠ 1 হলে λ এর জায়গায় <b>λt</b> বসাতে হয়</p>
+
+                <h3 class="sub">Mean, Variance, SD</h3>
+                <div class="formula-block">
+                    <span class="lbl">Mean ও Variance (Poisson এর বিশেষত্ব — দুটো সমান!)</span>
+                    Mean = λt<br>
+                    Variance = λt<br>
+                    SD = √(λt)
+                </div>
+                <div class="box note">
+                    <span class="tag">কেন Mean = Variance?</span>
+                    <p>Poisson এ Mean ও Variance সবসময় সমান — এটি Poisson এর অনন্য বৈশিষ্ট্য।
+                       data এর mean ও variance কাছাকাছি হলে Poisson fit হওয়ার সম্ভাবনা বেশি।
+                       t = 1 হলে Mean = Variance = λ।</p>
+                </div>
+
+                <h3 class="sub">উদাহরণ ১ — ধাপে ধাপে</h3>
+                <p>প্রতি ঘণ্টায় গড়ে ৩ জন (λ = 3) দোকানে আসে। এক ঘণ্টায় <b>ঠিক ৫ জন</b> আসার
+                    probability কত?</p>
+                <div class="formula-block">
+                    <span class="lbl">ধাপ ১ — λ<sup>x</sup></span>
+                    3<sup>5</sup> = <b>243</b>
+                </div>
+                <div class="formula-block">
+                    <span class="lbl">ধাপ ২ — x!</span>
+                    5! = 5×4×3×2×1 = <b>120</b>
+                </div>
+                <div class="formula-block">
+                    <span class="lbl">ধাপ ৩ — λ<sup>x</sup> / x!</span>
+                    243 / 120 = <b>2.025</b>
+                </div>
+                <div class="formula-block">
+                    <span class="lbl">ধাপ ৪ — e<sup>−λ</sup></span>
+                    e<sup>−3</sup> ≈ <b>0.049787</b>
+                </div>
+                <div class="formula-block">
+                    <span class="lbl">ধাপ ৫ — চূড়ান্ত উত্তর</span>
+                    P(X=5) = 0.049787 × 2.025 ≈ <b>0.1008</b> (≈ ১০.১%)
+                </div>
+
+                <h3 class="sub">উদাহরণ ২ — যোগের নিয়ম</h3>
+                <p>৪ জন <b>অথবা</b> ৫ জন আসার probability = P(4) + P(5) (দুটো একসাথে হতে পারে না, তাই যোগ)।</p>
+                <div class="formula-block">
+                    <span class="lbl">P(X=4)</span>
+                    e<sup>−3</sup> · 3<sup>4</sup> / 4! = 0.049787 × 81/24 = 0.049787 × 3.375 ≈ <b>0.1680</b>
+                </div>
+                <div class="formula-block">
+                    <span class="lbl">P(4) + P(5)</span>
+                    0.1680 + 0.1008 = <b>0.2688</b> (≈ ২৬.৯%)
+                </div>
+
+                <h3 class="sub">Python কোড</h3>
+                <div class="cell">
+                    <div class="cell-in"><span class="prompt">In [B3]</span>
+                        <pre class="code"><span class="c-kw">from</span> scipy.stats <span class="c-kw">import</span> poisson
+
+lam = <span class="c-num">3</span>
+<span class="c-com"># ঠিক ৫ জন আসার probability</span>
+<span class="c-fn">print</span>(<span class="c-str">f"P(X=5) = {round(poisson.pmf(5, lam), 4)}"</span>)
+<span class="c-com"># ৪ জন অথবা ৫ জন</span>
+<span class="c-fn">print</span>(<span class="c-str">f"P(4)+P(5) = {round(poisson.pmf(4, lam) + poisson.pmf(5, lam), 4)}"</span>)</pre>
+                    </div>
+                    <div class="cell-out"><span class="prompt">Out[B3]</span>
+                        <pre class="out">P(X=5) = 0.1008
+P(4)+P(5) = 0.2688</pre>
+                    </div>
+                </div>
+
+                <h3 class="sub">Graph — Interactive</h3>
+                <p style="margin-bottom:4px;">λ বদলাও, দেখো distribution কীভাবে বদলায়। x = 5 হাইলাইট।</p>
+                <div style="margin-bottom:10px;">
+                    <label style="font-family:var(--mono);font-size:13px;color:var(--muted);">λ = <span id="poisLam">3.0</span>
+                        <input type="range" id="poisLamSlider" min="5" max="100" value="30" style="vertical-align:middle;width:160px;">
+                    </label>
+                </div>
+                <canvas id="poissonPMF" width="600" height="320" style="max-width:100%;background:var(--panel);border-radius:10px;"></canvas>
+                <p style="font-size:13px;color:var(--muted);margin-top:4px;">λ বাড়লে distribution এর কেন্দ্র ডানে সরে এবং আকার bell এর দিকে যায়।</p>
+
+                <div class="box warn">
+                    <span class="tag">⚠ সাধারণ ভুল</span>
+                    <p>১) x = 5 মানে "৫ম ঘণ্টা" <b>নয়</b> — এর মানে "এক interval এ ঠিক ৫টি ঘটনা"।
+                       graph এর x-axis এ <b>সময় নয়</b>, ঘটনার সংখ্যা (0, 1, 2, …) থাকে।<br>
+                       ২) λ এবং x গুলিয়ে ফেলা — λ হলো <b>parameter</b> (গড়), x হলো variable
+                       (কতবার ঘটলো, যা পরিবর্তনশীল)।</p>
+                </div>
+
+                <div class="box note">
+                    <span class="tag">Binomial → Poisson রূপান্তর</span>
+                    <p>Binomial এ n বড় ও p ছোট হলে Poisson (λ = np) দিয়ে আনুমানিক মান পাওয়া
+                       যায়। নিয়ম: n ≥ 20 এবং p ≤ 0.05 হলে ভালো কাজ করে।</p>
+                </div>
+
+                <h3 class="sub">কোথায় ব্যবহার হয়?</h3>
+                <p>• প্রতি ঘণ্টায় হাসপাতালে রোগী আসা<br>
+                   • প্রতি বর্গমিটার জমিতে পোকার সংখ্যা<br>
+                   • প্রতি মিনিটে website এ request<br>
+                   • প্রতি পাতায় মুদ্রণের ভুল<br>
+                   • প্রতি কিলোমিটারে সড়ক দুর্ঘটনা</p>
+
+                <a href="#top" class="backtotop">↑ উপরে ফিরে যাও</a>
+            </section>
+
+            <!-- ============ 26 UNIFORM ============ -->
+            <section class="topic" id="uniform-dist">
+                <div class="topic-head"><span class="topic-num">26</span>
+                    <h2>Uniform Distribution (সমসম্ভাব্য বণ্টন)</h2>
+                </div>
+                <p class="topic-sub">
+                    যখন সব মান <b>সমান সম্ভাব্য</b> — কোনো মান অন্যটির চেয়ে বেশি বা কম likely
+                    নয় — তখন সেটি Uniform Distribution। ছক্কা (dice) এর সেরা উদাহরণ:
+                    প্রতিটি face আসার সম্ভাবনা সমান (1/6)।
+                </p>
+
+                <!-- Continuous Uniform -->
+                <h3 class="sub">Continuous Uniform U(a, b)</h3>
+                <p>−∞ < a < b < ∞ — a = সর্বনিম্ন, b = সর্বোচ্চ। a থেকে b এর মধ্যে
+                    সব মান সমান সম্ভাব্য।</p>
+
+                <table class="cmp">
+                    <tr><th>Symbol</th><th>মানে</th><th>সীমা</th></tr>
+                    <tr><td>a</td><td>সর্বনিম্ন মান (minimum)</td><td>−∞ < a < b</td></tr>
+                    <tr><td>b</td><td>সর্বোচ্চ মান (maximum)</td><td>a < b < ∞</td></tr>
+                </table>
+
+                <h3 class="sub">PDF</h3>
+                <div class="formula-block">
+                    <span class="lbl">Continuous Uniform PDF</span>
+                    f(x) = 1 / (b − a) &emsp; যখন a ≤ x ≤ b<br>
+                    f(x) = 0 &emsp;&emsp;&emsp;&emsp; নইলে
+                </div>
+                <p>উচ্চতা = 1/(b−a), কারণ <b>মোট area = 1</b> হতে হবে (area = উচ্চতা × প্রস্থ
+                    = 1/(b−a) × (b−a) = 1)।</p>
+
+                <h3 class="sub">CDF</h3>
+                <div class="formula-block">
+                    <span class="lbl">Continuous Uniform CDF</span>
+                    F(x) = 0 &emsp;&emsp;&emsp;&emsp;&emsp;&emsp; যদি x < a<br>
+                    F(x) = (x − a) / (b − a) &emsp; যদি a ≤ x ≤ b<br>
+                    F(x) = 1 &emsp;&emsp;&emsp;&emsp;&emsp;&emsp; যদি x > b
+                </div>
+
+                <h3 class="sub">Mean, Median, Variance</h3>
+                <div class="formula-block">
+                    <span class="lbl">Continuous Uniform এর পরিসংখ্যান</span>
+                    Mean = Median = (a + b) / 2<br>
+                    Variance = (b − a)² / 12<br>
+                    SD = (b − a) / √12
+                </div>
+                <p><b>Interval এ probability:</b> P(x₁ ≤ X ≤ x₂) = (x₂ − x₁) / (b − a)
+                    = F(x₂) − F(x₁)। Continuous distribution এ প্রান্তবিন্দু ≤ বা < ধরায় ফল
+                    বদলায় না (P(X = x) = 0 কারণ)।</p>
+
+                <!-- Discrete Uniform -->
+                <h3 class="sub">Discrete Uniform U(a, b)</h3>
+                <p>a ও b পূর্ণসংখ্যা, b ≥ a। মোট n = b − a + 1 টি মান, প্রতিটির probability
+                    সমান।</p>
+                <div class="formula-block">
+                    <span class="lbl">Discrete Uniform PMF</span>
+                    P(X = k) = 1 / n &emsp; যেখানে n = b − a + 1
+                </div>
+                <div class="formula-block">
+                    <span class="lbl">Discrete Uniform এর পরিসংখ্যান</span>
+                    Mean = Median = (a + b) / 2<br>
+                    Variance = (n² − 1) / 12
+                </div>
+
+                <div class="box note">
+                    <span class="tag">Dice উদাহরণ</span>
+                    <p>Dice: {1, 2, 3, 4, 5, 6}, n = 6−1+1 = 6, PMF = 1/6<br>
+                       Mean = (1+6)/2 = <b>3.5</b> (এটা কোনো face এ নেই; mean সবসময় সম্ভাব্য মান নয়)<br>
+                       Variance = (36−1)/12 = 35/12 ≈ <b>2.9167</b>; SD ≈ <b>1.7078</b></p>
+                </div>
+
+                <h3 class="sub">উদাহরণ (Continuous) — ধাপে ধাপে</h3>
+                <p>একটি দোকানে দৈনিক candy বিক্রি uniform, সর্বনিম্ন ১০, সর্বোচ্চ ৪০।
+                    ১৫ থেকে ৩০ এর মধ্যে বিক্রির probability কত?</p>
+                <div class="formula-block">
+                    <span class="lbl">ধাপ ১ — সীমা নির্ধারণ</span>
+                    a = 10, b = 40, b−a = 30
+                </div>
+                <div class="formula-block">
+                    <span class="lbl">ধাপ ২ — PDF উচ্চতা</span>
+                    f(x) = 1/(b−a) = 1/30
+                </div>
+                <div class="formula-block">
+                    <span class="lbl">ধাপ ৩ — Probability (area)</span>
+                    P(15 ≤ X ≤ 30) = (30−15) × 1/30 = 15/30 = <b>0.5</b> (৫০%)
+                </div>
+                <div class="formula-block">
+                    <span class="lbl">ধাপ ৪ — Mean ও Variance</span>
+                    Mean = (10+40)/2 = <b>25</b><br>
+                    Variance = (40−10)²/12 = 900/12 = <b>75</b><br>
+                    SD = √75 ≈ <b>8.6603</b>
+                </div>
+
+                <div class="box warn">
+                    <span class="tag">⚠ সাধারণ ভুল — Continuous বনাম Discrete</span>
+                    <p>candy এর সংখ্যা আসলে <b>পূর্ণসংখ্যা</b>, তাই এটি discrete uniform
+                       (১০ থেকে ৪০, মোট ৩১ টি মান, প্রতিটি 1/31)।
+                       তখন P(15 ≤ X ≤ 30) = ১৬ টি মান / ৩১ = <b>0.5161</b>।<br>
+                       প্রশ্নে "continuous uniform" ধরা হলে উত্তর 0.5। range বড় হলে দুটো
+                       প্রায় কাছাকাছি।</p>
+                </div>
+
+                <h3 class="sub">Python কোড</h3>
+                <div class="cell">
+                    <div class="cell-in"><span class="prompt">In [B4]</span>
+                        <pre class="code"><span class="c-kw">from</span> scipy.stats <span class="c-kw">import</span> uniform
+
+<span class="c-com"># scipy তে: uniform(loc=a, scale=b−a)</span>
+<span class="c-com"># loc = সর্বনিম্ন, scale = পরিসর (b − a)</span>
+a, b = <span class="c-num">10</span>, <span class="c-num">40</span>
+rv = uniform(loc=a, scale=b - a)
+<span class="c-fn">print</span>(<span class="c-str">f"P(15≤X≤30) = {round(rv.cdf(30) - rv.cdf(15), 4)}"</span>)
+<span class="c-fn">print</span>(<span class="c-str">f"Mean       = {round(rv.mean(), 4)}"</span>)
+<span class="c-fn">print</span>(<span class="c-str">f"Var        = {round(rv.var(), 4)}"</span>)</pre>
+                    </div>
+                    <div class="cell-out"><span class="prompt">Out[B4]</span>
+                        <pre class="out">P(15≤X≤30) = 0.5
+Mean       = 25.0
+Var        = 75.0</pre>
+                    </div>
+                </div>
+
+                <h3 class="sub">Graph</h3>
+
+                <p style="margin-bottom:4px;"><b>(ক) PDF — আয়তক্ষেত্র, ১৫–৩০ shaded</b></p>
+                <canvas id="uniformPDF" width="560" height="300" style="max-width:100%;background:var(--panel);border-radius:10px;"></canvas>
+                <p style="font-size:13px;color:var(--muted);margin-top:4px;">আয়তক্ষেত্রের উচ্চতা 1/(b−a) = 1/30 — ১৫ থেকে ৩০ পর্যন্ত shaded area = 0.5।</p>
+
+                <p style="margin-bottom:4px;margin-top:20px;"><b>(খ) CDF — সরলরেখা</b></p>
+                <canvas id="uniformCDF" width="560" height="300" style="max-width:100%;background:var(--panel);border-radius:10px;"></canvas>
+                <p style="font-size:13px;color:var(--muted);margin-top:4px;">a=10 এ F=0, b=40 এ F=1 — মাঝে সরলরেখা (সমান হারে probability জমা)।</p>
+
+                <p style="margin-bottom:4px;margin-top:20px;"><b>(গ) Dice — সব bar সমান (1/6)</b></p>
+                <canvas id="dicePMF" width="500" height="280" style="max-width:100%;background:var(--panel);border-radius:10px;"></canvas>
+                <p style="font-size:13px;color:var(--muted);margin-top:4px;">প্রতিটি face (1–6) এর probability সমান 1/6 ≈ 0.1667।</p>
+
+                <h3 class="sub">কোথায় ব্যবহার হয়?</h3>
+                <p>• Random number generation (0 থেকে 1 এর মধ্যে সমান সম্ভাব্য)<br>
+                   • Dice / Lottery<br>
+                   • Bus এর জন্য অপেক্ষার সময় (যদি bus প্রতি 15 মিনিটে আসে)<br>
+                   • Null hypothesis হিসেবে — "কোনো pattern নেই, সব সমান"</p>
+
+                <a href="#top" class="backtotop">↑ উপরে ফিরে যাও</a>
+            </section>
+
+            <!-- ============ 27 NORMAL (GAUSSIAN) ============ -->
+            <section class="topic" id="normal-dist">
+                <div class="topic-head"><span class="topic-num">27</span>
+                    <h2>Normal (Gaussian) Distribution</h2>
+                </div>
+                <p class="topic-sub">
+                    Statistics এর সবচেয়ে গুরুত্বপূর্ণ distribution — <b>bell আকৃতির</b> curve।
+                    প্রকৃতিতে অধিকাংশ পরিমাপ (উচ্চতা, ওজন, পরীক্ষার নম্বর) এই আকার অনুসরণ
+                    করে। Mean = Median = Mode; মাঝখান থেকে দুই পাশে <b>symmetric</b>।
+                </p>
+
+                <h3 class="sub">বৈশিষ্ট্য</h3>
+                <p>• ধরন: <b>Continuous</b><br>
+                   • x ∈ ℝ (−∞ থেকে +∞ পর্যন্ত যেকোনো মান)<br>
+                   • Mean = Median = Mode = μ<br>
+                   • মোট area = 1; P(X = x) = 0 (continuous বলে)<br>
+                   • μ বদলালে curve ডানে-বামে সরে; σ বাড়লে curve চ্যাপ্টা ও চওড়া হয়</p>
+
+                <h3 class="sub">Notation ও Parameter Table</h3>
+                <table class="cmp">
+                    <tr><th>Symbol</th><th>মানে</th><th>সীমা</th></tr>
+                    <tr><td>μ (mu)</td><td>Mean — কেন্দ্রের অবস্থান</td><td>μ ∈ ℝ</td></tr>
+                    <tr><td>σ² (sigma²)</td><td>Variance — ছড়ানো</td><td>σ² > 0</td></tr>
+                    <tr><td>σ</td><td>Standard Deviation</td><td>σ > 0</td></tr>
+                </table>
+                <p>Notation: X ~ <b>N(μ, σ²)</b></p>
+
+                <h3 class="sub">PDF</h3>
+                <div class="formula-block">
+                    <span class="lbl">Normal PDF</span>
+                    f(x) = 1 / (σ√(2π)) · e<sup>−½·((x−μ)/σ)²</sup>
+                </div>
+                <p><b>প্রতিটি অংশ:</b><br>
+                   • 1/(σ√(2π)) = normalizing constant — মোট area = 1 করে<br>
+                   • e<sup>−½(…)²</sup> = bell আকার তৈরি করে — mean থেকে দূরে গেলে মান দ্রুত কমে<br>
+                   • (x−μ)/σ = <b>z-score</b> — মান mean থেকে কত SD দূরে</p>
+
+                <h3 class="sub">Population vs Sample</h3>
+                <div class="formula-block">
+                    <span class="lbl">Population</span>
+                    μ = ΣX / N &emsp; σ² = Σ(X−μ)² / N
+                </div>
+                <div class="formula-block">
+                    <span class="lbl">Sample</span>
+                    x̄ = Σx / n &emsp; s² = Σ(x−x̄)² / (n−1)
+                </div>
+
+                <h3 class="sub">Empirical Rule (68-95-99.7)</h3>
+                <div class="formula-block">
+                    <span class="lbl">Empirical Rule</span>
+                    μ ± 1σ → ≈ 68.27% data<br>
+                    μ ± 2σ → ≈ 95.45% data<br>
+                    μ ± 3σ → ≈ 99.73% data<br>
+                    ঠিক 95% পড়ে μ ± <b>1.96</b>σ এ
+                </div>
+
+                <h3 class="sub">উদাহরণ</h3>
+                <p>ছাত্রদের ওজন N(60, 5²) কেজি:</p>
+                <div class="box note">
+                    <span class="tag">Empirical Rule প্রয়োগ</span>
+                    <p>• ৬৮% এর ওজন: 60±5 = <b>55–65</b> কেজি<br>
+                       • ৯৫% এর ওজন: 60±10 = <b>50–70</b> কেজি<br>
+                       • ৯৯.৭% এর ওজন: 60±15 = <b>45–75</b> কেজি</p>
+                </div>
+
+                <h3 class="sub">Python কোড</h3>
+                <div class="cell">
+                    <div class="cell-in"><span class="prompt">In [N1]</span>
+                        <pre class="code"><span class="c-kw">from</span> scipy.stats <span class="c-kw">import</span> norm
+
+<span class="c-com"># Empirical Rule যাচাই — N(0,1) তে</span>
+<span class="c-fn">print</span>(<span class="c-str">f"±1σ = {round(norm.cdf(1) - norm.cdf(-1), 4)}"</span>)   <span class="c-com"># 0.6827</span>
+<span class="c-fn">print</span>(<span class="c-str">f"±2σ = {round(norm.cdf(2) - norm.cdf(-2), 4)}"</span>)   <span class="c-com"># 0.9545</span>
+<span class="c-fn">print</span>(<span class="c-str">f"±3σ = {round(norm.cdf(3) - norm.cdf(-3), 4)}"</span>)   <span class="c-com"># 0.9973</span></pre>
+                    </div>
+                    <div class="cell-out"><span class="prompt">Out[N1]</span>
+                        <pre class="out">±1σ = 0.6827
+±2σ = 0.9545
+±3σ = 0.9973</pre>
+                    </div>
+                </div>
+
+                <h3 class="sub">Graph — Interactive</h3>
+                <p style="margin-bottom:4px;"><b>(ক) Empirical Rule</b> — μ±σ, ±2σ, ±3σ তিন আলাদা shade</p>
+                <div style="display:flex;gap:20px;flex-wrap:wrap;align-items:center;margin-bottom:10px;">
+                    <label style="font-family:var(--mono);font-size:13px;color:var(--muted);">μ = <span id="normMu">0</span>
+                        <input type="range" id="normMuSlider" min="-50" max="50" value="0" style="vertical-align:middle;width:120px;">
+                    </label>
+                    <label style="font-family:var(--mono);font-size:13px;color:var(--muted);">σ = <span id="normSig">1.0</span>
+                        <input type="range" id="normSigSlider" min="2" max="50" value="10" style="vertical-align:middle;width:120px;">
+                    </label>
+                </div>
+                <canvas id="normalPDF" width="620" height="340" style="max-width:100%;background:var(--panel);border-radius:10px;"></canvas>
+                <p style="font-size:13px;color:var(--muted);margin-top:4px;">μ বদলালে curve সরে; σ বাড়লে curve চ্যাপ্টা হয়, কিন্তু মোট area সবসময় 1।</p>
+
+                <div class="box warn">
+                    <span class="tag">⚠ সাধারণ ভুল</span>
+                    <p>১) f(x) মানে probability <b>নয়</b> — এটি density। Probability শুধু interval এর area থেকে পাওয়া যায়।<br>
+                       ২) সব bell-আকৃতির data Normal নয়। যাচাই করতে QQ plot বা Shapiro-Wilk test ব্যবহার করো।<br>
+                       ৩) IRIS dataset এর সব feature Normal নয়; কিছু (যেমন sepal width) প্রায় Normal।</p>
+                </div>
+
+                <h3 class="sub">কোথায় ব্যবহার হয়?</h3>
+                <p>• উচ্চতা, ওজন, রক্তচাপ<br>
+                   • পরীক্ষার নম্বর<br>
+                   • পরিমাপের ত্রুটি (measurement error)<br>
+                   • অনেক ছোট স্বাধীন প্রভাবের যোগফল (CLT)</p>
+
+                <a href="#top" class="backtotop">↑ উপরে ফিরে যাও</a>
+            </section>
+
+            <!-- ============ 28 STANDARD NORMAL ও Z-SCORE ============ -->
+            <section class="topic" id="standard-normal">
+                <div class="topic-head"><span class="topic-num">28</span>
+                    <h2>Standard Normal Distribution ও Z-score</h2>
+                </div>
+                <p class="topic-sub">
+                    <b>Standard Normal</b> = N(0, 1) — Mean = 0, SD = 1। যেকোনো Normal
+                    distribution কে <b>Z-score</b> দিয়ে এতে রূপান্তর করা যায়, ফলে ভিন্ন
+                    scale এর মান তুলনা করা সহজ হয়।
+                </p>
+
+                <h3 class="sub">Z-score সূত্র</h3>
+                <div class="formula-block">
+                    <span class="lbl">Z-score (Standardization)</span>
+                    Z = (x − μ) / σ
+                </div>
+                <p><b>Z মানে:</b> একটি মান mean থেকে কত SD দূরে।<br>
+                   • Z > 0 → mean এর <b>উপরে</b><br>
+                   • Z < 0 → mean এর <b>নিচে</b><br>
+                   • Z = 0 → ঠিক mean এ</p>
+
+                <h3 class="sub">উদাহরণ ১ — পুরো dataset standardize</h3>
+                <p>x = {1, 2, 3, 4, 5}, μ = 3, population σ = √2 ≈ 1.414</p>
+                <div class="formula-block">
+                    <span class="lbl">প্রতিটি মানের Z-score</span>
+                    Z = (x − 3) / 1.414<br>
+                    Z = {−1.41, −0.71, 0, 0.71, 1.41}
+                </div>
+                <div class="box note">
+                    <span class="tag">যাচাই</span>
+                    <p>নতুন data এর Mean = 0 এবং SD = 1 — standardization সঠিক।<br>
+                       <b>সতর্কতা:</b> σ কে 1 ধরা যাবে না, তাহলে রূপান্তরিত data এর SD 1 হবে না।</p>
+                </div>
+
+                <h3 class="sub">উদাহরণ ২ — একটি মান</h3>
+                <p>Distribution N(4, 1), x = 4.25:</p>
+                <div class="formula-block">
+                    <span class="lbl">Z-score</span>
+                    Z = (4.25 − 4) / 1 = <b>0.25</b>
+                </div>
+                <p>অর্থাৎ 4.25 মান mean থেকে <b>0.25 SD উপরে</b>।<br>
+                   <b>note:</b> এই distribution N(4, 1), standard normal নয়; Z দিয়ে আমরা একে
+                   standard normal এ নিয়ে যাই।</p>
+
+                <h3 class="sub">কেন Z-score কাজে লাগে?</h3>
+                <p>• <b>ভিন্ন scale এর মান তুলনা:</b> দুই পরীক্ষার নম্বর (একটিতে 80/100,
+                   অন্যটিতে 45/50) — Z দিয়ে বোঝা যায় কোনটা আপেক্ষিকভাবে ভালো<br>
+                   • <b>Outlier শনাক্ত:</b> |Z| > 3 হলে সাধারণত outlier ধরা হয়<br>
+                   • <b>Z-table থেকে probability:</b> P(Z ≤ z) সরাসরি পাওয়া যায়<br>
+                   • <b>ML এ feature scaling:</b> StandardScaler ঠিক Z-score ই ব্যবহার করে</p>
+
+                <h3 class="sub">Python কোড</h3>
+                <div class="cell">
+                    <div class="cell-in"><span class="prompt">In [Z1]</span>
+                        <pre class="code"><span class="c-kw">import</span> numpy <span class="c-kw">as</span> np
+
+x = np.array([<span class="c-num">1</span>, <span class="c-num">2</span>, <span class="c-num">3</span>, <span class="c-num">4</span>, <span class="c-num">5</span>])
+<span class="c-com"># population SD ব্যবহার (ddof=0)</span>
+z = np.round((x - x.mean()) / x.std(), <span class="c-num">2</span>)
+<span class="c-fn">print</span>(<span class="c-str">f"Z-scores = {z}"</span>)
+
+<span class="c-com"># উদাহরণ ২</span>
+<span class="c-fn">print</span>(<span class="c-str">f"Z(4.25) = {round((4.25 - 4) / 1, 2)}"</span>)</pre>
+                    </div>
+                    <div class="cell-out"><span class="prompt">Out[Z1]</span>
+                        <pre class="out">Z-scores = [-1.41 -0.71  0.    0.71  1.41]
+Z(4.25) = 0.25</pre>
+                    </div>
+                </div>
+
+                <h3 class="sub">Graph</h3>
+                <p style="margin-bottom:4px;">উপরে মূল data (μ=3), নিচে standardized (μ=0) — দুটো bell curve পাশাপাশি</p>
+                <canvas id="zscoreGraph" width="620" height="360" style="max-width:100%;background:var(--panel);border-radius:10px;"></canvas>
+                <p style="font-size:13px;color:var(--muted);margin-top:4px;">Standardization শুধু scale ও location বদলায়, আকৃতি একই থাকে।</p>
+
+                <a href="#top" class="backtotop">↑ উপরে ফিরে যাও</a>
+            </section>
+
+            <!-- ============ 29 LOG-NORMAL ============ -->
+            <section class="topic" id="log-normal">
+                <div class="topic-head"><span class="topic-num">29</span>
+                    <h2>Log-Normal Distribution</h2>
+                </div>
+                <p class="topic-sub">
+                    x > 0 (কখনো ঋণাত্মক নয়); যদি <b>ln(x)</b> Normal distribution অনুসরণ
+                    করে, তাহলে x হলো <b>Log-Normal</b>। উল্টোভাবে, x = e<sup>y</sup> যেখানে
+                    y ~ N(μ, σ²)। ডান দিকে লম্বা লেজ (<b>right-skewed</b>)।
+                </p>
+
+                <h3 class="sub">কেন তৈরি হয়?</h3>
+                <p>অনেক ছোট ধনাত্মক factor <b>গুণ</b> হয়ে একটি মান তৈরি হলে:
+                   log নিলে গুণ যোগে পরিণত হয়, আর যোগফল থেকে Normal আসে (CLT)
+                   — তাই গুণফল Log-Normal হয়।</p>
+
+                <h3 class="sub">Parameter Table</h3>
+                <table class="cmp">
+                    <tr><th>Symbol</th><th>মানে</th><th>সীমা</th></tr>
+                    <tr><td>μ</td><td><b>ln(x)</b> এর mean (x এর নয়!)</td><td>μ ∈ ℝ</td></tr>
+                    <tr><td>σ</td><td><b>ln(x)</b> এর SD (x এর নয়!)</td><td>σ > 0</td></tr>
+                </table>
+
+                <h3 class="sub">x এর পরিসংখ্যান</h3>
+                <div class="formula-block">
+                    <span class="lbl">Log-Normal এর Mean, Median, Mode, Variance</span>
+                    Mean = e<sup>(μ + σ²/2)</sup><br>
+                    Median = e<sup>μ</sup><br>
+                    Mode = e<sup>(μ − σ²)</sup><br>
+                    Variance = (e<sup>σ²</sup> − 1) · e<sup>(2μ + σ²)</sup>
+                </div>
+                <div class="box note">
+                    <span class="tag">সবসময় Mean > Median > Mode</span>
+                    <p>Right-skewed বলে Mean সবচেয়ে বড়, Mode সবচেয়ে ছোট। এটি
+                       Log-Normal এর অনন্য বৈশিষ্ট্য।</p>
+                </div>
+
+                <h3 class="sub">Log-Normal চেনার উপায় — QQ Plot</h3>
+                <p>data এর ln নিয়ে QQ plot আঁকলে যদি বিন্দুগুলো <b>সরলরেখায়</b> পড়ে,
+                   তাহলে data Log-Normal বলা যায়।</p>
+
+                <h3 class="sub">Graph</h3>
+                <p style="margin-bottom:4px;">Log-Normal curve (mean, median, mode চিহ্নিত)</p>
+                <canvas id="lognormalGraph" width="620" height="340" style="max-width:100%;background:var(--panel);border-radius:10px;"></canvas>
+                <p style="font-size:13px;color:var(--muted);margin-top:4px;">Log-Normal ডান দিকে লম্বা; ln নিলে symmetric Normal হয়ে যায়।</p>
+
+                <div class="box warn">
+                    <span class="tag">⚠ সাধারণ ভুল</span>
+                    <p>μ ও σ হলো <b>ln(x) এর</b> parameter, x এর নয়। x এর mean ≠ e<sup>μ</sup>
+                       (সেটা median)। x এর mean = e<sup>(μ+σ²/2)</sup>, যা সবসময় median এর চেয়ে বড়।</p>
+                </div>
+
+                <h3 class="sub">কোথায় ব্যবহার হয়?</h3>
+                <p>• আয় বণ্টন<br>
+                   • শেয়ার দাম<br>
+                   • বাড়ির দাম<br>
+                   • শহরের জনসংখ্যা<br>
+                   • File size<br>
+                   • সম্পদ বণ্টনের মূল অংশ প্রায় Log-Normal, কিন্তু সবচেয়ে ধনীদের লেজ Pareto এর মতো ভারী</p>
+
+                <a href="#top" class="backtotop">↑ উপরে ফিরে যাও</a>
+            </section>
+
+            <!-- ============ 30 POWER LAW ও PARETO ============ -->
+            <section class="topic" id="pareto-dist">
+                <div class="topic-head"><span class="topic-num">30</span>
+                    <h2>Power Law ও Pareto Distribution</h2>
+                </div>
+                <p class="topic-sub">
+                    <b>Power Law</b> = একটি পরিবার, যেখানে বড় মান খুব কম কিন্তু অস্তিত্বহীন
+                    নয় (<b>ভারী লেজ / heavy tail</b>)। <b>Pareto</b> হলো এর একটি নির্দিষ্ট
+                    continuous distribution।
+                </p>
+
+                <h3 class="sub">80-20 নিয়ম (Pareto Principle)</h3>
+                <p>২০% কারণ ৮০% ফল দেয়:</p>
+                <div class="box note">
+                    <span class="tag">উদাহরণ (বোঝার জন্য, সঠিক তথ্য নয়)</span>
+                    <p>• ২০% খেলোয়াড় ৮০% ম্যাচ জেতায়<br>
+                       • ২০% মানুষের হাতে ৮০% সম্পদ<br>
+                       • IT প্রজেক্টে ২০% টিম ৮০% কাজ করে<br>
+                       <b>80-20 ঠিক তখনই হয় যখন α ≈ 1.16</b>, সব Pareto তে নয়।</p>
+                </div>
+
+                <h3 class="sub">Parameter Table</h3>
+                <table class="cmp">
+                    <tr><th>Symbol</th><th>মানে</th><th>সীমা</th></tr>
+                    <tr><td>x<sub>m</sub></td><td>Scale — সর্বনিম্ন সম্ভাব্য মান</td><td>x<sub>m</sub> > 0</td></tr>
+                    <tr><td>α (alpha)</td><td>Shape — লেজের ভারীত্ব নিয়ন্ত্রণ</td><td>α > 0</td></tr>
+                </table>
+
+                <h3 class="sub">PDF ও CDF</h3>
+                <div class="formula-block">
+                    <span class="lbl">Pareto PDF</span>
+                    f(x) = α · x<sub>m</sub><sup>α</sup> / x<sup>(α+1)</sup> &emsp; x ≥ x<sub>m</sub>
+                </div>
+                <div class="formula-block">
+                    <span class="lbl">Pareto CDF</span>
+                    F(x) = 1 − (x<sub>m</sub> / x)<sup>α</sup>
+                </div>
+
+                <h3 class="sub">Mean, Median, Variance</h3>
+                <div class="formula-block">
+                    <span class="lbl">Pareto পরিসংখ্যান</span>
+                    Median = x<sub>m</sub> · 2<sup>(1/α)</sup><br>
+                    Mean = α · x<sub>m</sub> / (α − 1) &emsp; <b>শুধু α > 1 হলে</b> (নইলে অসীম)<br>
+                    Variance = x<sub>m</sub>² · α / ((α−1)²(α−2)) &emsp; <b>শুধু α > 2 হলে</b>
+                </div>
+
+                <h3 class="sub">α এর প্রভাব</h3>
+                <p>• α যত <b>ছোট</b>, লেজ তত <b>ভারী</b> (বিরল কিন্তু বিশাল মান বেশি সম্ভব)<br>
+                   • α বাড়লে লেজ হালকা হয়<br>
+                   • α = ∞ হলে curve x<sub>m</sub> এ একটি spike হয়ে যায়</p>
+
+                <h3 class="sub">Graph — Interactive</h3>
+                <p style="margin-bottom:4px;">α বদলাও, দেখো কীভাবে লেজ পরিবর্তন হয় (x<sub>m</sub> = 1)</p>
+                <div style="margin-bottom:10px;">
+                    <label style="font-family:var(--mono);font-size:13px;color:var(--muted);">α = <span id="paretoAlpha">2.0</span>
+                        <input type="range" id="paretoAlphaSlider" min="5" max="100" value="20" style="vertical-align:middle;width:160px;">
+                    </label>
+                </div>
+                <canvas id="paretoPDF" width="620" height="320" style="max-width:100%;background:var(--panel);border-radius:10px;"></canvas>
+                <p style="font-size:13px;color:var(--muted);margin-top:4px;">α ছোট হলে curve ধীরে নামে (ভারী লেজ); α বড় হলে দ্রুত নামে (হালকা লেজ)।</p>
+
+                <h3 class="sub">Box-Cox রূপান্তর</h3>
+                <div class="formula-block">
+                    <span class="lbl">Box-Cox</span>
+                    y = (x<sup>λ</sup> − 1) / λ &emsp; (λ ≠ 0)<br>
+                    y = ln(x) &emsp;&emsp;&emsp;&emsp; (λ = 0)
+                </div>
+                <p>ধনাত্মক data এর skewness কমানোর power রূপান্তর। এটি data কে Normal এর
+                   <b>কাছাকাছি</b> আনে, হুবহু Normal করে না।</p>
+
+                <div class="box warn">
+                    <span class="tag">⚠ গুরুত্বপূর্ণ পার্থক্য</span>
+                    <p><b>Log-Normal</b> এ ln নিলে → <b>হুবহু Normal</b>।<br>
+                       <b>Pareto</b> তে log নিলে পাওয়া যায় → <b>Exponential</b>, Normal নয়।<br>
+                       Box-Cox সব distribution কে Normal করে না — শুধু Normal এর দিকে টানে।</p>
+                </div>
+
+                <h3 class="sub">কোথায় ব্যবহার হয়?</h3>
+                <p>• সম্পদ ও জমির মালিকানা<br>
+                   • শহরের আকার (জনসংখ্যা)<br>
+                   • Website traffic<br>
+                   • File size<br>
+                   • বইয়ের বিক্রি, সোশ্যাল মিডিয়া follower</p>
+
+                <a href="#top" class="backtotop">↑ উপরে ফিরে যাও</a>
+            </section>
+
+            <!-- ============ 31 CLT ============ -->
+            <section class="topic" id="clt">
+                <div class="topic-head"><span class="topic-num">31</span>
+                    <h2>Central Limit Theorem (CLT)</h2>
+                </div>
+                <p class="topic-sub">
+                    Statistics এর সবচেয়ে শক্তিশালী theorem: population যে আকারেরই হোক (mean μ
+                    ও <b>সসীম variance σ²</b>), একই size n এর অনেক sample এর mean (x̄) এর
+                    distribution n বড় হলে <b>Normal এর কাছাকাছি</b> হয়।
+                </p>
+
+                <h3 class="sub">Sampling Distribution</h3>
+                <div class="formula-block">
+                    <span class="lbl">Sample Mean এর Distribution</span>
+                    μ<sub>x̄</sub> = μ<br>
+                    Standard Error (SE) = σ / √n<br>
+                    x̄ ~ N(μ, σ²/n)
+                </div>
+                <p><b>SE মানে:</b> sample mean গুলোর SD — population SD নয়। σ অজানা হলে
+                   s/√n ব্যবহার হয়। n বাড়লে SE কমে → estimate আরও নির্ভুল।</p>
+
+                <h3 class="sub">শর্ত</h3>
+                <p>• Sample গুলো <b>স্বাধীন</b><br>
+                   • সাধারণ নিয়ম: <b>n ≥ 30</b> (খুব skewed হলে আরও বড়)<br>
+                   • Population নিজে Normal হলে যেকোনো n এ x̄ হুবহু Normal<br>
+                   • <b>সসীম variance না থাকলে CLT কাজ করে না</b> — যেমন Pareto তে α ≤ 2</p>
+
+                <h3 class="sub">Point ও Interval Estimate</h3>
+                <div class="box note">
+                    <span class="tag">Point vs Interval Estimate</span>
+                    <p><b>Point estimate:</b> sample mean হলো population mean এর একটি একক মানের
+                       অনুমান।<br>
+                       <b>Interval estimate:</b> অজানা population parameter অনুমান করতে একটি
+                       মানের <b>পরিসর</b> (range) ব্যবহার।</p>
+                </div>
+
+                <h3 class="sub">Confidence Interval (ঝলক)</h3>
+                <div class="formula-block">
+                    <span class="lbl">95% Confidence Interval</span>
+                    CI = x̄ ± z · SE = x̄ ± 1.96 · (σ/√n)
+                </div>
+                <div class="box warn">
+                    <span class="tag">⚠ সাধারণ ভুল — CI এর ব্যাখ্যা</span>
+                    <p><b>সঠিক:</b> একই পদ্ধতিতে অনেকবার interval বানালে প্রায় ৯৫% টিতে আসল μ থাকবে।<br>
+                       <b>ভুল:</b> "এই interval এ μ থাকার probability ৯৫%" — μ নির্দিষ্ট, interval
+                       পরিবর্তনশীল।</p>
+                </div>
+
+                <h3 class="sub">Interactive Simulation</h3>
+                <p style="margin-bottom:4px;">Population বাছো, n বদলাও — দেখো ২০০০ টি sample mean এর histogram কীভাবে bell হয়:</p>
+                <div style="display:flex;gap:20px;flex-wrap:wrap;align-items:center;margin-bottom:10px;">
+                    <label style="font-family:var(--mono);font-size:13px;color:var(--muted);">Population:
+                        <select id="cltPop" style="background:var(--panel-2);color:var(--text);border:1px solid var(--line);border-radius:4px;padding:3px 6px;font-family:var(--mono);font-size:12px;">
+                            <option value="uniform">Uniform (0–10)</option>
+                            <option value="exponential">Exponential (λ=1)</option>
+                            <option value="dice">Dice (1–6)</option>
+                        </select>
+                    </label>
+                    <label style="font-family:var(--mono);font-size:13px;color:var(--muted);">n = <span id="cltN">5</span>
+                        <input type="range" id="cltNslider" min="1" max="100" value="5" style="vertical-align:middle;width:140px;">
+                    </label>
+                </div>
+                <canvas id="cltHist" width="620" height="360" style="max-width:100%;background:var(--panel);border-radius:10px;"></canvas>
+                <p id="cltStats" style="font-family:var(--mono);font-size:12px;color:var(--muted);margin-top:6px;"></p>
+                <p style="font-size:13px;color:var(--muted);margin-top:4px;">n বাড়ালে histogram ক্রমশ bell আকৃতি ধারণ করে, SD কমে যায় (= σ/√n)।<br>
+                   এমনকি Exponential (ভীষণ skewed) population ও n ≥ 30 এ প্রায় Normal দেখায়।</p>
+
+                <a href="#top" class="backtotop">↑ উপরে ফিরে যাও</a>
+            </section>
+
+            <!-- ============ 32 COMPARISON TABLE ============ -->
+            <section class="topic" id="dist-comparison">
+                <div class="topic-head"><span class="topic-num">32</span>
+                    <h2>সব Distribution — তুলনা সারণি</h2>
+                </div>
+                <p class="topic-sub">
+                    এই section এ তিনটি সারণি — (১) সব distribution একসাথে, (২) Z-score ও CLT
+                    হাতিয়ার হিসেবে, (৩) প্রশ্ন দেখে কোন distribution বাছবে।
+                </p>
+
+                <h3 class="sub">সারণি ১ — সব Distribution একসাথে</h3>
+                <div style="overflow-x:auto;">
+                <table class="cmp" style="min-width:900px;">
+                    <tr>
+                        <th>Distribution</th><th>ধরন</th><th>Notation ও Parameter</th>
+                        <th>PMF / PDF</th><th>Mean</th><th>Variance</th>
+                        <th>আকৃতি</th><th>মূল শর্ত</th><th>ব্যবহার</th>
+                    </tr>
+                    <tr>
+                        <td><b>Bernoulli</b></td><td>Discrete</td><td>p</td>
+                        <td>p<sup>k</sup>(1−p)<sup>(1−k)</sup></td><td>p</td><td>pq</td>
+                        <td>দুটি bar</td><td>একবার, দুই ফল</td><td>বীজ গজানো, পাস/ফেল</td>
+                    </tr>
+                    <tr>
+                        <td><b>Binomial</b></td><td>Discrete</td><td>n, p</td>
+                        <td><sup>n</sup>C<sub>k</sub>·p<sup>k</sup>·q<sup>(n−k)</sup></td><td>np</td><td>npq</td>
+                        <td>n বাড়লে bell</td><td>n নির্দিষ্ট, স্বাধীন, p স্থির</td><td>২০টি বীজের কয়টি গজালো</td>
+                    </tr>
+                    <tr>
+                        <td><b>Poisson</b></td><td>Discrete</td><td>λ</td>
+                        <td>e<sup>−λ</sup>λ<sup>x</sup>/x!</td><td>λt</td><td>λt</td>
+                        <td>ডানে ঢাল, λ বাড়লে bell</td><td>স্বাধীন ঘটনা, স্থির হার</td><td>প্রতি ঘণ্টায় রোগী</td>
+                    </tr>
+                    <tr>
+                        <td><b>Uniform (D)</b></td><td>Discrete</td><td>a, b</td>
+                        <td>1/n (n=b−a+1)</td><td>(a+b)/2</td><td>(n²−1)/12</td>
+                        <td>সমান bar</td><td>সব ফল সমান সম্ভাব্য</td><td>Dice, Lottery</td>
+                    </tr>
+                    <tr>
+                        <td><b>Uniform (C)</b></td><td>Continuous</td><td>a, b</td>
+                        <td>1/(b−a)</td><td>(a+b)/2</td><td>(b−a)²/12</td>
+                        <td>আয়তক্ষেত্র</td><td>সব মান সমান সম্ভাব্য</td><td>Random number, অপেক্ষার সময়</td>
+                    </tr>
+                    <tr>
+                        <td><b>Normal</b></td><td>Continuous</td><td>μ, σ²</td>
+                        <td>1/(σ√2π)·e<sup>−½((x−μ)/σ)²</sup></td><td>μ</td><td>σ²</td>
+                        <td>Bell, symmetric</td><td>ছোট স্বাধীন প্রভাবের যোগফল</td><td>উচ্চতা, ওজন, ভুল</td>
+                    </tr>
+                    <tr>
+                        <td><b>Log-Normal</b></td><td>Continuous</td><td>μ, σ (ln x এর)</td>
+                        <td>—</td><td>e<sup>(μ+σ²/2)</sup></td><td>(e<sup>σ²</sup>−1)e<sup>(2μ+σ²)</sup></td>
+                        <td>ডানে ঢাল</td><td>ছোট factor এর গুণফল, x>0</td><td>আয়, শেয়ার দাম</td>
+                    </tr>
+                    <tr>
+                        <td><b>Pareto</b></td><td>Continuous</td><td>x<sub>m</sub>, α</td>
+                        <td>α·x<sub>m</sub><sup>α</sup>/x<sup>(α+1)</sup></td>
+                        <td>αx<sub>m</sub>/(α−1)</td><td>x<sub>m</sub>²α/((α−1)²(α−2))</td>
+                        <td>খাড়া নামা, ভারী লেজ</td><td>অল্প কিছু বড় মান সব নিয়ন্ত্রণ</td><td>সম্পদ, শহরের আকার</td>
+                    </tr>
+                </table>
+                </div>
+
+                <h3 class="sub">সারণি ২ — Standard Normal ও CLT (distribution নয়, হাতিয়ার)</h3>
+                <table class="cmp">
+                    <tr><th>হাতিয়ার</th><th>কী করে</th><th>কোথায় ব্যবহার</th></tr>
+                    <tr>
+                        <td><b>Z-score</b></td>
+                        <td>মান কে standard scale এ আনে: Z = (x−μ)/σ</td>
+                        <td>তুলনা, outlier শনাক্ত, feature scaling (StandardScaler)</td>
+                    </tr>
+                    <tr>
+                        <td><b>CLT</b></td>
+                        <td>Sample mean → Normal (n বড় হলে)</td>
+                        <td>Sampling, poll, confidence interval, hypothesis test</td>
+                    </tr>
+                </table>
+
+                <h3 class="sub">সারণি ৩ — প্রশ্ন দেখে কোন Distribution?</h3>
+                <table class="cmp">
+                    <tr><th>প্রশ্নের ধরন</th><th>Distribution</th></tr>
+                    <tr><td>একবারের দুই ফল (হ্যাঁ/না)</td><td><b>Bernoulli</b></td></tr>
+                    <tr><td>n বারের মধ্যে সফল সংখ্যা গণনা</td><td><b>Binomial</b></td></tr>
+                    <tr><td>সময়/জায়গায় ঘটনার সংখ্যা গণনা</td><td><b>Poisson</b></td></tr>
+                    <tr><td>সব মান সমান সম্ভাব্য</td><td><b>Uniform</b></td></tr>
+                    <tr><td>ঘণ্টাকৃতি, symmetric মাপ</td><td><b>Normal</b></td></tr>
+                    <tr><td>ধনাত্মক, ডানে ঢাল, গুণের প্রভাব</td><td><b>Log-Normal</b></td></tr>
+                    <tr><td>অল্প কিছুর হাতে বেশিরভাগ</td><td><b>Pareto</b></td></tr>
+                    <tr><td>Sample mean এর আচরণ</td><td><b>CLT</b></td></tr>
+                </table>
+
+                <h3 class="sub">সম্পর্কের সারাংশ</h3>
+                <div class="box tip">
+                    <span class="tag">Distribution পরিবারের সম্পর্ক</span>
+                    <p><b>Bernoulli</b> → (n বার) → <b>Binomial</b> → (n বড়, p ছোট) → <b>Poisson</b><br>
+                       <b>Binomial / Poisson</b> → (n বা λ বড়) → <b>Normal</b><br>
+                       <b>Normal</b> ↔ (ln / exp) ↔ <b>Log-Normal</b><br>
+                       <b>Pareto</b> = ভারী লেজ, log নিলে Exponential (Normal নয়)<br>
+                       <b>CLT</b> = কেন Normal এত সাধারণ — অনেক যোগফলের সীমা Normal</p>
+                </div>
+
+                <a href="#top" class="backtotop">↑ উপরে ফিরে যাও</a>
+            </section>
+
 
         </main>
     </div>
@@ -1716,6 +2837,477 @@ Scipy  Spearman ρ = 0.8208</pre>
     <footer>
         Descriptive Statistics Reference — বাংলা ব্যাখ্যা ও পরীক্ষিত কোড উদাহরণ সহ
     </footer>
+
+    <!-- ====== SHARED GRAPH HELPERS ====== -->
+    <script>
+    (function(){
+        /* ─── HiDPI Canvas Setup ─── */
+        function setupCanvas(id){
+            const c=document.getElementById(id);
+            if(!c) return null;
+            const dpr=window.devicePixelRatio||1;
+            const rect=c.getBoundingClientRect();
+            c.width=rect.width*dpr;
+            c.height=rect.height*dpr;
+            const ctx=c.getContext('2d');
+            ctx.scale(dpr,dpr);
+            c.style.width=rect.width+'px';
+            c.style.height=rect.height+'px';
+            return {ctx,w:rect.width,h:rect.height};
+        }
+
+        /* ─── Color Palette (dark theme) ─── */
+        const C={
+            bg:'#151822', axis:'#3a4055', grid:'#252a38',
+            text:'#8b91a1', title:'#e7e9ee',
+            bar:'#e8a33d', barHL:'#4fd1c5', barAlt:'#c792ea',
+            line1:'#e8a33d', line2:'#4fd1c5', line3:'#c792ea', line4:'#ff6b5c',
+            shade:'rgba(79,209,197,0.18)', shadePrimary:'rgba(232,163,61,0.15)'
+        };
+
+        /* ─── drawBars ─── */
+        window.drawBars=function(canvasId, labels, values, opts){
+            opts=opts||{};
+            const s=setupCanvas(canvasId); if(!s) return;
+            const {ctx,w,h}=s;
+            const pad={t:40,r:20,b:50,l:55};
+            const pw=w-pad.l-pad.r, ph=h-pad.t-pad.b;
+            const n=labels.length;
+            const maxV=Math.max(...values)*1.15||1;
+            const barW=Math.min(pw/n*0.65,50);
+            const gap=(pw-barW*n)/(n+1);
+
+            /* grid & axis */
+            ctx.strokeStyle=C.grid; ctx.lineWidth=0.5;
+            for(let i=0;i<=4;i++){
+                const y=pad.t+ph-ph*(i/4);
+                ctx.beginPath();ctx.moveTo(pad.l,y);ctx.lineTo(w-pad.r,y);ctx.stroke();
+                ctx.fillStyle=C.text;ctx.font='11px JetBrains Mono,monospace';ctx.textAlign='right';
+                ctx.fillText((maxV*i/4).toFixed(opts.yDec!==undefined?opts.yDec:2),pad.l-6,y+4);
+            }
+            ctx.strokeStyle=C.axis; ctx.lineWidth=1;
+            ctx.beginPath();ctx.moveTo(pad.l,pad.t);ctx.lineTo(pad.l,pad.t+ph);ctx.lineTo(w-pad.r,pad.t+ph);ctx.stroke();
+
+            /* bars */
+            for(let i=0;i<n;i++){
+                const x=pad.l+gap+(barW+gap)*i;
+                const bh=(values[i]/maxV)*ph;
+                const y=pad.t+ph-bh;
+                const hl=opts.highlight!==undefined&&labels[i]===String(opts.highlight);
+                ctx.fillStyle=hl?C.barHL:C.bar;
+                ctx.globalAlpha=hl?1:0.82;
+                ctx.beginPath();ctx.roundRect?ctx.roundRect(x,y,barW,bh,4):ctx.rect(x,y,barW,bh);ctx.fill();
+                ctx.globalAlpha=1;
+                /* label */
+                ctx.fillStyle=C.text;ctx.font='11px JetBrains Mono,monospace';ctx.textAlign='center';
+                ctx.fillText(labels[i],x+barW/2,pad.t+ph+16);
+                /* value on top */
+                ctx.fillStyle=hl?C.barHL:C.title;ctx.font='bold 11px JetBrains Mono,monospace';
+                ctx.fillText(values[i].toFixed(opts.vDec!==undefined?opts.vDec:4),x+barW/2,y-6);
+            }
+
+            /* title & axis labels */
+            if(opts.title){ctx.fillStyle=C.title;ctx.font='bold 14px Inter,sans-serif';ctx.textAlign='center';ctx.fillText(opts.title,w/2,22);}
+            if(opts.xLabel){ctx.fillStyle=C.text;ctx.font='12px Inter,sans-serif';ctx.textAlign='center';ctx.fillText(opts.xLabel,w/2,h-4);}
+            if(opts.yLabel){ctx.save();ctx.translate(14,pad.t+ph/2);ctx.rotate(-Math.PI/2);ctx.fillStyle=C.text;ctx.font='12px Inter,sans-serif';ctx.textAlign='center';ctx.fillText(opts.yLabel,0,0);ctx.restore();}
+        };
+
+        /* ─── drawCurves ─── */
+        window.drawCurves=function(canvasId, curves, xmin, xmax, opts){
+            opts=opts||{};
+            const s=setupCanvas(canvasId); if(!s) return;
+            const {ctx,w,h}=s;
+            const pad={t:40,r:20,b:50,l:55};
+            const pw=w-pad.l-pad.r, ph=h-pad.t-pad.b;
+            const steps=400;
+            const dx=(xmax-xmin)/steps;
+            const colors=[C.line1,C.line2,C.line3,C.line4];
+
+            /* compute all y values first for auto-scaling */
+            let ymax=0;
+            const allPts=curves.map(c=>{
+                const pts=[];
+                for(let i=0;i<=steps;i++){const x=xmin+i*dx;const y=c.fn(x);pts.push({x,y});if(isFinite(y)&&y>ymax)ymax=y;}
+                return pts;
+            });
+            ymax*=1.12; if(ymax===0)ymax=1;
+
+            const toX=x=>pad.l+(x-xmin)/(xmax-xmin)*pw;
+            const toY=y=>pad.t+ph-y/ymax*ph;
+
+            /* grid */
+            ctx.strokeStyle=C.grid; ctx.lineWidth=0.5;
+            for(let i=0;i<=4;i++){
+                const y=pad.t+ph-ph*(i/4);
+                ctx.beginPath();ctx.moveTo(pad.l,y);ctx.lineTo(w-pad.r,y);ctx.stroke();
+                ctx.fillStyle=C.text;ctx.font='11px JetBrains Mono,monospace';ctx.textAlign='right';
+                ctx.fillText((ymax*i/4).toFixed(2),pad.l-6,y+4);
+            }
+            /* x ticks */
+            const xt=Math.ceil((xmax-xmin)/8);
+            for(let v=Math.ceil(xmin);v<=xmax;v+=xt||1){
+                const x=toX(v);
+                ctx.fillStyle=C.text;ctx.font='11px JetBrains Mono,monospace';ctx.textAlign='center';
+                ctx.fillText(v,x,pad.t+ph+16);
+            }
+            /* axis */
+            ctx.strokeStyle=C.axis;ctx.lineWidth=1;
+            ctx.beginPath();ctx.moveTo(pad.l,pad.t);ctx.lineTo(pad.l,pad.t+ph);ctx.lineTo(w-pad.r,pad.t+ph);ctx.stroke();
+
+            /* shade */
+            if(opts.shade){
+                const [sa,sb]=opts.shade;
+                ctx.fillStyle=C.shade;
+                ctx.beginPath();
+                ctx.moveTo(toX(sa),toY(0));
+                for(let i=0;i<=steps;i++){const x=xmin+i*dx;if(x>=sa&&x<=sb){ctx.lineTo(toX(x),toY(curves[0].fn(x)));}}
+                ctx.lineTo(toX(sb),toY(0));
+                ctx.closePath();ctx.fill();
+            }
+
+            /* curves */
+            allPts.forEach((pts,ci)=>{
+                ctx.strokeStyle=colors[ci%colors.length];ctx.lineWidth=2.2;
+                ctx.beginPath();
+                pts.forEach((p,i)=>{const px=toX(p.x),py=toY(Math.max(0,p.y));i===0?ctx.moveTo(px,py):ctx.lineTo(px,py);});
+                ctx.stroke();
+            });
+
+            /* legend */
+            if(curves.length>1||curves[0].label){
+                let lx=pad.l+10,ly=pad.t+14;
+                curves.forEach((c,ci)=>{
+                    if(!c.label)return;
+                    ctx.fillStyle=colors[ci%colors.length];ctx.font='bold 11px JetBrains Mono,monospace';ctx.textAlign='left';
+                    ctx.fillRect(lx,ly-8,14,3); ctx.fillText(c.label,lx+18,ly);
+                    ly+=16;
+                });
+            }
+
+            /* title & axis labels */
+            if(opts.title){ctx.fillStyle=C.title;ctx.font='bold 14px Inter,sans-serif';ctx.textAlign='center';ctx.fillText(opts.title,w/2,22);}
+            if(opts.xLabel){ctx.fillStyle=C.text;ctx.font='12px Inter,sans-serif';ctx.textAlign='center';ctx.fillText(opts.xLabel,w/2,h-4);}
+            if(opts.yLabel){ctx.save();ctx.translate(14,pad.t+ph/2);ctx.rotate(-Math.PI/2);ctx.fillStyle=C.text;ctx.font='12px Inter,sans-serif';ctx.textAlign='center';ctx.fillText(opts.yLabel,0,0);ctx.restore();}
+
+            /* shade label */
+            if(opts.shadeLabel&&opts.shade){
+                const mx=toX((opts.shade[0]+opts.shade[1])/2);
+                ctx.fillStyle=C.barHL;ctx.font='bold 12px Inter,sans-serif';ctx.textAlign='center';
+                ctx.fillText(opts.shadeLabel,mx,toY(curves[0].fn((opts.shade[0]+opts.shade[1])/2))-10);
+            }
+        };
+
+        /* ============ BERNOULLI GRAPHS ============ */
+        /* (ক) PMF */
+        drawBars('bernoulliPMF',['0','1'],[0.4,0.6],{title:'Bernoulli PMF (p = 0.6)',xLabel:'k (ফল)',yLabel:'P(X = k)',highlight:'1',vDec:2,yDec:2});
+
+        /* (খ) Variance parabola */
+        drawCurves('bernoulliVar',[{fn:function(p){return p*(1-p);},label:'Var = p(1−p)'}],0,1,{title:'Bernoulli Variance বনাম p',xLabel:'p',yLabel:'Variance'});
+
+        /* ============ BINOMIAL GRAPH ============ */
+        function fact(n){let r=1;for(let i=2;i<=n;i++)r*=i;return r;}
+        function comb(n,k){if(k<0||k>n)return 0;return fact(n)/(fact(k)*fact(n-k));}
+        function binPMF(k,n,p){return comb(n,k)*Math.pow(p,k)*Math.pow(1-p,n-k);}
+
+        function drawBinomial(){
+            const n=parseInt(document.getElementById('binNslider').value);
+            const p=parseInt(document.getElementById('binPslider').value)/100;
+            document.getElementById('binN').textContent=n;
+            document.getElementById('binP').textContent=p.toFixed(2);
+            const labels=[],vals=[];
+            for(let k=0;k<=n;k++){labels.push(String(k));vals.push(binPMF(k,n,p));}
+            drawBars('binomialPMF',labels,vals,{title:'Binomial PMF — B('+n+', '+p.toFixed(2)+')',xLabel:'k (সফলের সংখ্যা)',yLabel:'P(X = k)',highlight:'3'});
+        }
+        drawBinomial();
+        document.getElementById('binNslider').addEventListener('input',drawBinomial);
+        document.getElementById('binPslider').addEventListener('input',drawBinomial);
+
+        /* ============ POISSON GRAPH ============ */
+        function poisPMF(x,lam){return Math.exp(-lam)*Math.pow(lam,x)/fact(x);}
+
+        function drawPoisson(){
+            const lam=parseInt(document.getElementById('poisLamSlider').value)/10;
+            document.getElementById('poisLam').textContent=lam.toFixed(1);
+            const maxX=Math.max(12,Math.ceil(lam+4*Math.sqrt(lam)));
+            const labels=[],vals=[];
+            for(let x=0;x<=maxX;x++){labels.push(String(x));vals.push(poisPMF(x,lam));}
+            drawBars('poissonPMF',labels,vals,{title:'Poisson PMF — λ = '+lam.toFixed(1),xLabel:'x (ঘটনার সংখ্যা)',yLabel:'P(X = x)',highlight:'5'});
+        }
+        drawPoisson();
+        document.getElementById('poisLamSlider').addEventListener('input',drawPoisson);
+
+        /* ============ UNIFORM GRAPHS ============ */
+        /* (ক) PDF rectangle, 15-30 shaded */
+        drawCurves('uniformPDF',[{fn:function(x){return(x>=10&&x<=40)?1/30:0;},label:'f(x) = 1/30'}],5,45,{title:'Continuous Uniform PDF — U(10, 40)',xLabel:'x',yLabel:'f(x)',shade:[15,30],shadeLabel:'area = 0.5'});
+
+        /* (খ) CDF */
+        drawCurves('uniformCDF',[{fn:function(x){if(x<10)return 0;if(x>40)return 1;return(x-10)/30;},label:'F(x)'}],5,45,{title:'Continuous Uniform CDF — U(10, 40)',xLabel:'x',yLabel:'F(x)'});
+
+        /* (গ) Dice */
+        drawBars('dicePMF',['1','2','3','4','5','6'],[1/6,1/6,1/6,1/6,1/6,1/6],{title:'Discrete Uniform — Dice',xLabel:'Face',yLabel:'P(X = k)',vDec:4,yDec:2});
+
+        /* ============ NORMAL DISTRIBUTION GRAPH ============ */
+        function normalPDFval(x, mu, sig){
+            return (1/(sig*Math.sqrt(2*Math.PI)))*Math.exp(-0.5*Math.pow((x-mu)/sig,2));
+        }
+
+        function drawNormal(){
+            var mu=parseInt(document.getElementById('normMuSlider').value);
+            var sig=parseInt(document.getElementById('normSigSlider').value)/10;
+            document.getElementById('normMu').textContent=mu;
+            document.getElementById('normSig').textContent=sig.toFixed(1);
+
+            var s=setupCanvas('normalPDF'); if(!s) return;
+            var ctx=s.ctx, w=s.w, h=s.h;
+            var pad={t:40,r:20,b:50,l:55};
+            var pw=w-pad.l-pad.r, ph=h-pad.t-pad.b;
+            var xmin=mu-4*sig, xmax=mu+4*sig;
+            var steps=400, dx=(xmax-xmin)/steps;
+            var ymax=normalPDFval(mu,mu,sig)*1.15;
+
+            function toX(x){return pad.l+(x-xmin)/(xmax-xmin)*pw;}
+            function toY(y){return pad.t+ph-y/ymax*ph;}
+
+            /* grid */
+            ctx.strokeStyle=C.grid; ctx.lineWidth=0.5;
+            for(var i=0;i<=4;i++){
+                var y=pad.t+ph-ph*(i/4);
+                ctx.beginPath();ctx.moveTo(pad.l,y);ctx.lineTo(w-pad.r,y);ctx.stroke();
+            }
+            ctx.strokeStyle=C.axis;ctx.lineWidth=1;
+            ctx.beginPath();ctx.moveTo(pad.l,pad.t);ctx.lineTo(pad.l,pad.t+ph);ctx.lineTo(w-pad.r,pad.t+ph);ctx.stroke();
+
+            /* shaded regions: 3σ, 2σ, 1σ */
+            var shades=[
+                {lo:mu-3*sig,hi:mu+3*sig,color:'rgba(99,230,163,0.08)',label:'99.73%'},
+                {lo:mu-2*sig,hi:mu+2*sig,color:'rgba(79,209,197,0.12)',label:'95.45%'},
+                {lo:mu-1*sig,hi:mu+1*sig,color:'rgba(232,163,61,0.18)',label:'68.27%'}
+            ];
+            shades.forEach(function(sh){
+                ctx.fillStyle=sh.color;
+                ctx.beginPath();
+                ctx.moveTo(toX(sh.lo),toY(0));
+                for(var i=0;i<=steps;i++){
+                    var x=xmin+i*dx;
+                    if(x>=sh.lo&&x<=sh.hi) ctx.lineTo(toX(x),toY(normalPDFval(x,mu,sig)));
+                }
+                ctx.lineTo(toX(sh.hi),toY(0));
+                ctx.closePath();ctx.fill();
+            });
+
+            /* curve */
+            ctx.strokeStyle=C.line1;ctx.lineWidth=2.5;
+            ctx.beginPath();
+            for(var i=0;i<=steps;i++){
+                var x=xmin+i*dx;
+                var px=toX(x), py=toY(normalPDFval(x,mu,sig));
+                i===0?ctx.moveTo(px,py):ctx.lineTo(px,py);
+            }
+            ctx.stroke();
+
+            /* labels for σ regions */
+            ctx.font='bold 11px JetBrains Mono,monospace';ctx.textAlign='center';
+            ctx.fillStyle='#e8a33d';ctx.fillText('68.27%',toX(mu),toY(normalPDFval(mu,mu,sig)*0.35));
+            ctx.fillStyle='#4fd1c5';ctx.fillText('95.45%',toX(mu),toY(normalPDFval(mu,mu,sig)*0.15));
+            ctx.fillStyle='#63e6a3';ctx.fillText('99.73%',toX(mu),toY(normalPDFval(mu,mu,sig)*0.04));
+
+            /* x-axis ticks */
+            ctx.fillStyle=C.text;ctx.font='11px JetBrains Mono,monospace';
+            for(var i=-3;i<=3;i++){
+                var xv=mu+i*sig;
+                ctx.fillText((i===0?'μ':'μ'+(i>0?'+':'')+i+'σ'),toX(xv),pad.t+ph+16);
+            }
+
+            /* title */
+            ctx.fillStyle=C.title;ctx.font='bold 14px Inter,sans-serif';ctx.textAlign='center';
+            ctx.fillText('Normal PDF — N('+mu+', '+sig.toFixed(1)+'²)',w/2,22);
+        }
+        drawNormal();
+        document.getElementById('normMuSlider').addEventListener('input',drawNormal);
+        document.getElementById('normSigSlider').addEventListener('input',drawNormal);
+
+        /* ============ Z-SCORE GRAPH ============ */
+        (function(){
+            var s=setupCanvas('zscoreGraph'); if(!s) return;
+            var ctx=s.ctx, w=s.w, h=s.h;
+            var midY=h/2;
+            var pad={l:55,r:20};
+            var pw=w-pad.l-pad.r;
+
+            /* top: original N(3, sqrt2) */
+            var mu1=3, sig1=Math.sqrt(2);
+            var xmin1=mu1-4*sig1, xmax1=mu1+4*sig1;
+            var ymax1=normalPDFval(mu1,mu1,sig1)*1.15;
+            /* bottom: standard N(0,1) */
+            var mu2=0, sig2=1;
+            var xmin2=mu2-4, xmax2=mu2+4;
+            var ymax2=normalPDFval(0,0,1)*1.15;
+
+            function drawHalf(yOff, halfH, mu, sig, xmin, xmax, ymax, title, pts, color){
+                var steps=300, dx=(xmax-xmin)/steps;
+                function toX(x){return pad.l+(x-xmin)/(xmax-xmin)*pw;}
+                function toY(y){return yOff+halfH-y/ymax*halfH*0.85;}
+
+                /* axis */
+                ctx.strokeStyle=C.axis;ctx.lineWidth=1;
+                ctx.beginPath();ctx.moveTo(pad.l,yOff);ctx.lineTo(pad.l,yOff+halfH);ctx.lineTo(w-pad.r,yOff+halfH);ctx.stroke();
+
+                /* shade */
+                ctx.fillStyle='rgba(232,163,61,0.1)';
+                ctx.beginPath();ctx.moveTo(toX(xmin),toY(0));
+                for(var i=0;i<=steps;i++){var x=xmin+i*dx;ctx.lineTo(toX(x),toY(normalPDFval(x,mu,sig)));}
+                ctx.lineTo(toX(xmax),toY(0));ctx.closePath();ctx.fill();
+
+                /* curve */
+                ctx.strokeStyle=color;ctx.lineWidth=2;
+                ctx.beginPath();
+                for(var i=0;i<=steps;i++){var x=xmin+i*dx;var px=toX(x),py=toY(normalPDFval(x,mu,sig));i===0?ctx.moveTo(px,py):ctx.lineTo(px,py);}
+                ctx.stroke();
+
+                /* data points */
+                ctx.fillStyle=C.barHL;
+                pts.forEach(function(p){
+                    var px=toX(p), py=toY(normalPDFval(p,mu,sig));
+                    ctx.beginPath();ctx.arc(px,py,5,0,2*Math.PI);ctx.fill();
+                    ctx.fillStyle=C.title;ctx.font='bold 10px JetBrains Mono,monospace';ctx.textAlign='center';
+                    ctx.fillText(p.toFixed(2),px,py-10);
+                    ctx.fillStyle=C.barHL;
+                });
+
+                /* title */
+                ctx.fillStyle=C.title;ctx.font='bold 12px Inter,sans-serif';ctx.textAlign='center';
+                ctx.fillText(title,w/2,yOff+14);
+            }
+
+            drawHalf(5, midY-10, mu1, sig1, xmin1, xmax1, ymax1, 'মূল Data — N(3, √2)', [1,2,3,4,5], C.line1);
+
+            /* arrow between */
+            ctx.fillStyle=C.barHL;ctx.font='bold 13px Inter,sans-serif';ctx.textAlign='center';
+            ctx.fillText('↓  Z = (x−μ)/σ  ↓',w/2,midY+2);
+
+            drawHalf(midY+10, midY-30, mu2, sig2, xmin2, xmax2, ymax2, 'Standardized — N(0, 1)', [-1.41,-0.71,0,0.71,1.41], C.line2);
+        })();
+
+        /* ============ LOG-NORMAL GRAPH ============ */
+        (function(){
+            var mu=0, sig=1;
+            /* Log-Normal PDF: f(x) = 1/(x·σ·√2π) · e^(−(ln(x)−μ)²/(2σ²)) */
+            function lnPDF(x){
+                if(x<=0) return 0;
+                var lnx=Math.log(x);
+                return (1/(x*sig*Math.sqrt(2*Math.PI)))*Math.exp(-0.5*Math.pow((lnx-mu)/sig,2));
+            }
+            var meanX=Math.exp(mu+sig*sig/2);
+            var medianX=Math.exp(mu);
+            var modeX=Math.exp(mu-sig*sig);
+
+            drawCurves('lognormalGraph',[
+                {fn:lnPDF, label:'Log-Normal (μ=0, σ=1)'}
+            ], 0.01, 8, {title:'Log-Normal Distribution',xLabel:'x',yLabel:'f(x)'});
+
+            /* mark mean, median, mode on the canvas */
+            var s2=setupCanvas('lognormalGraph'); if(!s2) return;
+            var ctx2=s2.ctx, w2=s2.w, h2=s2.h;
+            /* re-draw with marks — simple approach: just add vertical lines */
+            var pad2={t:40,r:20,b:50,l:55};
+            var pw2=w2-pad2.l-pad2.r, ph2=h2-pad2.t-pad2.b;
+            var xmin2=0.01, xmax2=8;
+            /* compute ymax */
+            var ymax2=0;
+            for(var i=0;i<=400;i++){var x=xmin2+i*(xmax2-xmin2)/400;var y=lnPDF(x);if(y>ymax2)ymax2=y;}
+            ymax2*=1.12;
+            function toX2(x){return pad2.l+(x-xmin2)/(xmax2-xmin2)*pw2;}
+            function toY2(y){return pad2.t+ph2-y/ymax2*ph2;}
+
+            var marks=[
+                {val:modeX,label:'Mode='+modeX.toFixed(2),color:C.line3},
+                {val:medianX,label:'Median='+medianX.toFixed(2),color:C.line2},
+                {val:meanX,label:'Mean='+meanX.toFixed(2),color:C.line4}
+            ];
+            marks.forEach(function(m,i){
+                ctx2.strokeStyle=m.color;ctx2.lineWidth=1.5;ctx2.setLineDash([5,3]);
+                ctx2.beginPath();ctx2.moveTo(toX2(m.val),pad2.t+10);ctx2.lineTo(toX2(m.val),pad2.t+ph2);ctx2.stroke();
+                ctx2.setLineDash([]);
+                ctx2.fillStyle=m.color;ctx2.font='bold 11px JetBrains Mono,monospace';ctx2.textAlign='left';
+                ctx2.fillText(m.label,toX2(m.val)+4,pad2.t+25+i*16);
+            });
+        })();
+
+        /* ============ PARETO GRAPH ============ */
+        function paretoPDFval(x, xm, alpha){
+            if(x<xm) return 0;
+            return alpha*Math.pow(xm,alpha)/Math.pow(x,alpha+1);
+        }
+
+        function drawPareto(){
+            var alpha=parseInt(document.getElementById('paretoAlphaSlider').value)/10;
+            document.getElementById('paretoAlpha').textContent=alpha.toFixed(1);
+            var xm=1;
+            drawCurves('paretoPDF',[
+                {fn:function(x){return paretoPDFval(x,xm,alpha);}, label:'α = '+alpha.toFixed(1)}
+            ], 0.5, 8, {title:'Pareto PDF — x_m = 1, α = '+alpha.toFixed(1),xLabel:'x',yLabel:'f(x)'});
+        }
+        drawPareto();
+        document.getElementById('paretoAlphaSlider').addEventListener('input',drawPareto);
+
+        /* ============ CLT SIMULATION ============ */
+        function sampleFromPop(pop){
+            if(pop==='uniform') return Math.random()*10;
+            if(pop==='exponential') return -Math.log(1-Math.random()); /* Exp(1) */
+            if(pop==='dice') return Math.floor(Math.random()*6)+1;
+            return Math.random()*10;
+        }
+        function popMuSig(pop){
+            if(pop==='uniform') return {mu:5, sig:Math.sqrt(100/12)}; /* U(0,10) */
+            if(pop==='exponential') return {mu:1, sig:1};
+            if(pop==='dice') return {mu:3.5, sig:Math.sqrt(35/12)};
+            return {mu:5,sig:1};
+        }
+
+        function drawCLT(){
+            var pop=document.getElementById('cltPop').value;
+            var n=parseInt(document.getElementById('cltNslider').value);
+            document.getElementById('cltN').textContent=n;
+            var info=popMuSig(pop);
+            var nSamples=2000;
+            var means=[];
+            for(var s=0;s<nSamples;s++){
+                var sum=0;
+                for(var j=0;j<n;j++) sum+=sampleFromPop(pop);
+                means.push(sum/n);
+            }
+            /* histogram */
+            var lo=Math.min.apply(null,means), hi=Math.max.apply(null,means);
+            var nBins=Math.min(40,Math.max(12,Math.ceil(Math.sqrt(nSamples))));
+            var binW2=(hi-lo)/nBins; if(binW2===0){binW2=1;lo-=0.5;hi+=0.5;}
+            var bins=new Array(nBins).fill(0);
+            means.forEach(function(m){
+                var idx=Math.min(Math.floor((m-lo)/binW2),nBins-1);
+                bins[idx]++;
+            });
+            var labels2=[], vals2=[];
+            for(var i=0;i<nBins;i++){
+                labels2.push((lo+i*binW2+binW2/2).toFixed(1));
+                vals2.push(bins[i]);
+            }
+            drawBars('cltHist',labels2,vals2,{title:'CLT Simulation — '+pop+', n = '+n+', ২০০০ sample mean',xLabel:'Sample Mean (x̄)',yLabel:'Frequency',vDec:0,yDec:0});
+
+            /* stats */
+            var mMean=means.reduce(function(a,b){return a+b;},0)/means.length;
+            var mVar=means.reduce(function(a,b){return a+(b-mMean)*(b-mMean);},0)/means.length;
+            var mSD=Math.sqrt(mVar);
+            var theoSE=info.sig/Math.sqrt(n);
+            document.getElementById('cltStats').innerHTML=
+                'Population: μ = '+info.mu.toFixed(2)+', σ = '+info.sig.toFixed(2)+
+                ' &emsp;|&emsp; Sample Means: mean = '+mMean.toFixed(3)+', SD = '+mSD.toFixed(3)+
+                ' &emsp;|&emsp; তাত্ত্বিক SE (σ/√n) = '+theoSE.toFixed(3);
+        }
+        drawCLT();
+        document.getElementById('cltNslider').addEventListener('input',drawCLT);
+        document.getElementById('cltPop').addEventListener('change',drawCLT);
+
+    })();
+    </script>
 
     <script>
         // highlight active section in sidebar while scrolling
