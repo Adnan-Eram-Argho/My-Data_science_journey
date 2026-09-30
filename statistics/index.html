@@ -31,15 +31,23 @@
 
 <body id="top">
 
+    <!-- Mobile Top Navigation Bar -->
+    <div class="mobile-nav-bar">
+        <button class="mn-btn" id="mobileNavToggle" aria-label="Open Navigation">
+            <span>☰</span>
+            <span>Topics (32)</span>
+        </button>
+        <span class="mn-title">statistics_ref.py</span>
+        <a class="mn-home" href="../index.html">◂ Hub</a>
+    </div>
+    <div class="sidebar-overlay" id="sidebarOverlay"></div>
+
     <div class="shell">
         <aside class="sidebar" id="sidebar">
-            <button class="mobile-toggle" onclick="document.getElementById('sidebar').classList.toggle('open')">
-                <span>≡ Statistics</span>
-                <span class="toggle-icon">▾</span>
-            </button>
-            <div class="sidebar-head desktop-dots">
+            <div class="sidebar-head">
                 <span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
                 <span class="sidebar-title">statistics_ref.py</span>
+                <button class="sidebar-close-btn" id="sidebarCloseBtn" aria-label="Close Navigation">✕</button>
             </div>
             <nav class="nb-group" id="navlinks">
                 <a class="nb-link" href="../index.html"><span class="ico">◂</span> Home</a>
@@ -85,8 +93,8 @@
 
             </nav>
             <div class="sidebar-foot">
-                Descriptive Statistics<br>
-                সম্পূর্ণ বাংলা ব্যাখ্যা<br>
+                32 topics covered<br>
+                Descriptive, Probability &amp; Distributions<br>
                 Framework: Python / Math
             </div>
         </aside>
@@ -94,15 +102,13 @@
         <main>
             <div class="hero">
                 <div class="kicker">// consolidated study reference</div>
-                <h1>Descriptive Statistics <span>&amp; Data Summarization</span></h1>
+                <h1>Statistics &amp; Probability <span>Theory Reference</span></h1>
                 <p>
-                    Statistics-এর Descriptive অংশের পূর্ণাঙ্গ বাংলা রেফারেন্স — Central Tendency,
-                    Variance, Percentile, Box Plot, Covariance এবং Correlation সহ প্রতিটি concept-এর
-                    বিস্তারিত ব্যাখ্যা, সূত্র, numeric example এবং inline visualization।
+                    Statistics-এর Descriptive অংশ, Probability Fundamentals, এবং Probability Distributions (Bernoulli, Binomial, Poisson, Normal, Log-Normal, Pareto, CLT) সহ পূর্ণাঙ্গ বাংলা রেফারেন্স — বিস্তারিত ব্যাখ্যা, সূত্র, numeric example এবং inline visualization।
                 </p>
                 <div class="hero-stats">
-                    <div><b>10</b>topics</div>
-                    <div><b>20+</b>formulae</div>
+                    <div><b>32</b>topics</div>
+                    <div><b>35+</b>formulae</div>
                     <div><b>100%</b>বাংলা ব্যাখ্যা</div>
                 </div>
             </div>
@@ -3320,16 +3326,34 @@ Z(4.25) = 0.25</pre>
             });
             links.forEach(l => l.classList.toggle('active', l.getAttribute('href') === '#' + current));
         };
-        window.addEventListener('scroll', setActive);
+        window.addEventListener('scroll', setActive, { passive: true });
         setActive();
 
-        // mobile toggle
-        const toggle = document.querySelector('.mobile-toggle');
-        if (toggle) {
-            toggle.addEventListener('click', () => {
-                document.getElementById('sidebar').classList.toggle('open');
-            });
-        }
+        // mobile drawer toggle
+        const sidebar = document.getElementById('sidebar');
+        const overlay = document.getElementById('sidebarOverlay');
+        const openBtn = document.getElementById('mobileNavToggle');
+        const closeBtn = document.getElementById('sidebarCloseBtn');
+
+        const openMenu = () => {
+            if (sidebar) sidebar.classList.add('open');
+            if (overlay) overlay.classList.add('open');
+            document.body.style.overflow = 'hidden';
+        };
+
+        const closeMenu = () => {
+            if (sidebar) sidebar.classList.remove('open');
+            if (overlay) overlay.classList.remove('open');
+            document.body.style.overflow = '';
+        };
+
+        if (openBtn) openBtn.addEventListener('click', openMenu);
+        if (closeBtn) closeBtn.addEventListener('click', closeMenu);
+        if (overlay) overlay.addEventListener('click', closeMenu);
+
+        document.querySelectorAll('.nb-link[href^="#"]').forEach(link => {
+            link.addEventListener('click', closeMenu);
+        });
     </script>
 </body>
 

@@ -1,6 +1,6 @@
 # My Data Science Journey & Study Reference
 
-A structured, web-based study reference hub built from hands-on Jupyter Notebooks, original research notes, and core mathematics & statistics foundations. Covers **Python Core**, **NumPy**, **Pandas**, **Data Manipulation**, **Data Visualization** (Matplotlib & Seaborn), **SQL (SQLite)**, **Flask**, **Streamlit**, and **Descriptive Statistics** — all with tested code examples and detailed explanations in Bengali.
+A structured, web-based study reference hub built from hands-on Jupyter Notebooks, original research notes, and core mathematics & statistics foundations. Covers **Python Core**, **NumPy**, **Pandas**, **Data Manipulation**, **Data Visualization** (Matplotlib & Seaborn), **SQL (SQLite)**, **Flask**, **Streamlit**, and **Statistics & Probability Theory** — all with tested code examples, mathematical proofs, and detailed explanations in Bengali.
 
 ## 🌐 Live Website
 
@@ -13,11 +13,11 @@ Access the interactive study reference dashboard online:
 
 ```
 Website-root/
-├── index.html              ← Landing page & Quick Topic Index (94 topics)
-├── style.css               ← Shared dark-mode design system
+├── index.html              ← Landing page & Quick Topic Index (120 topics)
+├── style.css               ← Shared dark-mode design system & Mobile Drawer
 ├── .nojekyll               ← GitHub Pages static site config
 ├── python/
-│   └── index.html          ← Python Core (23 topics)
+│   └── index.html          ← Python Core & Advanced Paradigms (27 topics)
 ├── numpy/
 │   └── index.html          ← NumPy + Pandas + Data Manipulation + Visualization (47 topics)
 ├── sql/
@@ -27,7 +27,7 @@ Website-root/
 ├── streamlit/
 │   └── index.html          ← Streamlit Data Apps (2 topics)
 └── statistics/
-    └── index.html          ← Descriptive Statistics (10 topics) ← NEW
+    └── index.html          ← Statistics, Probability & Distributions (32 topics)
 ```
 
 ---
@@ -35,22 +35,24 @@ Website-root/
 ## 📦 Active Modules
 
 ### 🐍 Python Core & Functional Tools
-> `python/index.html` · **23 topics** · **60+ code cells**
+> `python/index.html` · **27 topics** · **60+ code cells**
 
 | # | Topic | # | Topic |
 |---|---|---|---|
-| 01 | Lists | 13 | Exception Handling |
-| 02 | Tuples | 14 | Magic Methods |
-| 03 | Dictionaries | 15 | OOP Basics |
-| 04 | Sets | 16 | Encapsulation |
-| 05 | Functions | 17 | Inheritance |
-| 06 | Lambda Functions | 18 | Polymorphism |
-| 07 | map() | 19 | Abstraction |
-| 08 | filter() | 20 | Custom Exceptions |
-| 09 | Comparison | 21 | Iterators |
-| 10 | Modules & Packages | 22 | Generators |
-| 11 | Standard Library | 23 | Decorators |
-| 12 | File Operations | | |
+| 01 | Lists | 15 | OOP Basics |
+| 02 | Tuples | 16 | Encapsulation |
+| 03 | Dictionaries | 17 | Inheritance |
+| 04 | Sets | 18 | Polymorphism |
+| 05 | Functions | 19 | Abstraction |
+| 06 | Lambda Functions | 20 | Custom Exceptions |
+| 07 | map() | 21 | Iterators |
+| 08 | filter() | 22 | Generators |
+| 09 | Comparison | 23 | Decorators |
+| 10 | Modules & Packages | 24 | Logging |
+| 11 | Standard Library | 25 | Multithreading |
+| 12 | File Operations | 26 | Multiprocessing |
+| 13 | Exception Handling | 27 | Memory Management |
+| 14 | Magic Methods | | |
 
 ---
 
@@ -148,9 +150,10 @@ Website-root/
 
 ---
 
-### 📊 Descriptive Statistics ← NEW
-> `statistics/index.html` · **10 topics** · **20+ formulae** · **সম্পূর্ণ বাংলা**
+### 📊 Statistics & Probability Theory
+> `statistics/index.html` · **32 topics** · **35+ formulae** · **সম্পূর্ণ বাংলা**
 
+#### Descriptive Statistics (10 topics)
 | # | Topic | Key Concepts |
 |---|---|---|
 | 01 | Statistics কী | Descriptive vs Inferential — সংজ্ঞা ও পার্থক্য |
@@ -161,26 +164,54 @@ Website-root/
 | 06 | Histogram | সংজ্ঞা, Bar Chart থেকে পার্থক্য, inline SVG chart |
 | 07 | Percentile & Quartile | Position সূত্র, interpolation পদ্ধতি, Q1/Q2/Q3 |
 | 08 | 5 Number Summary & Box Plot | IQR, Fence Value, outlier detection, inline SVG |
-| 09 | Covariance | Population/Sample সূত্র, Cov(X,X) = Var, advantages/disadvantages |
+| 09 | Covariance | Population/Sample সূত্র, Cov(X,X) = Var |
 | 10 | Correlation | Pearson (r) ও Spearman (ρ) — দুটি সমতুল্য সূত্র সহ |
 
-> **Note:** কাঠামো এমন রাখা হয়েছে যাতে পরে **Inferential Statistics** একই `index.html`-এ সহজে যোগ করা যায়।
+#### Probability Fundamentals (11 topics)
+| # | Topic | Key Concepts |
+|---|---|---|
+| 11 | Probability কী | Sample Space, Events, $P(E) = n(E)/n(S)$ |
+| 12 | Mutually Exclusive | $P(A \cap B) = 0$, Disjoint Events |
+| 13 | Non-Mutually Exclusive | Joint Events, Overlapping outcomes |
+| 14 | Addition Formulas | $P(A \cup B) = P(A) + P(B) - P(A \cap B)$ |
+| 15 | Multiplication Rule | Joint Probability, Product Rule |
+| 16 | Dependent Events | Conditional Probability $P(A \mid B) = P(A \cap B)/P(B)$ |
+| 17 | Independent Events | $P(A \cap B) = P(A) \cdot P(B)$ |
+| 18 | Distribution Function | Probability mass/density assignment |
+| 19 | PMF | Probability Mass Function (Discrete) |
+| 20 | PDF | Probability Density Function (Continuous) |
+| 21 | CDF | Cumulative Distribution Function $F(x) = P(X \le x)$ |
+
+#### Probability Distributions & CLT (11 topics)
+| # | Topic | Key Concepts |
+|---|---|---|
+| 22 | Distribution কী | Parametric models overview |
+| 23 | Bernoulli | Binary outcome, $p$ and $q=1-p$, Mean $p$, Var $pq$ |
+| 24 | Binomial | $n$ independent trials, $\binom{n}{k}p^k(1-p)^{n-k}$ |
+| 25 | Poisson | Rare events in continuous interval, $\lambda^k e^{-\lambda}/k!$ |
+| 26 | Uniform | Constant probability over interval $[a, b]$ |
+| 27 | Normal (Gaussian) | Bell curve, $\mu, \sigma$, Empirical Rule (68-95-99.7) |
+| 28 | Standard Normal (Z) | Z-score standardizing: $Z = (X - \mu)/\sigma$ |
+| 29 | Log-Normal | Right-skewed data, $\ln(X) \sim \mathcal{N}(\mu, \sigma^2)$ |
+| 30 | Pareto & Power Law | 80/20 Rule, heavy-tail distribution |
+| 31 | Central Limit Theorem | Sample means converge to Normal distribution as $n \ge 30$ |
+| 32 | তুলনা সারণি | PMF/PDF, Mean, Variance summary comparison table |
 
 ---
 
 ## 🚀 Features
 
-- **94 Topics** across 6 active modules with **180+ tested code examples**
-- **Consolidated Notebooks**: Multiple Jupyter notebooks integrated into single, searchable web pages
-- **Quick Topic Index**: Jump to any topic across all modules from the homepage
+- **120 Topics** across 6 active modules with **200+ tested code examples & formulas**
+- **Consolidated Notebooks**: Multiple Jupyter notebooks and Python scripts integrated into searchable web pages
+- **Quick Topic Index**: Jump to any of the 120 topics across all modules directly from the homepage
 - **Inline SVG Visualizations**: Histogram, Box Plot, Scatter Plot, Variable hierarchy diagram, Correlation scale — all embedded as responsive SVG
 - **Dual-language Content**: Technical terms in English, detailed explanations in Bengali (বাংলা)
-- **Mathematical Formulae**: Every formula verified and presented with numeric examples
+- **Mathematical Formulae**: Every formula verified and presented with step-by-step numeric examples
 - **Detailed Nuances**: Syntax explanations, edge-case warnings (⚠), tips (💡), and notes (📝)
 - **Original Code Preserved**: All comments from original notebooks kept intact
 - **Modern Dark UI**: JetBrains Mono code font, responsive grid layout, sidebar navigation with scroll-highlight
-- **Mobile Responsive**: Collapsible sidebar with toggle, stacked cards on small screens
-- **Slot-comment Workflow**: `<!-- SLOT:NAV -->` and `<!-- SLOT:SECTION -->` markers for easy content expansion
+- **100% Mobile Friendly**: Off-canvas slide-in navigation drawer with backdrop overlay, mobile top bar, responsive code blocks with touch scroll, responsive tables, and mobile-friendly tap targets
+- **Slot-comment Workflow**: `<!-- SLOT:NAV -->` and `<!-- SLOT:SECTION -->` markers for easy future expansion
 
 ---
 
@@ -189,8 +220,8 @@ Website-root/
 | Component | Technology |
 |---|---|
 | Structure | HTML5 (semantic) |
-| Styling | Vanilla CSS (custom dark theme) |
-| Charts | Inline SVG (no external library) |
+| Styling | Vanilla CSS (custom dark theme, responsive grid & drawer) |
+| Charts | Inline SVG (zero external runtime dependencies) |
 | Fonts | Google Fonts — Inter + JetBrains Mono |
 | Hosting | GitHub Pages |
 | Source | Jupyter Notebooks + Study Notes |
@@ -200,7 +231,7 @@ Website-root/
 ## 📌 Planned Modules
 
 - 🤖 **Machine Learning** — Scikit-Learn, Regression, Classification, Model Tuning
-- 📈 **Inferential Statistics** — Hypothesis Testing, Confidence Intervals, p-value, Distributions
+- 📈 **Inferential Statistics (Part 2)** — Hypothesis Testing, Confidence Intervals, p-value, t-test, ANOVA, Chi-Square
 
 ---
 

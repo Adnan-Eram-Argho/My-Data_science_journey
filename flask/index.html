@@ -13,11 +13,23 @@
 
 <body id="top">
 
+    <!-- Mobile Top Navigation Bar -->
+    <div class="mobile-nav-bar">
+        <button class="mn-btn" id="mobileNavToggle" aria-label="Open Navigation">
+            <span>☰</span>
+            <span>Topics (05)</span>
+        </button>
+        <span class="mn-title">flask_core.py</span>
+        <a class="mn-home" href="../index.html">◂ Hub</a>
+    </div>
+    <div class="sidebar-overlay" id="sidebarOverlay"></div>
+
     <div class="shell">
         <aside class="sidebar" id="sidebar">
             <div class="sidebar-head">
                 <span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
                 <span class="sidebar-title">flask_core.py</span>
+                <button class="sidebar-close-btn" id="sidebarCloseBtn" aria-label="Close Navigation">✕</button>
             </div>
             <nav class="nb-group" id="navlinks">
                 <a class="nb-link" href="../index.html"><span class="ico">◂</span> Home</a>
@@ -586,8 +598,34 @@ curl -X PUT http://127.0.0.1:5000/items/3 \
             });
             links.forEach(l => l.classList.toggle('active', l.getAttribute('href') === '#' + current));
         };
-        window.addEventListener('scroll', setActive);
+        window.addEventListener('scroll', setActive, { passive: true });
         setActive();
+
+        // mobile drawer toggle
+        const sidebar = document.getElementById('sidebar');
+        const overlay = document.getElementById('sidebarOverlay');
+        const openBtn = document.getElementById('mobileNavToggle');
+        const closeBtn = document.getElementById('sidebarCloseBtn');
+
+        const openMenu = () => {
+            if (sidebar) sidebar.classList.add('open');
+            if (overlay) overlay.classList.add('open');
+            document.body.style.overflow = 'hidden';
+        };
+
+        const closeMenu = () => {
+            if (sidebar) sidebar.classList.remove('open');
+            if (overlay) overlay.classList.remove('open');
+            document.body.style.overflow = '';
+        };
+
+        if (openBtn) openBtn.addEventListener('click', openMenu);
+        if (closeBtn) closeBtn.addEventListener('click', closeMenu);
+        if (overlay) overlay.addEventListener('click', closeMenu);
+
+        document.querySelectorAll('.nb-link[href^="#"]').forEach(link => {
+            link.addEventListener('click', closeMenu);
+        });
     </script>
 </body>
 

@@ -13,16 +13,23 @@
 
 <body>
 
+    <!-- Mobile Top Navigation Bar -->
+    <div class="mobile-nav-bar">
+        <button class="mn-btn" id="mobileNavToggle" aria-label="Open Navigation">
+            <span>☰</span>
+            <span>Topics (07)</span>
+        </button>
+        <span class="mn-title">sqlite_python.ipynb</span>
+        <a class="mn-home" href="../index.html">◂ Hub</a>
+    </div>
+    <div class="sidebar-overlay" id="sidebarOverlay"></div>
+
     <div class="shell">
         <aside class="sidebar" id="sidebar">
             <div class="sidebar-head">
-                <button class="mobile-toggle" id="mobileToggle" aria-label="Toggle navigation">
-                    <span><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
-                    <span class="sidebar-title">sqlite_python.ipynb</span></span>
-                    <span class="toggle-icon">☰</span>
-                </button>
-                <span class="dot r desktop-dots"></span><span class="dot y desktop-dots"></span><span class="dot g desktop-dots"></span>
-                <span class="sidebar-title desktop-dots">sqlite_python.ipynb</span>
+                <span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+                <span class="sidebar-title">sqlite_python.ipynb</span>
+                <button class="sidebar-close-btn" id="sidebarCloseBtn" aria-label="Close Navigation">✕</button>
             </div>
             <nav class="nb-group" id="navlinks">
                 <a class="nb-link" href="../index.html"><span class="ico">◂</span> Home</a>
@@ -435,19 +442,34 @@ connection.commit()</pre>
             });
             links.forEach(l => l.classList.toggle('active', l.getAttribute('href') === '#' + current));
         };
-        window.addEventListener('scroll', setActive);
+        window.addEventListener('scroll', setActive, { passive: true });
         setActive();
 
-        // mobile sidebar toggle
+        // mobile drawer toggle
         const sidebar = document.getElementById('sidebar');
-        const toggle = document.getElementById('mobileToggle');
-        if (toggle) {
-            toggle.addEventListener('click', () => sidebar.classList.toggle('open'));
-            // close sidebar when a nav link is clicked
-            document.querySelectorAll('.nb-link[href^="#"]').forEach(link => {
-                link.addEventListener('click', () => sidebar.classList.remove('open'));
-            });
-        }
+        const overlay = document.getElementById('sidebarOverlay');
+        const openBtn = document.getElementById('mobileNavToggle');
+        const closeBtn = document.getElementById('sidebarCloseBtn');
+
+        const openMenu = () => {
+            if (sidebar) sidebar.classList.add('open');
+            if (overlay) overlay.classList.add('open');
+            document.body.style.overflow = 'hidden';
+        };
+
+        const closeMenu = () => {
+            if (sidebar) sidebar.classList.remove('open');
+            if (overlay) overlay.classList.remove('open');
+            document.body.style.overflow = '';
+        };
+
+        if (openBtn) openBtn.addEventListener('click', openMenu);
+        if (closeBtn) closeBtn.addEventListener('click', closeMenu);
+        if (overlay) overlay.addEventListener('click', closeMenu);
+
+        document.querySelectorAll('.nb-link[href^="#"]').forEach(link => {
+            link.addEventListener('click', closeMenu);
+        });
     </script>
 </body>
 

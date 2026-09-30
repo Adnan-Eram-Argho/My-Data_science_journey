@@ -11,11 +11,23 @@
 
 <body>
 
+    <!-- Mobile Top Navigation Bar -->
+    <div class="mobile-nav-bar">
+        <button class="mn-btn" id="mobileNavToggle" aria-label="Open Navigation">
+            <span>☰</span>
+            <span>Topics (27)</span>
+        </button>
+        <span class="mn-title">python_core.ipynb</span>
+        <a class="mn-home" href="../index.html">◂ Hub</a>
+    </div>
+    <div class="sidebar-overlay" id="sidebarOverlay"></div>
+
     <div class="shell">
         <aside class="sidebar" id="sidebar">
             <div class="sidebar-head">
                 <span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
                 <span class="sidebar-title">python_core.ipynb</span>
+                <button class="sidebar-close-btn" id="sidebarCloseBtn" aria-label="Close Navigation">✕</button>
             </div>
             <nav class="nb-group" id="navlinks">
                 <a class="nb-link" href="../index.html"><span class="ico">◂</span> Home</a>
@@ -28,7 +40,7 @@
                 <a class="nb-link" href="#map"><span class="ico">▸</span> 07 · map()</a>
                 <a class="nb-link" href="#filter"><span class="ico">▸</span> 08 · filter()</a>
                 <a class="nb-link" href="#comparison"><span class="ico">▸</span> 09 · Comparison</a>
-                <a class="nb-link" href="#modules"><span class="ico">▸</span> 10 · Modules & Packages</a>
+                <a class="nb-link" href="#modules"><span class="ico">▸</span> 10 · Modules &amp; Packages</a>
                 <a class="nb-link" href="#stdlib"><span class="ico">▸</span> 11 · Standard Library</a>
                 <a class="nb-link" href="#fileops"><span class="ico">▸</span> 12 · File Operations</a>
                 <a class="nb-link" href="#exceptions"><span class="ico">▸</span> 13 · Exception Handling</a>
@@ -39,19 +51,18 @@
                 <a class="nb-link" href="#polymorphism"><span class="ico">▸</span> 18 · Polymorphism</a>
                 <a class="nb-link" href="#abstraction"><span class="ico">▸</span> 19 · Abstraction</a>
                 <a class="nb-link" href="#custom-exceptions"><span class="ico">▸</span> 20 · Custom Exceptions</a>
-
-                <li><a href="#iterators" class="nb-link"><span class="ico">▸</span>21 · Iterators</a></li>
-                <li><a href="#generators" class="nb-link"><span class="ico">▸</span>22 · Generators</a></li>
-                <li><a href="#decorators" class="nb-link"><span class="ico">▸</span>23 · Decorators</a></li>
-                <a href="#logging" class="nb-link"><span class="ico">▸</span>24 · Logging</a>
-                <a href="#multithreading" class="nb-link"><span class="ico">▸</span>24 · Multithreading</a>
-                <a href="#multiprocessing" class="nb-link"><span class="ico">▸</span>25 · Multiprocessing</a>
-                <a href="#memory-management" class="nb-link"><span class="ico">▸</span>24 · Memory Management</a>
+                <a class="nb-link" href="#iterators"><span class="ico">▸</span> 21 · Iterators</a>
+                <a class="nb-link" href="#generators"><span class="ico">▸</span> 22 · Generators</a>
+                <a class="nb-link" href="#decorators"><span class="ico">▸</span> 23 · Decorators</a>
+                <a class="nb-link" href="#logging"><span class="ico">▸</span> 24 · Logging</a>
+                <a class="nb-link" href="#multithreading"><span class="ico">▸</span> 25 · Multithreading</a>
+                <a class="nb-link" href="#multiprocessing"><span class="ico">▸</span> 26 · Multiprocessing</a>
+                <a class="nb-link" href="#memory-management"><span class="ico">▸</span> 27 · Memory Management</a>
                 <!-- SLOT:NAV -->
 
             </nav>
             <div class="sidebar-foot">
-                8 notebooks converted<br>
+                27 topics &amp; notebooks<br>
                 Every example is your original code<br>
                 Kernel: python3
             </div>
@@ -61,13 +72,11 @@
             <div class="hero">
                 <div class="kicker">// consolidated study reference</div>
                 <h1>Python Core Data Structures <span>&amp; Functional Tools</span></h1>
-                <p>Every cell from your 8 notebooks — <code>dictionaries</code>, <code>inbuild_data_structure</code>,
-                    <code>sets</code>, <code>tuples</code>, <code>functions</code>, <code>lambda_function</code>,
-                    <code>map_function</code>, <code>filter_function</code> — rebuilt as one reference, with the nuances
+                <p>Every cell from your notebooks and scripts rebuilt as one reference, with the nuances
                     explained, not just the syntax.
                 </p>
                 <div class="hero-stats">
-                    <div><b>8</b>topics</div>
+                    <div><b>27</b>topics</div>
                     <div><b>60+</b>code cells</div>
                     <div><b>0</b>skipped edge cases</div>
                 </div>
@@ -3109,8 +3118,34 @@ your_script.py:4: size=38.6 MiB, count=999744, average=40 B</pre>
             });
             links.forEach(l => l.classList.toggle('active', l.getAttribute('href') === '#' + current));
         };
-        window.addEventListener('scroll', setActive);
+        window.addEventListener('scroll', setActive, { passive: true });
         setActive();
+
+        // mobile drawer toggle
+        const sidebar = document.getElementById('sidebar');
+        const overlay = document.getElementById('sidebarOverlay');
+        const openBtn = document.getElementById('mobileNavToggle');
+        const closeBtn = document.getElementById('sidebarCloseBtn');
+
+        const openMenu = () => {
+            if (sidebar) sidebar.classList.add('open');
+            if (overlay) overlay.classList.add('open');
+            document.body.style.overflow = 'hidden';
+        };
+
+        const closeMenu = () => {
+            if (sidebar) sidebar.classList.remove('open');
+            if (overlay) overlay.classList.remove('open');
+            document.body.style.overflow = '';
+        };
+
+        if (openBtn) openBtn.addEventListener('click', openMenu);
+        if (closeBtn) closeBtn.addEventListener('click', closeMenu);
+        if (overlay) overlay.addEventListener('click', closeMenu);
+
+        document.querySelectorAll('.nb-link[href^="#"]').forEach(link => {
+            link.addEventListener('click', closeMenu);
+        });
     </script>
 </body>
 
