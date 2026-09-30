@@ -56,6 +56,18 @@
                 <a class="nb-link" href="#covariance"><span class="ico">▸</span> 09 · Covariance</a>
                 <a class="nb-link" href="#correlation"><span class="ico">▸</span> 10 · Correlation</a>
 <!-- SLOT:NAV -->
+                <div class="nav-group-label">Probability</div>
+                <a class="nb-link" href="#probability-basics"><span class="ico">▸</span> 11 · Probability</a>
+                <a class="nb-link" href="#mutually-exclusive"><span class="ico">▸</span> 12 · Mutually Exclusive</a>
+                <a class="nb-link" href="#non-mutually-exclusive"><span class="ico">▸</span> 13 · Non-Mutually Exclusive</a>
+                <a class="nb-link" href="#addition-formulas"><span class="ico">▸</span> 14 · Addition Formulas</a>
+                <a class="nb-link" href="#multiplication-rule"><span class="ico">▸</span> 15 · Multiplication Rule</a>
+                <a class="nb-link" href="#dependent-events"><span class="ico">▸</span> 16 · Dependent Events</a>
+                <a class="nb-link" href="#independent-events"><span class="ico">▸</span> 17 · Independent Events</a>
+                <a class="nb-link" href="#prob-dist-fn"><span class="ico">▸</span> 18 · Distribution Function</a>
+                <a class="nb-link" href="#pmf"><span class="ico">▸</span> 19 · PMF</a>
+                <a class="nb-link" href="#pdf"><span class="ico">▸</span> 20 · PDF</a>
+                <a class="nb-link" href="#cdf"><span class="ico">▸</span> 21 · CDF</a>
 
             </nav>
             <div class="sidebar-foot">
@@ -1212,6 +1224,489 @@ Scipy  Spearman ρ = 0.8208</pre>
                 <a href="#top" class="backtotop">↑ উপরে ফিরে যাও</a>
             </section>
             <!-- SLOT:SECTION -->
+
+            <!-- ============ 11 PROBABILITY BASICS ============ -->
+            <section class="topic" id="probability-basics">
+                <div class="topic-head"><span class="topic-num">11</span>
+                    <h2>Probability — সম্ভাব্যতা</h2>
+                </div>
+                <p class="topic-sub">
+                    <b>Probability</b> হলো কোনো ঘটনা ঘটার সম্ভাবনার পরিমাণগত পরিমাপ।
+                    এটি সর্বদা 0 (অসম্ভব) থেকে 1 (নিশ্চিত) এর মধ্যে থাকে।
+                </p>
+
+                <div class="formula-block">
+                    <span class="lbl">মৌলিক সূত্র (Classical Probability)</span>
+                    P(A) = n(A) / n(S)
+                </div>
+                <p>যেখানে n(A) = অনুকূল ফলাফলের সংখ্যা, n(S) = সম্ভাব্য সকল ফলাফলের সংখ্যা (Sample Space)।</p>
+                <div class="formula-block">
+                    <span class="lbl">রেঞ্জ (Range)</span>
+                    0 ≤ P(A) ≤ 1
+                </div>
+
+                <div class="box note">
+                    <span class="tag">উদাহরণ</span>
+                    <p><b>মুদ্রা নিক্ষেপ:</b> P(Head) = 1/2 = 0.5<br>
+                       <b>তাসের প্যাক:</b> P(King) = 4/52 = 1/13 ≈ 0.077</p>
+                </div>
+
+                <a href="#top" class="backtotop">↑ উপরে ফিরে যাও</a>
+            </section>
+
+            <!-- ============ 12 MUTUALLY EXCLUSIVE ============ -->
+            <section class="topic" id="mutually-exclusive">
+                <div class="topic-head"><span class="topic-num">12</span>
+                    <h2>পারস্পরিক বিচ্ছিন্ন ঘটনা (Mutually Exclusive Events)</h2>
+                </div>
+                <p class="topic-sub">
+                    দুটি ঘটনা <b>পারস্পরিক বিচ্ছিন্ন (Mutually Exclusive)</b> হয় যদি তারা একই সাথে ঘটতে না পারে —
+                    অর্থাৎ তাদের ছেদ শূন্য।
+                </p>
+
+                <div class="formula-block">
+                    <span class="lbl">ছেদ (Intersection)</span>
+                    P(A ∩ B) = 0
+                </div>
+                <div class="formula-block">
+                    <span class="lbl">সংযোগ (Union / Addition Rule)</span>
+                    P(A ∪ B) = P(A) + P(B)
+                </div>
+
+                <div class="box note">
+                    <span class="tag">উদাহরণ ১ — মুদ্রা</span>
+                    <!-- মুদ্রায় Head ও Tail একসাথে আসতে পারে না -->
+                    <p>P(H বা T) = P(H) + P(T) = 1/2 + 1/2 = <b>1</b></p>
+                </div>
+                <div class="box note">
+                    <span class="tag">উদাহরণ ২ — তাস</span>
+                    <!-- King ও Queen একই তাস হতে পারে না -->
+                    <p>P(King বা Queen) = 4/52 + 4/52 = 8/52 = <b>2/13</b></p>
+                </div>
+
+                <a href="#top" class="backtotop">↑ উপরে ফিরে যাও</a>
+            </section>
+
+            <!-- ============ 13 NON-MUTUALLY EXCLUSIVE ============ -->
+            <section class="topic" id="non-mutually-exclusive">
+                <div class="topic-head"><span class="topic-num">13</span>
+                    <h2>অ-পারস্পরিক বিচ্ছিন্ন ঘটনা (Non-Mutually Exclusive Events)</h2>
+                </div>
+                <p class="topic-sub">
+                    দুটি ঘটনা <b>অ-পারস্পরিক বিচ্ছিন্ন (Non-Mutually Exclusive)</b> হয় যদি তারা একই সাথে ঘটতে পারে —
+                    অর্থাৎ P(A ∩ B) ≠ 0। এক্ষেত্রে সরাসরি যোগ করলে ছেদাংশ দুইবার গোনা হয়, তাই বাদ দিতে হয়।
+                </p>
+
+                <div class="formula-block">
+                    <span class="lbl">সংযোগ সূত্র (General Addition Rule)</span>
+                    P(A ∪ B) = P(A) + P(B) − P(A ∩ B)
+                </div>
+
+                <div class="box note">
+                    <span class="tag">উদাহরণ ১ — তাস</span>
+                    <!-- King ও Heart একসাথে হতে পারে (King of Hearts) -->
+                    <p>P(King বা Heart) = 4/52 + 13/52 − 1/52 = 16/52 = <b>4/13</b></p>
+                </div>
+                <div class="box note">
+                    <span class="tag">উদাহরণ ২ — দুটি মুদ্রা</span>
+                    <!-- কমপক্ষে একটি Head আসার সম্ভাব্যতা -->
+                    <p>P(কমপক্ষে একটি H) = P(1st H) + P(2nd H) − P(উভয় H)<br>
+                       = 1/2 + 1/2 − 1/4 = <b>3/4</b></p>
+                </div>
+
+                <a href="#top" class="backtotop">↑ উপরে ফিরে যাও</a>
+            </section>
+
+            <!-- ============ 14 ADDITION FORMULAS ============ -->
+            <section class="topic" id="addition-formulas">
+                <div class="topic-head"><span class="topic-num">14</span>
+                    <h2>যোগ সূত্র তুলনা (Addition Formulas)</h2>
+                </div>
+                <p class="topic-sub">
+                    দুটি ঘটনার সংযোগ (Union) বের করার সূত্র ঘটনাদ্বয় পারস্পরিক বিচ্ছিন্ন কিনা তার ওপর নির্ভর করে।
+                </p>
+
+                <table class="cmp">
+                    <tr>
+                        <th>বিষয়</th>
+                        <th>Mutually Exclusive</th>
+                        <th>Non-Mutually Exclusive</th>
+                    </tr>
+                    <tr>
+                        <td><b>শর্ত</b></td>
+                        <td>P(A ∩ B) = 0</td>
+                        <td>P(A ∩ B) ≠ 0</td>
+                    </tr>
+                    <tr>
+                        <td><b>সূত্র</b></td>
+                        <td>P(A ∪ B) = P(A) + P(B)</td>
+                        <td>P(A ∪ B) = P(A) + P(B) − P(A ∩ B)</td>
+                    </tr>
+                    <tr>
+                        <td><b>উদাহরণ</b></td>
+                        <td>P(King বা Queen) = 4/52 + 4/52 = 2/13</td>
+                        <td>P(King বা Heart) = 4/52 + 13/52 − 1/52 = 4/13</td>
+                    </tr>
+                    <tr>
+                        <td><b>ছেদ</b></td>
+                        <td>কখনো ঘটে না — বাদ দেওয়ার দরকার নেই</td>
+                        <td>ঘটতে পারে — দুইবার গণনা এড়াতে বাদ দিতে হয়</td>
+                    </tr>
+                </table>
+
+                <div class="box tip">
+                    <span class="tag">মনে রাখার কৌশল</span>
+                    <!-- সাধারণ সূত্রটি সর্বজনীন -->
+                    <p>General Addition Rule সবসময় কাজ করে। Mutually Exclusive ক্ষেত্রে
+                       P(A ∩ B) = 0 বসালে সেটি স্বয়ংক্রিয়ভাবে সরল সূত্রে পরিণত হয়।</p>
+                </div>
+
+                <a href="#top" class="backtotop">↑ উপরে ফিরে যাও</a>
+            </section>
+
+            <!-- ============ 15 MULTIPLICATION RULE ============ -->
+            <section class="topic" id="multiplication-rule">
+                <div class="topic-head"><span class="topic-num">15</span>
+                    <h2>গুণ সূত্র (Multiplication Rule)</h2>
+                </div>
+                <p class="topic-sub">
+                    দুটি ঘটনার একই সাথে ঘটার (ছেদ / Intersection) সম্ভাব্যতা বের করার নিয়ম।
+                    ঘটনাদ্বয় স্বাধীন না পরনির্ভর তার ওপর সূত্র পরিবর্তন হয়।
+                </p>
+
+                <h3 class="sub">স্বাধীন ঘটনা (Independent)</h3>
+                <div class="formula-block">
+                    <span class="lbl">Independent — ছেদ</span>
+                    P(A ∩ B) = P(A) × P(B)
+                </div>
+
+                <h3 class="sub">পরনির্ভর ঘটনা (Dependent)</h3>
+                <div class="formula-block">
+                    <span class="lbl">Dependent — ছেদ</span>
+                    P(A ∩ B) = P(A) × P(B|A)
+                </div>
+
+                <h3 class="sub">শর্তাধীন সম্ভাব্যতা (Conditional Probability)</h3>
+                <div class="formula-block">
+                    <span class="lbl">Conditional Probability</span>
+                    P(B|A) = P(A ∩ B) / P(A)
+                </div>
+
+                <div class="box note">
+                    <span class="tag">ব্যাখ্যা</span>
+                    <!-- P(B|A) মানে A ঘটেছে জেনে B-এর সম্ভাব্যতা -->
+                    <p>P(B|A) পড়া হয় "A দেওয়া আছে, B-এর সম্ভাব্যতা কত"। A ঘটেছে ধরে নিলে
+                       নতুন Sample Space A হয়ে যায় এবং সেই অনুযায়ী B-এর সম্ভাব্যতা হিসেব হয়।</p>
+                </div>
+
+                <a href="#top" class="backtotop">↑ উপরে ফিরে যাও</a>
+            </section>
+
+            <!-- ============ 16 DEPENDENT EVENTS ============ -->
+            <section class="topic" id="dependent-events">
+                <div class="topic-head"><span class="topic-num">16</span>
+                    <h2>পরনির্ভর ঘটনা (Dependent Events)</h2>
+                </div>
+                <p class="topic-sub">
+                    যখন একটি ঘটনার ফলাফল অপর ঘটনার সম্ভাব্যতা পরিবর্তন করে, তখন তাদের
+                    <b>পরনির্ভর (Dependent)</b> বলে।
+                </p>
+
+                <div class="formula-block">
+                    <span class="lbl">সূত্র (Dependent Intersection)</span>
+                    P(A ∩ B) = P(A) × P(B|A)
+                </div>
+
+                <h3 class="sub">উদাহরণ ১ — বিনা প্রতিস্থাপনে দুটি King টানা</h3>
+                <div class="box note">
+                    <span class="tag">তাস — Without Replacement</span>
+                    <!-- প্রথম King টানলে দ্বিতীয়বার 3 King ও 51 তাস বাকি থাকে -->
+                    <p>P(1st King) = 4/52<br>
+                       P(2nd King | 1st King) = 3/51<br>
+                       P(উভয় King) = 4/52 × 3/51 = 12/2652 = <b>1/221</b></p>
+                </div>
+
+                <h3 class="sub">উদাহরণ ২ — শর্তাধীন সম্ভাব্যতা (Conditional)</h3>
+                <div class="box note">
+                    <span class="tag">মুদ্রা — Conditional Probability</span>
+                    <!-- দুটি মুদ্রা নিক্ষেপে কমপক্ষে একটি H দেওয়া আছে, উভয় H হওয়ার সম্ভাব্যতা -->
+                    <p>দুটি মুদ্রা নিক্ষেপ: S = {HH, HT, TH, TT}<br>
+                       A = কমপক্ষে একটি H = {HH, HT, TH}, B = উভয় H = {HH}<br>
+                       P(B|A) = P(A ∩ B) / P(A) = (1/4) / (3/4) = <b>1/3</b></p>
+                </div>
+
+                <a href="#top" class="backtotop">↑ উপরে ফিরে যাও</a>
+            </section>
+
+            <!-- ============ 17 INDEPENDENT EVENTS ============ -->
+            <section class="topic" id="independent-events">
+                <div class="topic-head"><span class="topic-num">17</span>
+                    <h2>স্বাধীন ঘটনা (Independent Events)</h2>
+                </div>
+                <p class="topic-sub">
+                    যখন একটি ঘটনার ফলাফল অপর ঘটনার সম্ভাব্যতায় কোনো প্রভাব ফেলে না, তখন তাদের
+                    <b>স্বাধীন (Independent)</b> বলে। শর্ত: P(A ∩ B) = P(A) × P(B)।
+                </p>
+
+                <div class="formula-block">
+                    <span class="lbl">স্বাধীনতার পরীক্ষা (Independence Test)</span>
+                    P(A ∩ B) = P(A) × P(B) হলে A ও B স্বাধীন
+                </div>
+
+                <h3 class="sub">উদাহরণ ১ — King ও Heart স্বাধীন কিনা প্রমাণ</h3>
+                <div class="box note">
+                    <span class="tag">তাস — স্বাধীনতা যাচাই</span>
+                    <!-- King ও Heart দুটি স্বতন্ত্র বৈশিষ্ট্য, একটি অপরটিকে প্রভাবিত করে না -->
+                    <p>P(King) = 4/52 = 1/13<br>
+                       P(Heart) = 13/52 = 1/4<br>
+                       P(King) × P(Heart) = 1/13 × 1/4 = 1/52<br>
+                       P(King ∩ Heart) = 1/52 (King of Hearts — ঠিক একটি তাস)<br>
+                       যেহেতু P(K ∩ H) = P(K) × P(H), তাই ঘটনা দুটি <b>স্বাধীন</b>। ✓</p>
+                </div>
+
+                <h3 class="sub">উদাহরণ ২ — দুটি মুদ্রা নিক্ষেপ</h3>
+                <div class="box note">
+                    <span class="tag">মুদ্রা — Independent</span>
+                    <!-- প্রতিটি মুদ্রার ফলাফল অন্যটি থেকে স্বতন্ত্র -->
+                    <p>P(H ও H) = P(H) × P(H) = 1/2 × 1/2 = <b>1/4</b></p>
+                </div>
+
+                <a href="#top" class="backtotop">↑ উপরে ফিরে যাও</a>
+            </section>
+
+            <!-- ============ 18 PROBABILITY DISTRIBUTION FUNCTION ============ -->
+            <section class="topic" id="prob-dist-fn">
+                <div class="topic-head"><span class="topic-num">18</span>
+                    <h2>Probability Distribution Function — সম্ভাব্যতা বণ্টন ফাংশন</h2>
+                </div>
+                <p class="topic-sub">
+                    <b>Probability Distribution Function</b> হলো এমন একটি গাণিতিক ফাংশন যা বর্ণনা করে
+                    কীভাবে একটি <a href="#random-variable">Random Variable</a>-এর সম্ভাব্য মানগুলোর উপর
+                    সম্ভাব্যতা ছড়িয়ে আছে।
+                </p>
+                <div class="box tip">
+                    <span class="tag">তিনটি রূপ</span>
+                    <!-- বিচ্ছিন্ন, অবিচ্ছিন্ন, এবং সঞ্চয়ী — তিন ধরনের ফাংশন -->
+                    <p><b>Discrete Variable →</b> PMF (Probability Mass Function)<br>
+                       <b>Continuous Variable →</b> PDF (Probability Density Function)<br>
+                       <b>উভয়ের জন্য →</b> CDF (Cumulative Distribution Function)</p>
+                </div>
+
+                <a href="#top" class="backtotop">↑ উপরে ফিরে যাও</a>
+            </section>
+
+            <!-- ============ 19 PMF ============ -->
+            <section class="topic" id="pmf">
+                <div class="topic-head"><span class="topic-num">19</span>
+                    <h2>PMF — Probability Mass Function</h2>
+                </div>
+                <p class="topic-sub">
+                    <b>PMF</b> হলো বিচ্ছিন্ন (Discrete) Random Variable-এর প্রতিটি নির্দিষ্ট মানে
+                    সম্ভাব্যতা নির্ধারণকারী ফাংশন: P(X = x)।
+                </p>
+
+                <div class="formula-block">
+                    <span class="lbl">PMF শর্তসমূহ</span>
+                    P(X = x) ≥ 0 &emsp;(প্রতিটি মানে অ-ঋণাত্মক)<br>
+                    Σ P(X = x) = 1 &emsp;(সকল মানের যোগফল ১)
+                </div>
+
+                <h3 class="sub">উদাহরণ — দুটি মুদ্রা নিক্ষেপ, X = Head-এর সংখ্যা</h3>
+                <!-- S = {TT, TH, HT, HH} → X ∈ {0, 1, 2} -->
+                <table class="cmp">
+                    <tr>
+                        <th>x (Head সংখ্যা)</th>
+                        <th>ফলাফল</th>
+                        <th>P(X = x)</th>
+                    </tr>
+                    <tr><td>0</td><td>TT</td><td>1/4</td></tr>
+                    <tr><td>1</td><td>TH, HT</td><td>2/4 = 1/2</td></tr>
+                    <tr><td>2</td><td>HH</td><td>1/4</td></tr>
+                    <tr><td colspan="2"><b>যোগফল</b></td><td><b>1</b></td></tr>
+                </table>
+
+                <h3 class="sub">PMF বার চার্ট (CSS)</h3>
+                <!-- লাইব্রেরি ছাড়া CSS-এ তৈরি সরল বার চার্ট -->
+                <div style="display:flex;align-items:flex-end;gap:32px;justify-content:center;padding:24px 0 8px;">
+                    <div style="text-align:center;">
+                        <div style="background:var(--accent);width:52px;height:60px;border-radius:6px 6px 0 0;opacity:.85;"></div>
+                        <div style="font-family:var(--mono);font-size:12px;color:var(--muted);margin-top:6px;">x=0</div>
+                        <div style="font-family:var(--mono);font-size:11px;color:var(--accent-2);">1/4</div>
+                    </div>
+                    <div style="text-align:center;">
+                        <div style="background:var(--accent);width:52px;height:120px;border-radius:6px 6px 0 0;opacity:.85;"></div>
+                        <div style="font-family:var(--mono);font-size:12px;color:var(--muted);margin-top:6px;">x=1</div>
+                        <div style="font-family:var(--mono);font-size:11px;color:var(--accent-2);">1/2</div>
+                    </div>
+                    <div style="text-align:center;">
+                        <div style="background:var(--accent);width:52px;height:60px;border-radius:6px 6px 0 0;opacity:.85;"></div>
+                        <div style="font-family:var(--mono);font-size:12px;color:var(--muted);margin-top:6px;">x=2</div>
+                        <div style="font-family:var(--mono);font-size:11px;color:var(--accent-2);">1/4</div>
+                    </div>
+                </div>
+
+                <a href="#top" class="backtotop">↑ উপরে ফিরে যাও</a>
+            </section>
+
+            <!-- ============ 20 PDF ============ -->
+            <section class="topic" id="pdf">
+                <div class="topic-head"><span class="topic-num">20</span>
+                    <h2>PDF — Probability Density Function</h2>
+                </div>
+                <p class="topic-sub">
+                    <b>PDF</b> হলো অবিচ্ছিন্ন (Continuous) Random Variable-এর সম্ভাব্যতা ঘনত্ব ফাংশন।
+                    কোনো নির্দিষ্ট বিন্দুতে সম্ভাব্যতা শূন্য; সম্ভাব্যতা বের হয় ব্যবধানের (interval) ক্ষেত্রফল থেকে।
+                </p>
+
+                <div class="formula-block">
+                    <span class="lbl">PDF শর্তসমূহ</span>
+                    f(x) ≥ 0 &emsp;(সর্বত্র অ-ঋণাত্মক)<br>
+                    ∫ f(x) dx = 1 &emsp;(সমস্ত ক্ষেত্রফল = ১)
+                </div>
+                <div class="formula-block">
+                    <span class="lbl">ব্যবধানে সম্ভাব্যতা</span>
+                    P(a ≤ X ≤ b) = ∫<sub>a</sub><sup>b</sup> f(x) dx
+                </div>
+                <div class="formula-block">
+                    <span class="lbl">একক বিন্দুতে (Single Point)</span>
+                    P(X = x) = 0
+                </div>
+
+                <h3 class="sub">উদাহরণ — Uniform Distribution [a, b]</h3>
+                <div class="formula-block">
+                    <span class="lbl">Uniform PDF</span>
+                    f(x) = 1 / (b − a) &emsp;যখন a ≤ x ≤ b
+                </div>
+
+                <!-- সমসম্ভাব্যতা বণ্টনের (Uniform) ক্ষেত্রফল দেখানো SVG -->
+                <svg class="svg-chart" viewBox="0 0 420 180" xmlns="http://www.w3.org/2000/svg">
+                    <!-- অক্ষরেখা (Axes) -->
+                    <line class="axis" x1="50" y1="20" x2="50" y2="140"/>
+                    <line class="axis" x1="50" y1="140" x2="390" y2="140"/>
+                    <!-- সমসম্ভাব্য রেখা (Uniform line) f(x) = 1/(b-a) -->
+                    <line x1="100" y1="50" x2="340" y2="50" stroke="var(--accent)" stroke-width="2.5"/>
+                    <!-- ছায়াযুক্ত ক্ষেত্রফল P(a ≤ X ≤ b) -->
+                    <rect x="100" y="50" width="240" height="90" fill="var(--accent)" fill-opacity=".15" rx="2"/>
+                    <!-- ছায়াযুক্ত উপক্ষেত্রফল — P(c ≤ X ≤ d) অংশ হাইলাইট -->
+                    <rect x="160" y="50" width="100" height="90" fill="var(--accent-2)" fill-opacity=".25" rx="2"/>
+                    <!-- উল্লম্ব রেখা (Vertical lines) -->
+                    <line x1="100" y1="50" x2="100" y2="140" stroke="var(--accent)" stroke-width="1.5" stroke-dasharray="4,3"/>
+                    <line x1="340" y1="50" x2="340" y2="140" stroke="var(--accent)" stroke-width="1.5" stroke-dasharray="4,3"/>
+                    <line x1="160" y1="50" x2="160" y2="140" stroke="var(--accent-2)" stroke-width="1" stroke-dasharray="3,3"/>
+                    <line x1="260" y1="50" x2="260" y2="140" stroke="var(--accent-2)" stroke-width="1" stroke-dasharray="3,3"/>
+                    <!-- লেবেল -->
+                    <text x="100" y="158" text-anchor="middle" fill="var(--accent)" font-size="12" font-weight="600">a</text>
+                    <text x="340" y="158" text-anchor="middle" fill="var(--accent)" font-size="12" font-weight="600">b</text>
+                    <text x="160" y="158" text-anchor="middle" fill="var(--accent-2)" font-size="11">c</text>
+                    <text x="260" y="158" text-anchor="middle" fill="var(--accent-2)" font-size="11">d</text>
+                    <text x="38" y="55" text-anchor="end" fill="var(--muted)" font-size="11">1/(b−a)</text>
+                    <text x="210" y="100" text-anchor="middle" fill="var(--accent-2)" font-size="11" font-weight="600">P(c≤X≤d)</text>
+                    <text x="220" y="172" text-anchor="middle" fill="var(--muted)" font-size="11">f(x) = 1/(b−a), Uniform Distribution</text>
+                </svg>
+
+                <a href="#top" class="backtotop">↑ উপরে ফিরে যাও</a>
+            </section>
+
+            <!-- ============ 21 CDF ============ -->
+            <section class="topic" id="cdf">
+                <div class="topic-head"><span class="topic-num">21</span>
+                    <h2>CDF — Cumulative Distribution Function</h2>
+                </div>
+                <p class="topic-sub">
+                    <b>CDF</b> হলো সঞ্চয়ী বণ্টন ফাংশন: F(x) = P(X ≤ x)। এটি বলে দেয় — Random Variable
+                    x বা তার চেয়ে ছোট মান নেওয়ার মোট সম্ভাব্যতা কত।
+                </p>
+
+                <h3 class="sub">বিচ্ছিন্ন (Discrete) CDF</h3>
+                <div class="formula-block">
+                    <span class="lbl">Discrete CDF — PMF-এর সঞ্চয়ী যোগফল</span>
+                    F(x) = Σ P(X = t), &emsp;সকল t ≤ x
+                </div>
+
+                <h3 class="sub">অবিচ্ছিন্ন (Continuous) CDF</h3>
+                <div class="formula-block">
+                    <span class="lbl">Continuous CDF — PDF-এর সমাকলন</span>
+                    F(x) = ∫<sub>−∞</sub><sup>x</sup> f(t) dt
+                </div>
+                <div class="formula-block">
+                    <span class="lbl">PDF ↔ CDF সম্পর্ক</span>
+                    f(x) = dF(x) / dx
+                </div>
+                <div class="formula-block">
+                    <span class="lbl">ব্যবধানে সম্ভাব্যতা</span>
+                    P(a < X ≤ b) = F(b) − F(a)
+                </div>
+
+                <h3 class="sub">CDF-এর বৈশিষ্ট্য</h3>
+                <div class="box note">
+                    <span class="tag">মূল বৈশিষ্ট্যসমূহ</span>
+                    <!-- CDF সর্বদা অ-হ্রাসমান এবং 0 থেকে 1-এ যায় -->
+                    <p>• <b>অ-হ্রাসমান (Non-decreasing):</b> x বাড়লে F(x) কখনো কমে না<br>
+                       • F(−∞) = 0 এবং F(+∞) = 1<br>
+                       • যেকোনো x-এ 0 ≤ F(x) ≤ 1</p>
+                </div>
+
+                <h3 class="sub">উদাহরণ — দুটি মুদ্রা নিক্ষেপের PMF থেকে CDF</h3>
+                <!-- উপরের PMF (topic 19) ব্যবহার করে CDF হিসাব -->
+                <table class="cmp">
+                    <tr>
+                        <th>x</th>
+                        <th>P(X = x) [PMF]</th>
+                        <th>F(x) = P(X ≤ x) [CDF]</th>
+                    </tr>
+                    <tr><td>0</td><td>1/4</td><td>1/4</td></tr>
+                    <tr><td>1</td><td>1/2</td><td>1/4 + 1/2 = <b>3/4</b></td></tr>
+                    <tr><td>2</td><td>1/4</td><td>3/4 + 1/4 = <b>1</b></td></tr>
+                </table>
+
+                <h3 class="sub">PMF vs PDF vs CDF — তুলনা সারণি</h3>
+                <table class="cmp">
+                    <tr>
+                        <th>বিষয়</th>
+                        <th>PMF</th>
+                        <th>PDF</th>
+                        <th>CDF</th>
+                    </tr>
+                    <tr>
+                        <td><b>পূর্ণরূপ</b></td>
+                        <td>Probability Mass Function</td>
+                        <td>Probability Density Function</td>
+                        <td>Cumulative Distribution Function</td>
+                    </tr>
+                    <tr>
+                        <td><b>Variable ধরন</b></td>
+                        <td>Discrete</td>
+                        <td>Continuous</td>
+                        <td>উভয় (Discrete + Continuous)</td>
+                    </tr>
+                    <tr>
+                        <td><b>কী নির্দেশ করে</b></td>
+                        <td>P(X = x) — নির্দিষ্ট মানে সম্ভাব্যতা</td>
+                        <td>f(x) — সম্ভাব্যতা ঘনত্ব (area = probability)</td>
+                        <td>F(x) = P(X ≤ x) — সঞ্চয়ী সম্ভাব্যতা</td>
+                    </tr>
+                    <tr>
+                        <td><b>মানের পরিসর</b></td>
+                        <td>0 ≤ P ≤ 1</td>
+                        <td>f(x) ≥ 0 (1-এর বেশিও হতে পারে)</td>
+                        <td>0 ≤ F(x) ≤ 1</td>
+                    </tr>
+                    <tr>
+                        <td><b>যোগফল / সমাকলন</b></td>
+                        <td>Σ P = 1</td>
+                        <td>∫ f(x)dx = 1</td>
+                        <td>F(+∞) = 1</td>
+                    </tr>
+                    <tr>
+                        <td><b>গ্রাফ</b></td>
+                        <td>বিচ্ছিন্ন বার / লাইন</td>
+                        <td>মসৃণ বক্ররেখা</td>
+                        <td>অ-হ্রাসমান সিঁড়ি / বক্ররেখা</td>
+                    </tr>
+                </table>
+
+                <a href="#top" class="backtotop">↑ উপরে ফিরে যাও</a>
+            </section>
 
 
 
