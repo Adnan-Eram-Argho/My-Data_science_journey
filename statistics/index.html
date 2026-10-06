@@ -4,8 +4,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Statistics :: Descriptive Statistics Reference</title>
-    <meta name="description" content="Descriptive Statistics-এর পূর্ণাঙ্গ বাংলা রেফারেন্স — Central Tendency, Variance, Percentile, Box Plot, Covariance, Correlation সহ সব concept বিস্তারিত ব্যাখ্যা ও উদাহরণ।">
+    <title>Statistics &amp; Probability Reference — বাংলা পূর্ণাঙ্গ গাইড</title>
+    <meta name="description" content="Statistics ও Probability-র পূর্ণাঙ্গ বাংলা রেফারেন্স — Descriptive Statistics, Probability, Distributions (Binomial, Poisson, Normal, Pareto) এবং Inferential Statistics (Z-test, t-test, ANOVA, Chi-square) সহ বিস্তারিত ব্যাখ্যা ও কোড।">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -24,7 +24,7 @@
         .svg-chart .dot.outlier{fill:var(--warn);r:5;stroke:#fff;stroke-width:.5}
         .svg-chart .label{font-size:10px;fill:var(--muted)}
         .svg-chart .grid-line{stroke:var(--line);stroke-dasharray:3,3;stroke-width:.5}
-        .formula-block{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:18px 22px;margin:16px 0 22px;font-family:var(--mono);font-size:14px;line-height:2;color:var(--accent-2);overflow-x:auto}
+        .formula-block{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:18px 22px;margin:16px 0 22px;font-family:var(--mono);font-size:14px;line-height:2;color:var(--accent-2);overflow-x:auto;white-space:pre-line;}
         .formula-block .lbl{color:var(--muted);font-size:12px;display:block;margin-bottom:4px;text-transform:uppercase;letter-spacing:.08em}
     </style>
 </head>
@@ -63,7 +63,6 @@
                 <a class="nb-link" href="#five-num-boxplot"><span class="ico">▸</span> 08 · Box Plot &amp; IQR</a>
                 <a class="nb-link" href="#covariance"><span class="ico">▸</span> 09 · Covariance</a>
                 <a class="nb-link" href="#correlation"><span class="ico">▸</span> 10 · Correlation</a>
-<!-- SLOT:NAV -->
                 <div class="nav-group-label">Probability</div>
                 <a class="nb-link" href="#probability-basics"><span class="ico">▸</span> 11 · Probability</a>
                 <a class="nb-link" href="#mutually-exclusive"><span class="ico">▸</span> 12 · Mutually Exclusive</a>
@@ -104,7 +103,6 @@
                 <a class="nb-link" href="#anova-intro"><span class="ico">▸</span> 43 · ANOVA গোড়ার ধারণা</a>
                 <a class="nb-link" href="#anova-problem"><span class="ico">▸</span> 44 · One-Way ANOVA সমাধান</a>
                 <a class="nb-link" href="#inf-summary"><span class="ico">▸</span> 45 · সারাংশ ও রেফারেন্স</a>
-<!-- SLOT:NAV4 -->
 
             </nav>
             <div class="sidebar-foot">
@@ -641,6 +639,10 @@ Samp SD       = 1.9235</pre>
                 </table>
 
                 <h3 class="sub">উদাহরণ — পরীক্ষার নম্বর</h3>
+                <div class="box note">
+                    <span class="tag">Bin Edge Convention (বিনের প্রান্তিক সীমা)</span>
+                    <p>Histogram-এ সাধারণত প্রতিটি বিনের জন্য বামে বদ্ধ ও ডানে খোলা <code>[a, b)</code> কনভেনশন ব্যবহৃত হয় — অর্থাৎ নিম্নসীমা <code>a</code> অন্তর্ভুক্ত কিন্তু উচ্চসীমা <code>b</code> বাদ পড়ে। যেমন <code>[60, 70)</code> ব্যবধিতে ৬০ থাকলে ঢুকবে, কিন্তু ৭০ যাবে পরবর্তী <code>[70, 80)</code> ব্যবধিতে (শুধু একদম শেষ বিনে উভয় প্রান্ত <code>[90, 100]</code> অন্তর্ভুক্ত থাকে)।</p>
+                </div>
                 <p>ডেটা: 45, 52, 58, 61, 63, 65, 67, 68, 70, 72, 74, 75, 78, 80, 82, 85, 88, 91, 95, 98</p>
 
                 <!-- Inline SVG Histogram -->
@@ -865,9 +867,10 @@ Q3 = 40.25  (position 5.25)</pre>
                         <pre class="code"><span class="c-kw">import</span> numpy <span class="c-kw">as</span> np
 
 data = [<span class="c-num">2</span>, <span class="c-num">3</span>, <span class="c-num">5</span>, <span class="c-num">7</span>, <span class="c-num">8</span>, <span class="c-num">10</span>, <span class="c-num">12</span>, <span class="c-num">15</span>, <span class="c-num">18</span>, <span class="c-num">22</span>, <span class="c-num">50</span>]
-q1 = np.<span class="c-fn">percentile</span>(data, <span class="c-num">25</span>)
-q2 = np.<span class="c-fn">percentile</span>(data, <span class="c-num">50</span>)
-q3 = np.<span class="c-fn">percentile</span>(data, <span class="c-num">75</span>)
+<span class="c-com"># সেকশন ০৭-এর (n+1) সূত্রের সাথে মেলাতে method='weibull' ব্যবহৃত</span>
+q1 = np.<span class="c-fn">percentile</span>(data, <span class="c-num">25</span>, method=<span class="c-str">'weibull'</span>)
+q2 = np.<span class="c-fn">percentile</span>(data, <span class="c-num">50</span>, method=<span class="c-str">'weibull'</span>)
+q3 = np.<span class="c-fn">percentile</span>(data, <span class="c-num">75</span>, method=<span class="c-str">'weibull'</span>)
 iqr = q3 - q1
 lower_fence = q1 - <span class="c-num">1.5</span> * iqr
 higher_fence = q3 + <span class="c-num">1.5</span> * iqr
@@ -887,6 +890,12 @@ Lower Fence = -14.5
 Higher Fence = 37.5
 Outliers = [50]</pre>
                     </div>
+                </div>
+
+                <div class="box note">
+                    <span class="tag">সফটওয়্যার ভেদে Percentile-এর পার্থক্য</span>
+                    <p>NumPy-র ডিফল্ট পদ্ধতি হলো <code>method='linear'</code> — এতে <code>(n − 1)</code> ইন্টারপোলেশন হয় (Q1 = 6.0, Q2 = 10.0, Q3 = 16.5, IQR = 10.5, ফেন্স: −9.75 ও 32.25, আউটলায়ার: [50])।<br>
+                    আমাদের সেকশন ০৭-এর গাণিতিক <code>(n + 1)</code> পজিশন সূত্রের হুবহু মান পেতে NumPy-তে <code>method='weibull'</code> ব্যবহার করতে হয় (Excel-এ এটি <code>=PERCENTILE.EXC</code>)। উল্লেখ্য, Excel-এর সাধারণ <code>=PERCENTILE.INC</code> এবং Pandas ডিফল্টভাবে <code>linear</code> পদ্ধতি অনুসরণ করে।</p>
                 </div>
 
                 <!-- Inline SVG Box Plot -->
@@ -966,6 +975,12 @@ Outliers = [50]</pre>
                 <p><b>Cov(X,Y) &lt; 0 (Negative):</b> X বাড়লে Y কমে (বিপরীত দিকে)।
                     যেমন: তাপমাত্রা ↑ → গরম কাপড়ের বিক্রি ↓</p>
                 <p><b>Cov(X,Y) = 0:</b> X ও Y-এর মধ্যে কোনো <b>linear</b> সম্পর্ক নেই।</p>
+
+                <div class="box warn">
+                    <span class="tag">⚠ Independent ⟹ Cov = 0, কিন্তু উল্টোটা সত্য নয়!</span>
+                    <p>দুটি চলক স্বাধীন (Independent) হলে তাদের Covariance অবশ্যই শূন্য <code>Cov(X, Y) = 0</code> হবে।<br>
+                    <b>কিন্তু Cov(X, Y) = 0 হলেই তারা স্বাধীন নয়!</b> কারণ তাদের মধ্যে শক্তিশালী অ-রৈখিক (Non-linear) সম্পর্ক থাকতে পারে। যেমন: <code>X = [−2, −1, 0, 1, 2]</code> এবং <code>Y = X² = [4, 1, 0, 1, 4]</code> হলে হিসাব করলে <code>Cov(X, Y) = 0</code> পাওয়া যাবে, অথচ Y সম্পূর্ণরূপে X-এর ওপর নির্ভরশীল!</p>
+                </div>
 
                 <h3 class="sub">বিশেষ সম্পর্ক: Cov(X, X) = Variance</h3>
                 <div class="box note">
@@ -1151,37 +1166,31 @@ r = numerator / denominator
 X = [<span class="c-num">1</span>, <span class="c-num">2</span>, <span class="c-num">3</span>, <span class="c-num">4</span>, <span class="c-num">5</span>]
 Y = [<span class="c-num">2</span>, <span class="c-num">4</span>, <span class="c-num">5</span>, <span class="c-num">4</span>, <span class="c-num">5</span>]
 
-<span class="c-com"># Manual Spearman</span>
-<span class="c-kw">def</span> <span class="c-fn">rank</span>(arr):
-    sorted_arr = <span class="c-fn">sorted</span>(<span class="c-fn">enumerate</span>(arr), key=<span class="c-kw">lambda</span> x: x[<span class="c-num">1</span>])
-    ranks = [<span class="c-num">0</span>] * <span class="c-fn">len</span>(arr)
-    <span class="c-kw">for</span> r, (i, _) <span class="c-kw">in</span> <span class="c-fn">enumerate</span>(sorted_arr, <span class="c-num">1</span>):
-        ranks[i] = r
-    <span class="c-kw">return</span> ranks
-
-rx = <span class="c-fn">rank</span>(X)  <span class="c-com"># [1, 2, 3, 4, 5]</span>
-ry = <span class="c-fn">rank</span>(Y)  <span class="c-com"># [1, 2, 4, 3, 5] (ties simplified)</span>
+<span class="c-com"># X-এ কোনো tie নেই, তাই rx = [1, 2, 3, 4, 5]</span>
+<span class="c-com"># Y-এ 4 দুটি (র‍্যাংক 2 ও 3-এর গড় 2.5), 5 দুটি (র‍্যাংক 4 ও 5-এর গড় 4.5):</span>
+rx = [<span class="c-num">1.0</span>, <span class="c-num">2.0</span>, <span class="c-num">3.0</span>, <span class="c-num">4.0</span>, <span class="c-num">5.0</span>]
+ry = [<span class="c-num">1.0</span>, <span class="c-num">2.5</span>, <span class="c-num">4.5</span>, <span class="c-num">2.5</span>, <span class="c-num">4.5</span>]
 n = <span class="c-fn">len</span>(X)
 
-d_sq = <span class="c-fn">sum</span>((rx[i] - ry[i])**<span class="c-num">2</span> <span class="c-kw">for</span> i <span class="c-kw">in</span> <span class="c-fn">range</span>(n))
-rho = <span class="c-num">1</span> - (<span class="c-num">6</span> * d_sq) / (n * (n**<span class="c-num">2</span> - <span class="c-num">1</span>))
-<span class="c-fn">print</span>(<span class="c-str">f"Manual Spearman ρ = {rho:.4f}"</span>)
+<span class="c-com"># ১. গড় র‍্যাংক বসিয়ে শর্টকাট সূত্র (সূত্র ১):</span>
+d_sq = <span class="c-fn">sum</span>((rx[i] - ry[i])**<span class="c-num">2</span> <span class="c-kw">for</span> i <span class="c-kw">in</span> <span class="c-fn">range</span>(n))  <span class="c-com"># 0 + 0.25 + 2.25 + 2.25 + 0.25 = 5.0</span>
+rho_shortcut = <span class="c-num">1</span> - (<span class="c-num">6</span> * d_sq) / (n * (n**<span class="c-num">2</span> - <span class="c-num">1</span>))
+<span class="c-fn">print</span>(<span class="c-str">f"Shortcut Spearman ρ = {rho_shortcut:.4f}"</span>)
 
-<span class="c-com"># scipy verification</span>
+<span class="c-com"># ২. Scipy / Pearson on Ranks (প্রকৃত Spearman - সূত্র ২):</span>
 rho_scipy, pval = stats.<span class="c-fn">spearmanr</span>(X, Y)
-<span class="c-fn">print</span>(<span class="c-str">f"Scipy  Spearman ρ = {rho_scipy:.4f}"</span>)</pre>
+<span class="c-fn">print</span>(<span class="c-str">f"Scipy True Spearman ρ = {rho_scipy:.4f}"</span>)</pre>
                     </div>
                     <div class="cell-out"><span class="prompt">Out[9]</span>
-                        <pre class="out">Manual Spearman ρ = 0.9000
-Scipy  Spearman ρ = 0.8208</pre>
+                        <pre class="out">Shortcut Spearman ρ = 0.7500
+Scipy True Spearman ρ = 0.7379</pre>
                     </div>
                 </div>
 
                 <div class="box warn">
-                    <span class="tag">⚠ Manual vs Scipy পার্থক্য কেন?</span>
-                    <p>Manual formula-তে tied ranks handle করা হয়নি (সরলীকৃত rank দেওয়া
-                        হয়েছে), কিন্তু Scipy tied ranks-এর average নেয়। ডেটায় ties থাকলে
-                        Scipy-র মান আরও সঠিক।</p>
+                    <span class="tag">⚠ Tied Ranks-এর শিক্ষণীয় পার্থক্য (০.৭৫০০ বনাম ০.৭৩৭৯)</span>
+                    <p>Y-এর মানগুলোতে Tie (একই মান একাধিকবার) থাকায় গড় র‍্যাংক <code>ry = [1.0, 2.5, 4.5, 2.5, 4.5]</code> হয়। এতে <code>Σ d² = 5.0</code> হয়ে শর্টকাট সূত্রে মান আসে <b>0.7500</b>।<br>
+                    কিন্তু শর্টকাট সূত্রের তাত্ত্বিক প্রমাণে ধরে নেওয়া হয় র‍্যাংকগুলো ঠিক ১ থেকে n পর্যন্ত অবিকৃত পূর্ণসংখ্যা। Tie থাকলে র‍্যাংকের নিজস্ব ভ্যারিয়েন্স কমে যায়, তাই শর্টকাট সূত্র কিছুটা ভুল (আসন্ন) মান দেয়। র‍্যাংকের ওপর সরাসরি Pearson Correlation (সূত্র ২) চালালে Scipy-র মতো সম্পূর্ণ সঠিক মান <b>0.7379</b> পাওয়া যায়।</p>
                 </div>
 
                 <h3 class="sub">Pearson vs Spearman — কখন কোনটা?</h3>
@@ -1208,8 +1217,8 @@ Scipy  Spearman ρ = 0.8208</pre>
                     </tr>
                     <tr>
                         <td><b>Distribution</b></td>
-                        <td>ডেটা normally distributed হওয়া উচিত</td>
-                        <td>কোনো distribution assumption নেই</td>
+                        <td>বর্ণনামূলক (Descriptive) হিসেবে Normality জরুরি নয়; তবে Significance testing (p-value / t-test)-এ Bivariate Normal বণ্টন আবশ্যক</td>
+                        <td>কোনো distribution assumption নেই (Non-parametric)</td>
                     </tr>
                     <tr>
                         <td><b>কখন better?</b></td>
@@ -1258,7 +1267,6 @@ Scipy  Spearman ρ = 0.8208</pre>
 
                 <a href="#top" class="backtotop">↑ উপরে ফিরে যাও</a>
             </section>
-            <!-- SLOT:SECTION -->
 
             <!-- ============ 11 PROBABILITY BASICS ============ -->
             <section class="topic" id="probability-basics">
@@ -2664,7 +2672,7 @@ Z(4.25) = 0.25</pre>
                 <div class="box warn">
                     <span class="tag">⚠ গুরুত্বপূর্ণ পার্থক্য</span>
                     <p><b>Log-Normal</b> এ ln নিলে → <b>হুবহু Normal</b>।<br>
-                       <b>Pareto</b> তে log নিলে পাওয়া যায় → <b>Exponential</b>, Normal নয়।<br>
+                       <b>Pareto</b> তে log নিলে পাওয়া যায় → <b>Exponential</b> [অর্থাৎ <code>X ~ Pareto(x_m, α)</code> হলে <code>ln(X / x_m) ~ Exponential(α)</code>], Normal নয়।<br>
                        Box-Cox সব distribution কে Normal করে না — শুধু Normal এর দিকে টানে।</p>
                 </div>
 
@@ -3024,17 +3032,18 @@ Z(4.25) = 0.25</pre>
                 <p>মানে H₀ সত্য হলে প্রায় ৫০টা head আসা উচিত, আর বেশিরভাগ সময় ফল ৫০ থেকে ±5-এর মধ্যে থাকবে।</p>
 
                 <p><b>পরিস্থিতি ১: ৬০টা head এলো</b></p>
-                <p>৬০ − ৫০ = ১০, আর SD = ৫। তাহলে ৬০ মানে গড় থেকে 10/5 = <b>2 SD দূরে</b>।<br>
-                    Two-tailed p-value ≈ 0.0455 (মানে H₀ সত্য হলে এমন বা এর চেয়ে চরম ফল পাওয়ার
-                    সম্ভাবনা মাত্র ৪.৫৫%)। এটা কম, <b>কিন্তু খুব কম নয়</b> — কিছুটা সন্দেহ হয়।</p>
+                <p>৬০ − ৫০ = ১০, আর SD = ৫। তাহলে ৬০ মানে গড় থেকে 10/5 = <b>Z = 2.0 SD দূরে</b>।<br>
+                    • <b>Normal Approximation (সরাসরি):</b> Two-tailed <code>p ≈ 0.0455 &lt; 0.05</code> ⟹ বর্ডারলাইনে <b>Reject H₀</b>!<br>
+                    • <b>Exact Binomial Test (দ্বিপদী বণ্টন):</b> নিখুঁত দ্বিমুখী সম্ভাবনা <code>p = 0.0569 &gt; 0.05</code> ⟹ <b>Fail to reject H₀</b>!<br>
+                    • <b>Continuity Correction সহ:</b> <code>Z = (59.5 − 50) / 5 = 1.9</code>, ফলে <code>p ≈ 0.0574 &gt; 0.05</code> ⟹ <b>Fail to reject H₀</b>!<br>
+                    <b style="color:var(--accent);">শিক্ষণীয় অন্তর্দৃষ্টি:</b> বর্ডারলাইন p-value-তে (যেমন ০.০৪৫৫ বনাম ০.০৫৭৪) আসন্ন মান বা পদ্ধতি বদলালে পরিসংখ্যানগত সিদ্ধান্ত বদলে যেতে পারে! তাই সীমানার কাছাকাছি ডেটায় অত্যন্ত সতর্ক হতে হয়।</p>
 
                 <p><b>পরিস্থিতি ২: ৭০টা head এলো</b></p>
-                <p>৭০ − ৫০ = ২০, মানে 20/5 = <b>4 SD দূরে</b>।<br>
-                    Two-tailed p ≈ 0.00006 (মাত্র ০.০০৬%)। এত দূরের ফল <b>প্রায় অসম্ভব</b> H₀ সত্য হলে।
-                    তাই আমরা বলি: "মুদ্রা ন্যায্য নয়।"</p>
+                <p>৭০ − ৫০ = ২০, মানে 20/5 = <b>Z = 4.0 SD দূরে</b>।<br>
+                    Two-tailed <code>p ≈ 0.00006</code> (মাত্র ০.০০৬%)। এত দূরের চরম ফল H₀ সত্য হলে প্রায় অসম্ভব ⟹ নিঃসন্দেহে <b>Reject H₀</b> (মুদ্রা ন্যায্য নয়)।</p>
 
-                <!-- SVG: Coin example bell curve -->
-                <svg class="svg-chart" viewBox="0 0 700 320" role="img" aria-label="Coin toss bell curve — acceptance ও rejection region দেখানো হয়েছে">
+                <!-- SVG: Coin example bell curve with uniform scale -->
+                <svg class="svg-chart" viewBox="0 0 740 330" role="img" aria-label="Coin toss bell curve — uniform scale acceptance ও rejection region">
                     <defs>
                         <linearGradient id="acceptGrad" x1="0" y1="0" x2="0" y2="1">
                             <stop offset="0%" stop-color="#4fd1c5" stop-opacity="0.25"/>
@@ -3046,58 +3055,58 @@ Z(4.25) = 0.25</pre>
                         </linearGradient>
                     </defs>
                     <!-- Axis -->
-                    <line x1="60" y1="250" x2="660" y2="250" stroke="#3a4055" stroke-width="1"/>
+                    <line x1="60" y1="250" x2="680" y2="250" stroke="#3a4055" stroke-width="1"/>
                     <line x1="60" y1="250" x2="60" y2="30" stroke="#3a4055" stroke-width="1"/>
-                    <!-- X-axis labels (heads count) -->
-                    <text x="120" y="270" text-anchor="middle" fill="#8b91a1" font-size="11">35</text>
-                    <text x="210" y="270" text-anchor="middle" fill="#8b91a1" font-size="11">40</text>
-                    <text x="300" y="270" text-anchor="middle" fill="#8b91a1" font-size="11">45</text>
-                    <text x="360" y="270" text-anchor="middle" fill="#e8a33d" font-size="12" font-weight="bold">50 (μ)</text>
-                    <text x="420" y="270" text-anchor="middle" fill="#8b91a1" font-size="11">55</text>
-                    <text x="510" y="270" text-anchor="middle" fill="#8b91a1" font-size="11">60</text>
-                    <text x="600" y="270" text-anchor="middle" fill="#8b91a1" font-size="11">65</text>
-                    <text x="360" y="295" text-anchor="middle" fill="#8b91a1" font-size="12">Head-এর সংখ্যা</text>
+                    <!-- X-axis labels (heads count: perfectly uniform scale 15px per head) -->
+                    <text x="70" y="270" text-anchor="middle" fill="#8b91a1" font-size="11">30</text>
+                    <text x="145" y="270" text-anchor="middle" fill="#8b91a1" font-size="11">35</text>
+                    <text x="220" y="270" text-anchor="middle" fill="#8b91a1" font-size="11">40</text>
+                    <text x="295" y="270" text-anchor="middle" fill="#8b91a1" font-size="11">45</text>
+                    <text x="370" y="270" text-anchor="middle" fill="#e8a33d" font-size="12" font-weight="bold">50 (μ)</text>
+                    <text x="445" y="270" text-anchor="middle" fill="#8b91a1" font-size="11">55</text>
+                    <text x="520" y="270" text-anchor="middle" fill="#8b91a1" font-size="11">60</text>
+                    <text x="595" y="270" text-anchor="middle" fill="#8b91a1" font-size="11">65</text>
+                    <text x="670" y="270" text-anchor="middle" fill="#8b91a1" font-size="11">70</text>
+                    <text x="370" y="295" text-anchor="middle" fill="#8b91a1" font-size="12">Head-এর সংখ্যা (সমান স্কেল: প্রতি হেড = ১৫ পিক্সেল)</text>
 
-                    <!-- Rejection region LEFT (< ~40.2, i.e. < μ-1.96σ = 50-9.8 = 40.2) -->
-                    <path d="M60,250 Q60,248 80,240 Q100,220 120,195 Q140,165 156,140 L156,250 Z" fill="url(#rejectGrad)"/>
-                    <!-- Rejection region RIGHT (> ~59.8) -->
-                    <path d="M564,140 Q576,165 596,195 Q616,220 636,240 Q656,248 660,250 L564,250 Z" fill="url(#rejectGrad)"/>
-                    <!-- Acceptance region (middle) -->
-                    <path d="M156,140 Q180,100 210,75 Q250,50 300,40 Q340,35 360,34 Q380,35 420,40 Q460,50 510,75 Q540,100 564,140 L564,250 L156,250 Z" fill="url(#acceptGrad)"/>
+                    <!-- Left rejection fill (x < 223, i.e. < 40.2) -->
+                    <path d="M70,250 Q145,248 180,230 Q205,210 223,178 L223,250 Z" fill="url(#rejectGrad)"/>
+                    <!-- Right rejection fill (x > 517, i.e. > 59.8) -->
+                    <path d="M517,178 Q535,210 560,230 Q595,248 670,250 L517,250 Z" fill="url(#rejectGrad)"/>
+                    <!-- Middle acceptance fill (223 to 517) -->
+                    <path d="M223,178 Q250,135 295,85 Q335,45 370,35 Q405,45 445,85 Q490,135 517,178 L517,250 L223,250 Z" fill="url(#acceptGrad)"/>
 
-                    <!-- Bell curve -->
-                    <path d="M60,250 Q80,248 100,240 Q120,225 140,200 Q160,165 180,130 Q200,98 220,72
-                             Q240,52 260,42 Q280,36 300,34 Q320,33 340,33 Q360,34 380,36
-                             Q400,42 420,52 Q440,72 460,98 Q480,130 500,165 Q520,200 540,225
-                             Q560,240 580,248 Q600,250 620,250 Q640,250 660,250"
+                    <!-- Bell curve path -->
+                    <path d="M70,250 Q120,249 160,240 Q200,220 240,165 Q280,105 325,55 Q350,38 370,35
+                             Q390,38 415,55 Q460,105 500,165 Q540,220 580,240 Q620,249 670,250"
                           fill="none" stroke="#e8a33d" stroke-width="2.5"/>
 
-                    <!-- Critical values ±1.96σ (at ~40.2 and ~59.8, mapped to x=156 and x=564) -->
-                    <line x1="156" y1="250" x2="156" y2="130" stroke="#ff6b5c" stroke-width="1.5" stroke-dasharray="5,3"/>
-                    <line x1="564" y1="250" x2="564" y2="130" stroke="#ff6b5c" stroke-width="1.5" stroke-dasharray="5,3"/>
-                    <text x="156" y="125" text-anchor="middle" fill="#ff6b5c" font-size="10" font-weight="bold">−1.96σ</text>
-                    <text x="564" y="125" text-anchor="middle" fill="#ff6b5c" font-size="10" font-weight="bold">+1.96σ</text>
+                    <!-- Critical lines at 40.2 (x=223) and 59.8 (x=517) -->
+                    <line x1="223" y1="250" x2="223" y2="120" stroke="#ff6b5c" stroke-width="1.5" stroke-dasharray="5,3"/>
+                    <line x1="517" y1="250" x2="517" y2="120" stroke="#ff6b5c" stroke-width="1.5" stroke-dasharray="5,3"/>
+                    <text x="223" y="112" text-anchor="middle" fill="#ff6b5c" font-size="10" font-weight="bold">40.2 (−1.96σ)</text>
+                    <text x="517" y="112" text-anchor="middle" fill="#ff6b5c" font-size="10" font-weight="bold">59.8 (+1.96σ)</text>
 
                     <!-- Labels for regions -->
-                    <text x="100" y="210" text-anchor="middle" fill="#ff6b5c" font-size="11" font-weight="bold">Reject</text>
-                    <text x="100" y="225" text-anchor="middle" fill="#ff6b5c" font-size="10">α/2 = 0.025</text>
-                    <text x="360" y="100" text-anchor="middle" fill="#4fd1c5" font-size="12" font-weight="bold">Acceptance Region</text>
-                    <text x="360" y="118" text-anchor="middle" fill="#4fd1c5" font-size="11">95% (1 − α)</text>
-                    <text x="620" y="210" text-anchor="middle" fill="#ff6b5c" font-size="11" font-weight="bold">Reject</text>
-                    <text x="620" y="225" text-anchor="middle" fill="#ff6b5c" font-size="10">α/2 = 0.025</text>
+                    <text x="145" y="210" text-anchor="middle" fill="#ff6b5c" font-size="11" font-weight="bold">Reject</text>
+                    <text x="145" y="225" text-anchor="middle" fill="#ff6b5c" font-size="10">α/2 = 0.025</text>
+                    <text x="370" y="100" text-anchor="middle" fill="#4fd1c5" font-size="12" font-weight="bold">Acceptance Region (95%)</text>
+                    <text x="370" y="118" text-anchor="middle" fill="#4fd1c5" font-size="10">৪০.২ থেকে ৫৯.৮ এর মধ্যে</text>
+                    <text x="615" y="210" text-anchor="middle" fill="#ff6b5c" font-size="11" font-weight="bold">Reject</text>
+                    <text x="615" y="225" text-anchor="middle" fill="#ff6b5c" font-size="10">α/2 = 0.025</text>
 
-                    <!-- 60 heads marker -->
-                    <line x1="510" y1="250" x2="510" y2="90" stroke="#c792ea" stroke-width="1.5" stroke-dasharray="4,3"/>
-                    <circle cx="510" cy="90" r="4" fill="#c792ea"/>
-                    <text x="510" y="80" text-anchor="middle" fill="#c792ea" font-size="10" font-weight="bold">60 head (2σ)</text>
+                    <!-- 60 heads marker at x=520 (just past 517 into Rejection boundary) -->
+                    <line x1="520" y1="250" x2="520" y2="70" stroke="#c792ea" stroke-width="2" stroke-dasharray="4,2"/>
+                    <circle cx="520" cy="70" r="4.5" fill="#c792ea"/>
+                    <text x="520" y="58" text-anchor="middle" fill="#c792ea" font-size="10" font-weight="bold">৬০ head (বর্ডারলাইন Reject: Z=2.0)</text>
 
-                    <!-- 70 heads marker -->
-                    <line x1="635" y1="250" x2="635" y2="60" stroke="#ff6b5c" stroke-width="1.5" stroke-dasharray="4,3"/>
-                    <circle cx="635" cy="60" r="4" fill="#ff6b5c"/>
-                    <text x="635" y="50" text-anchor="middle" fill="#ff6b5c" font-size="10" font-weight="bold">70 head (4σ)</text>
+                    <!-- 70 heads marker at x=670 -->
+                    <line x1="670" y1="250" x2="670" y2="50" stroke="#ff6b5c" stroke-width="2" stroke-dasharray="4,2"/>
+                    <circle cx="670" cy="50" r="4.5" fill="#ff6b5c"/>
+                    <text x="670" y="40" text-anchor="middle" fill="#ff6b5c" font-size="10" font-weight="bold">৭০ head (চরম Reject: Z=4.0)</text>
 
                     <!-- Title -->
-                    <text x="350" y="18" text-anchor="middle" fill="#e7e9ee" font-size="13" font-weight="bold">Two-tailed Test — α = 0.05, Acceptance ও Rejection Region</text>
+                    <text x="370" y="18" text-anchor="middle" fill="#e7e9ee" font-size="13" font-weight="bold">Two-tailed Test — α = 0.05, Acceptance ও Rejection Region (সমান স্কেল)</text>
                 </svg>
 
                 <!-- ── p-value ── -->
@@ -3261,13 +3270,13 @@ Z(4.25) = 0.25</pre>
                     <tr>
                         <td><b>Z-test</b></td>
                         <td>গড়ের পরীক্ষা</td>
-                        <td>Population σ <b>জানা</b> এবং n ≥ 30</td>
+                        <td>Population σ <b>জানা</b> (পপুলেশন Normal হলে যেকোনো n; Normal না হলে n ≥ 30)</td>
                         <td>Sample mean বনাম population mean</td>
                     </tr>
                     <tr>
                         <td><b>t-test</b></td>
                         <td>গড়ের পরীক্ষা</td>
-                        <td>Population σ <b>অজানা</b> (sample SD = s ব্যবহার করি)</td>
+                        <td>Population σ <b>অজানা</b> (পপুলেশন Normal হলে s ব্যবহার করে যেকোনো n, বিশেষত n &lt; 30)</td>
                         <td>Sample mean বনাম population mean</td>
                     </tr>
                     <tr>
@@ -3279,50 +3288,21 @@ Z(4.25) = 0.25</pre>
                     <tr>
                         <td><b>ANOVA</b></td>
                         <td>একাধিক group-এর গড় তুলনা</td>
-                        <td>৩+ group থাকলে (বিস্তারিত পরে আসবে)</td>
+                        <td>৩+ group থাকলে (সেকশন ৪৩ ও ৪৪)</td>
                         <td>Group-গুলোর গড় একই কিনা</td>
                     </tr>
                 </table>
 
-                <h3 class="sub">Z-test-এর দুই শর্ত — কেন?</h3>
-                <p><b>শর্ত ১: Population σ জানা থাকতে হবে</b><br>
-                    Z-test-এর সূত্রে σ লাগে। σ না জানলে সূত্রে কী বসাবে? তখন sample SD (s) ব্যবহার করতে হয়, আর সেটা করলে test হয় t-test।</p>
-                <p><b>শর্ত ২: n ≥ 30</b><br>
-                    CLT (Central Limit Theorem) বলে, sample size যথেষ্ট বড় (n ≥ 30) হলে sample mean-এর
-                    distribution প্রায় Normal হয় — আর Z-test Normal distribution ধরে কাজ করে।
-                    n ছোট হলে t-distribution ব্যবহার করা নিরাপদ (কারণ t-distribution-এর tail মোটা,
-                    যা ছোট sample-এর অনিশ্চয়তা হিসাবে রাখে)।</p>
-
-                <div class="box note">
-                    <span class="tag">উপমা</span>
-                    <p>Z-test হলো "পরিচিত রাস্তায় GPS ছাড়া গাড়ি চালানো" — তুমি জানো রাস্তা কতটা
-                        পরিষ্কার (σ জানা) এবং যথেষ্ট অভিজ্ঞতা আছে (n ≥ 30)।<br>
-                        t-test হলো "অচেনা রাস্তায় GPS দিয়ে চলা" — রাস্তা কতটা বিপদজনক সেটা
-                        অনুমান করতে হচ্ছে (s ব্যবহার), তাই বেশি সতর্ক থাকতে হয় (মোটা tail)।</p>
-                </div>
-
-                <h3 class="sub">Z-test-এর সূত্র</h3>
-                <div class="formula-block">
-                    <span class="lbl">Z-test Statistic</span>
-                    Z = (x̄ − μ) / (σ / √n)
-                </div>
-                <p><b>x̄</b> = sample mean (নমুনার গড়) — এটা আমরা ডেটা থেকে হিসাব করি।<br>
-                    <b>μ</b> = population mean (জনসংখ্যার গড়, H₀-তে যা দাবি করা হয়েছে)।<br>
-                    <b>σ</b> = population standard deviation (জানা আছে ধরে নিই)।<br>
-                    <b>n</b> = sample size।<br>
-                    <b>σ/√n</b> = Standard Error (SE) — sample mean কতটা ওঠানামা করে তার পরিমাপ।</p>
-
-                <div class="box tip">
-                    <span class="tag">সূত্রটা কেন এমন?</span>
-                    <p>Z = (x̄ − μ) / SE বলছে: "sample mean, population mean থেকে <b>কত SE দূরে</b>?"
-                        যদি ১-২ SE দূরে হয় তাহলে স্বাভাবিক (fail to reject)। যদি ৩-৪ SE দূরে হয়
-                        তাহলে খুবই অস্বাভাবিক (reject)।</p>
-                </div>
+                <h3 class="sub">Z-test বনাম t-test-এর শর্তাবলী — সঠিক নিয়ম</h3>
+                <p><b>১. Population σ জানা থাকতে হবে:</b><br>
+                    Z-test-এর সূত্রে তাত্ত্বিক σ প্রয়োজন। যদি σ জানা না থাকে, তবে স্যাম্পল স্ট্যান্ডার্ড ডেভিয়েশন (s) ব্যবহার করতে হবে এবং সরাসরি Student's t-test প্রয়োগ করতে হবে।</p>
+                <p><b>২. Normal Distribution বনাম Sample Size (n ≥ 30):</b><br>
+                    • যদি <b>মূল Population নিজেই Normal</b> হয় এবং <b>σ জানা থাকে</b>, তবে <b>যেকোনো স্যাম্পল সাইজে (এমনকি n = 5 বা 10 হলেও) Z-test শতভাগ সঠিক!</b><br>
+                    • কিন্তু যদি <b>Population Normal না হয়</b> (বা এর বণ্টন অজানা থাকে), তবে Central Limit Theorem (CLT) কার্যকর হতে এবং স্যাম্পল গড়ের বণ্টনকে Normal বানাতে <b>n ≥ 30</b> আবশ্যক।</p>
 
                 <div class="box tip">
                     <span class="tag">এক লাইনের সারাংশ</span>
-                    <p>Z-test = population SD (σ) জানা থাকলে এবং sample বড় (n ≥ 30) হলে, sample mean
-                        কি population mean থেকে "যথেষ্ট দূরে" কিনা পরীক্ষা করার উপায়।</p>
+                    <p>Z-test = population SD (σ) জানা থাকলে এবং sample বড় (n ≥ 30) হলে, sample mean কি population mean থেকে "যথেষ্ট দূরে" কিনা পরীক্ষা করার উপায়।</p>
                 </div>
 
                 <a href="#top" class="backtotop">↑ উপরে ফিরে যাও</a>
@@ -3676,7 +3656,7 @@ Z(4.25) = 0.25</pre>
                 </ul>
 
                 <!-- Inline SVG: Z curve vs t-curve (df=2 vs df=30) -->
-                <svg class="svg-chart" viewBox="0 0 720 270" width="100%" height="270" style="background:#151822;border:1px solid #2a2f3d;border-radius:8px;margin:20px 0;">
+                <svg class="svg-chart" viewBox="0 0 720 270" style="background:#151822;border:1px solid #2a2f3d;border-radius:8px;margin:20px 0;">
                     <text x="360" y="24" text-anchor="middle" fill="#e7e9ee" font-size="14" font-weight="bold">Z-distribution বনাম Student's t-distribution (Tail-এর তুলনা)</text>
                     
                     <!-- Axis -->
@@ -3784,19 +3764,19 @@ Z(4.25) = 0.25</pre>
                     প্রথমে Standard Error (SE) বের করি:<br>
                     <code>SE = s / √n = 20 / √30 = 20 / 5.4772 ≈ 3.6515</code><br><br>
                     এখন t-score হিসাব করি:<br>
-                    <code>t = (x̄ − μ) / SE = (140 − 100) / 3.6515 = 40 / 3.6515 ≈ +10.96</code><br>
+                    <code>t = (x̄ − μ) / SE = (140 − 100) / 3.6515 = 40 / 3.6515 ≈ +10.95</code><br>
                     <i>(অর্থ: আমাদের স্যাম্পল গড় পপুলেশন গড় থেকে প্রায় ১১ গুণ Standard Error দূরে!)</i>
                 </p>
 
                 <p><b>ধাপ ৫: সিদ্ধান্ত গ্রহণ</b></p>
                 <p>
-                    যেহেতু <code>t = 10.96 &gt; 2.045</code>, অর্থাৎ আমাদের মানটি অতিমাত্রায় ডানদিকের Rejection Region-এ পড়ে গেছে:<br>
+                    যেহেতু <code>t = 10.95 &gt; 2.045</code>, অর্থাৎ আমাদের মানটি অতিমাত্রায় ডানদিকের Rejection Region-এ পড়ে গেছে:<br>
                     • <b>সিদ্ধান্ত:</b> <b>Reject H₀</b> (Null hypothesis বাতিল করা হলো)।<br>
                     • <b>উপসংহার:</b> পরিসংখ্যানগতভাবে নিশ্চিত যে নতুন ওষুধটি মানুষের IQ তাৎপর্যপূর্ণভাবে বৃদ্ধি করেছে।
                 </p>
 
                 <!-- Inline SVG: Drug IQ t-test curve -->
-                <svg class="svg-chart" viewBox="0 0 720 250" width="100%" height="250" style="background:#151822;border:1px solid #2a2f3d;border-radius:8px;margin:16px 0;">
+                <svg class="svg-chart" viewBox="0 0 720 250" style="background:#151822;border:1px solid #2a2f3d;border-radius:8px;margin:16px 0;">
                     <text x="360" y="24" text-anchor="middle" fill="#e7e9ee" font-size="13" font-weight="bold">IQ ড্রাগ টেস্ট — t-distribution (df = 29, α = 0.05)</text>
                     <!-- Axis -->
                     <line x1="60" y1="200" x2="660" y2="200" stroke="#3a4055" stroke-width="1.5"/>
@@ -3816,10 +3796,10 @@ Z(4.25) = 0.25</pre>
                     <text x="500" y="148" text-anchor="middle" fill="#ff6b5c" font-size="11" font-weight="bold">+2.045</text>
                     <text x="360" y="185" text-anchor="middle" fill="#4fd1c5" font-size="12">Acceptance Region (95%)</text>
                     
-                    <!-- t = 10.96 annotation far right -->
+                    <!-- t = 10.95 annotation far right -->
                     <line x1="640" y1="200" x2="640" y2="80" stroke="#c792ea" stroke-width="2.5" stroke-dasharray="4,2"/>
                     <circle cx="640" cy="80" r="5" fill="#c792ea"/>
-                    <text x="640" y="68" text-anchor="middle" fill="#c792ea" font-size="11" font-weight="bold">t = 10.96 (Reject Zone!)</text>
+                    <text x="640" y="68" text-anchor="middle" fill="#c792ea" font-size="11" font-weight="bold">t = 10.95 (Reject Zone!)</text>
                     <text x="640" y="225" text-anchor="middle" fill="#c792ea" font-size="10">সুদূর Rejection Region</text>
                 </svg>
 
@@ -3885,7 +3865,8 @@ df = n - <span class="c-num">1</span>
 
 <span class="c-com"># ২. Critical value এবং p-value</span>
 t_crit = stats.t.<span class="c-fn">ppf</span>(<span class="c-num">1</span> - alpha/<span class="c-num">2</span>, df=df)
-p_val = <span class="c-num">2</span> * (<span class="c-num">1</span> - stats.t.<span class="c-fn">cdf</span>(<span class="c-fn">abs</span>(t_stat), df=df))
+<span class="c-com"># 1 - cdf এর চেয়ে stats.t.sf অধিক সূক্ষ্ম ও স্ট্যাবল</span>
+p_val = <span class="c-num">2</span> * stats.t.<span class="c-fn">sf</span>(<span class="c-fn">abs</span>(t_stat), df=df)
 
 <span class="c-fn">print</span>(<span class="c-str">f"Standard Error (SE) = {se:.4f}"</span>)
 <span class="c-fn">print</span>(<span class="c-str">f"t-statistic         = {t_stat:.4f}"</span>)
@@ -4034,7 +4015,7 @@ p-value             = 1.83e-11
                 </ul>
 
                 <!-- Inline SVG: Two overlapping curves for alpha, beta, and power -->
-                <svg class="svg-chart" viewBox="0 0 720 280" width="100%" height="280" style="background:#151822;border:1px solid #2a2f3d;border-radius:8px;margin:20px 0;">
+                <svg class="svg-chart" viewBox="0 0 720 280" style="background:#151822;border:1px solid #2a2f3d;border-radius:8px;margin:20px 0;">
                     <text x="360" y="24" text-anchor="middle" fill="#e7e9ee" font-size="14" font-weight="bold">Type 1 Error (α), Type 2 Error (β) এবং Power (1 − β) এর ভিজ্যুয়ালাইজেশন</text>
                     
                     <!-- Axis -->
@@ -4071,8 +4052,9 @@ p-value             = 1.83e-11
 
                 <h3 class="sub">(ছ) Python কোড — Error ও Power ক্যালকুলেশন</h3>
                 <div class="cell">
-                    <div class="cell-in"><span class="prompt">In [2]</span>
-                        <pre class="code"><span class="c-kw">from</span> statsmodels.stats.power <span class="c-kw">import</span> TTestIndPower
+                    <div class="cell-in"><span class="prompt">In [1]</span>
+                        <pre class="code"><span class="c-kw">import</span> math
+<span class="c-kw">from</span> statsmodels.stats.power <span class="c-kw">import</span> TTestIndPower
 
 <span class="c-com"># Power Analysis প্যারামিটার</span>
 effect_size = <span class="c-num">0.8</span>   <span class="c-com"># Cohen's d (প্রভাবের মাত্রা: বড়)</span>
@@ -4088,7 +4070,7 @@ required_n = analysis.<span class="c-fn">solve_power</span>(effect_size=effect_s
 <span class="c-fn">print</span>(<span class="c-str">f"Type 2 Error (β)         = {1 - power:.2f}"</span>)
 <span class="c-fn">print</span>(<span class="c-str">f"প্রয়োজনীয় Sample Size (n) = {math.ceil(required_n)} জন প্রতি গ্রুপে"</span>)</pre>
                     </div>
-                    <div class="cell-out"><span class="prompt">Out[2]</span>
+                    <div class="cell-out"><span class="prompt">Out[1]</span>
                         <pre class="out">Type 1 Error (α)         = 0.05
 Target Power (1 - β)     = 0.8
 Type 2 Error (β)         = 0.20
@@ -4213,8 +4195,8 @@ Type 2 Error (β)         = 0.20
                     <b>পরিস্থিতি:</b> একটি মারাত্মক কিন্তু বিরল রোগ সমাজে মাত্র <b>১% মানুষের</b> হয় (<code>Prior = 0.01</code>)। একটি ল্যাব টেস্ট তৈরি করা হয়েছে যা:
                 </p>
                 <ul>
-                    <li>আক্রান্ত ব্যক্তির ক্ষেত্রে <b>৯৯% সময় পজিটিভ</b> রিপোর্ট দেয় (Sensitivity = <code>P(+ | Disease) = 0.99</code>)।</li>
-                    <li>কিন্তু সম্পূর্ণ সুস্থ ব্যক্তির ক্ষেত্রেও <b>৫% সময় ভুল করে পজিটিভ</b> রিপোর্ট দিয়ে ফেলে (False Positive = <code>P(+ | Healthy) = 0.05</code>)।</li>
+                    <li>আক্রান্ত ব্যক্তির ক্ষেত্রে <b>৯৯% সময় পজিটিভ</b> রিপোর্ট দেয় (Sensitivity = <code>P(+ | Disease) = 0.99</code>; অর্থাৎ True Positive Rate)।</li>
+                    <li>সুস্থ ব্যক্তির ক্ষেত্রে <b>৯৫% সময় নেগেটিভ</b> রিপোর্ট দেয় (Specificity = <code>P(− | Healthy) = 0.95</code>; অর্থাৎ True Negative Rate)। ফলে সুস্থ ব্যক্তির ক্ষেত্রেও <b>৫% সময় ভুল করে পজিটিভ</b> আসে (False Positive Rate = <code>1 − Specificity = 0.05</code>)।</li>
                 </ul>
                 <p>
                     <b>প্রশ্ন:</b> একজন ব্যক্তি এই টেস্ট করালেন এবং তার রিপোর্ট <b>Positive (+)</b> এল। তার আসলেই রোগটি থাকার সম্ভাবনা কত?
@@ -4232,17 +4214,51 @@ Type 2 Error (β)         = 0.20
                 </p>
                 <p><b>ধাপ ৩: Bayes' Theorem প্রয়োগ করে Posterior বের করা</b><br>
                     <code>P(Disease | +) = [ P(Disease) · P(+ | Disease) ] / P(+)</code><br>
-                    <code>P(Disease | +) = 0.0099 / 0.0594 ≈ 0.1667 বা 16.7%</code>
+                    <code>P(Disease | +) = 0.0099 / 0.0594 = 1 / 6 ≈ 0.1667 বা 16.67%</code>
                 </p>
 
                 <div class="box tip">
-                    <span class="tag">চমকপ্রদ অন্তর্দৃষ্টি (Why so low?)</span>
-                    <p>টেস্টটি ৯৯% নিখুঁত হওয়া সত্ত্বেও পজিটিভ রিপোর্ট আসার পর রোগীর সত্যি সত্যি রোগ থাকার সম্ভাবনা মাত্র <b>১৬.৭%</b>! বাকি <b>৮৩.৩%</b> সম্ভাবনাই হলো তিনি সুস্থ!<br>
-                    <b>কেন এমন হলো?</b> কারণ রোগটি এত বিরল যে ৯৯ জন সুস্থ মানুষের ৫% ভুল পজিটিভ সংখ্যায় (০.০৪৯৫) ১ জন রোগীর সঠিক পজিটিভের (০.০০৯৯) চেয়ে ৫ গুণ বেশি ভারী হয়ে গেছে!</p>
+                    <span class="tag">চমকপ্রদ অন্তর্দৃষ্টি (Sensitivity ৯৯% ও Specificity ৯৫% হলেও কেন এত কম?)</span>
+                    <p>টেস্টটির Sensitivity ৯৯% এবং Specificity ৯৫% হওয়া সত্ত্বেও পজিটিভ রিপোর্ট আসার পর রোগীর সত্যি সত্যি রোগ থাকার সম্ভাবনা মাত্র <b>১৬.৬৭%</b>! বাকি <b>৮৩.৩৩%</b> সম্ভাবনাই হলো তিনি সম্পূর্ণ সুস্থ!<br>
+                    <b>কেন এমন হলো?</b> কারণ রোগটি এত বিরল যে ৯,৯০০ জন সুস্থ মানুষের ৫% ভুল পজিটিভ সংখ্যায় (৪৯৫ জন) ১০০ জন রোগীর সঠিক পজিটিভের (৯৯ জন) চেয়ে ৫ গুণ বেশি ভারী হয়ে গেছে! তাই "৯৯% নিখুঁত টেস্ট" বলা বিভ্রান্তিকর — টেস্টের Sensitivity ও Specificity আলাদাভাবে দেখতে হয়।</p>
+                </div>
+
+                <h3 class="sub">Natural Frequency টেবিল (১০,০০০ জনের হিসেবে সহজ হিসাব)</h3>
+                <p>সম্ভাবনার জটিল দশমিকের বদলে বাস্তব গণনা (Natural Frequency) দিয়ে বোঝা সবচেয়ে সহজ। ধরা যাক মোট <b>১০,০০০</b> জনের পরীক্ষা করা হলো:</p>
+                <table class="cmp">
+                    <tr>
+                        <th>বিভাগ (প্রকৃত অবস্থা)</th>
+                        <th>টেস্ট Positive (+)</th>
+                        <th>টেস্ট Negative (−)</th>
+                        <th>মোট জনসংখ্যা</th>
+                    </tr>
+                    <tr>
+                        <td><b>আক্রান্ত রোগী (১%)</b></td>
+                        <td><b style="color:var(--accent);">৯৯ জন</b> (সঠিক +, True Positive)</td>
+                        <td>১ জন (ভুল −, False Negative)</td>
+                        <td><b>১০০ জন</b></td>
+                    </tr>
+                    <tr>
+                        <td><b>সুস্থ মানুষ (৯৯%)</b></td>
+                        <td><b style="color:var(--warn);">৪৯৫ জন</b> (ভুল +, False Positive, ৫%)</td>
+                        <td>৯,৪০৫ জন (সঠিক −, Specificity ৯৫%)</td>
+                        <td><b>৯,৯০০ জন</b></td>
+                    </tr>
+                    <tr>
+                        <td><b>মোট</b></td>
+                        <td><b style="color:var(--accent-2);">৫৯৪ জন</b> মোট পজিটিভ</td>
+                        <td>৯,৪০৬ জন</td>
+                        <td><b>১০,০০০ জন</b></td>
+                    </tr>
+                </table>
+                <div class="box note">
+                    <span class="tag">সহজ হিসাব</span>
+                    <p>মোট পজিটিভ রিপোর্ট পেয়েছেন ৫৯৪ জন (৯৯ জন আসল রোগী + ৪৯৫ জন সুস্থ মানুষ যাদের ভুল পজিটিভ এসেছে)।<br>
+                    অতএব, পজিটিভ হলে সত্যি রোগী হওয়ার সম্ভাবনা = <code>৯৯ / ৫৯৪ = ১ / ৬ ≈ ১৬.৬৭%</code>।</p>
                 </div>
 
                 <!-- Inline SVG: Bayes Tree Diagram -->
-                <svg class="svg-chart" viewBox="0 0 720 260" width="100%" height="260" style="background:#151822;border:1px solid #2a2f3d;border-radius:8px;margin:16px 0;">
+                <svg class="svg-chart" viewBox="0 0 720 260" style="background:#151822;border:1px solid #2a2f3d;border-radius:8px;margin:16px 0;">
                     <text x="360" y="24" text-anchor="middle" fill="#e7e9ee" font-size="13" font-weight="bold">মেডিকেল টেস্টের Bayes Tree — Prior থেকে Evidence ও Posterior</text>
                     
                     <!-- Root node -->
@@ -4423,7 +4439,7 @@ ev, post = <span class="c-fn">bayes_disease_test</span>(prior_disease=<span clas
                 </div>
 
                 <!-- Inline SVG: 100 Confidence Intervals Simulation Concept -->
-                <svg class="svg-chart" viewBox="0 0 720 250" width="100%" height="250" style="background:#151822;border:1px solid #2a2f3d;border-radius:8px;margin:16px 0;">
+                <svg class="svg-chart" viewBox="0 0 720 250" style="background:#151822;border:1px solid #2a2f3d;border-radius:8px;margin:16px 0;">
                     <text x="360" y="24" text-anchor="middle" fill="#e7e9ee" font-size="13" font-weight="bold">Confidence Interval-এর বৈজ্ঞানিক অর্থ (১০০টি স্যাম্পল সিমুলেশন)</text>
                     
                     <!-- True Population Mean Line (Vertical) -->
@@ -4482,7 +4498,7 @@ ev, post = <span class="c-fn">bayes_disease_test</span>(prior_disease=<span clas
 
                 <h3 class="sub">(জ) Python কোড — Confidence Interval হিসাব</h3>
                 <div class="cell">
-                    <div class="cell-in"><span class="prompt">In [2]</span>
+                    <div class="cell-in"><span class="prompt">In [1]</span>
                         <pre class="code"><span class="c-kw">import</span> math
 <span class="c-kw">from</span> scipy <span class="c-kw">import</span> stats
 
@@ -4504,7 +4520,7 @@ ci_upper = x_bar + me
 <span class="c-fn">print</span>(<span class="c-str">f"Margin of Error (ME)  = {me:.4f}"</span>)
 <span class="c-fn">print</span>(<span class="c-str">f"95% Confidence Interval = [{ci_lower:.2f}, {ci_upper:.2f}]"</span>)</pre>
                     </div>
-                    <div class="cell-out"><span class="prompt">Out[2]</span>
+                    <div class="cell-out"><span class="prompt">Out[1]</span>
                         <pre class="out">Critical Z (95%)      = 1.960
 Standard Error (SE)   = 18.2574
 Margin of Error (ME)  = 35.7845
@@ -4567,7 +4583,7 @@ Margin of Error (ME)  = 35.7845
                     <b>২. কেন E দিয়ে ভাগ করা হয়?</b><br>
                     আপেক্ষিক তীব্রতা বা গুরুত্ব বোঝার জন্য। ১০০০ জনের মধ্যে ৫ জনের অমিল (০.৫%) খুবই নগণ্য; কিন্তু ১০ জনের মধ্যে ৫ জনের অমিল (৫০%) বিশাল বিপর্যয়! <code>E</code> দিয়ে ভাগ করে প্রতিটি অমিলকে তার প্রত্যাশার সাপেক্ষে ওজন দেওয়া হয়।<br><br>
                     <b>৩. বড় χ² মান কী বোঝায়?</b><br>
-                    χ² যত বড় হবে, তার মানে বাস্তবে প্রাপ্ত ডেটার সাথে আমাদের ধারণার অমিল তত ভয়াবহ $\implies$ <b>Reject H₀</b>!</p>
+                    χ² যত বড় হবে, তার মানে বাস্তবে প্রাপ্ত ডেটার সাথে আমাদের ধারণার অমিল তত ভয়াবহ ⟹ <b>Reject H₀</b>!</p>
                 </div>
 
                 <h3 class="sub">(গ) ৩টি অপরিহার্য শর্ত ও Right-Tailed প্রকৃতির রহস্য</h3>
@@ -4592,7 +4608,7 @@ Margin of Error (ME)  = 35.7845
                 <p>
                     • <b>H₀:</b> ক্লাসের বাঁহাতি ও ডানহাতির অনুপাত জাতীয় স্বাভাবিক গড়ের সাথে মেলে (১২% বাঁহাতি, ৮৮% ডানহাতি)।<br>
                     • <b>H₁:</b> ক্লাসের অনুপাত স্বাভাবিক গড়ের সাথে মেলে না।<br>
-                    • ক্যাটাগরি <code>k = 2</code> (বাঁহাতি ও ডানহাতি) $\implies$ <code>df = 2 − 1 = 1</code>
+                    • ক্যাটাগরি <code>k = 2</code> (বাঁহাতি ও ডানহাতি) ⟹ <code>df = 2 − 1 = 1</code>
                 </p>
                 <table class="cmp">
                     <tr>
@@ -4648,7 +4664,7 @@ Margin of Error (ME)  = 35.7845
                 <p>
                     • <b>H₀:</b> ২০২০ সালের ওজন বণ্টন ২০১০ সালের মতোই রয়েছে (Good Fit)।<br>
                     • <b>H₁:</b> ওজন বণ্টন পরিবর্তিত হয়েছে (Not a good fit)।<br>
-                    • ক্যাটাগরি <code>k = 3</code> $\implies$ <code>df = 3 − 1 = 2</code>, <code>α = 0.05</code>
+                    • ক্যাটাগরি <code>k = 3</code> ⟹ <code>df = 3 − 1 = 2</code>, <code>α = 0.05</code>
                 </p>
 
                 <table class="cmp">
@@ -4710,7 +4726,7 @@ Margin of Error (ME)  = 35.7845
                 </div>
 
                 <!-- Inline SVG: Chi-Square curve with rejection zone -->
-                <svg class="svg-chart" viewBox="0 0 720 250" width="100%" height="250" style="background:#151822;border:1px solid #2a2f3d;border-radius:8px;margin:16px 0;">
+                <svg class="svg-chart" viewBox="0 0 720 250" style="background:#151822;border:1px solid #2a2f3d;border-radius:8px;margin:16px 0;">
                     <text x="360" y="24" text-anchor="middle" fill="#e7e9ee" font-size="13" font-weight="bold">Chi-Square Distribution (df = 2, α = 0.05) — শহরের ওজন টেস্ট</text>
                     <!-- Axis -->
                     <line x1="50" y1="200" x2="670" y2="200" stroke="#3a4055" stroke-width="1.5"/>
@@ -4747,7 +4763,7 @@ Margin of Error (ME)  = 35.7845
                     <p>
                         • <b>Chi-Square Test of Independence:</b> দুটি ক্যাটাগরিকাল চলকের মধ্যে কোনো সম্পর্ক আছে কি না (যেমন: জেন্ডার বনাম ধূমপানের অভ্যাস) তা যাচাই করতে ব্যবহৃত হয়।<br>
                         • <b>ANOVA (Analysis of Variance / F-test):</b> তিন বা ততোধিক ভিন্ন গ্রুপের গড়ের মধ্যে কোনো পার্থক্য আছে কি না তা তুলনা করতে ব্যবহৃত হয়।<br>
-                        <i>(উভয় টেস্টের সম্পূর্ণ অধ্যায় পরবর্তীতে আলাদা মডিউলে যুক্ত হবে)।</i>
+                        <i>(ANOVA-র পূর্ণাঙ্গ তাত্ত্বিক ধারণা ও বাস্তব গাণিতিক সমাধান পরবর্তী সেকশন ৪৩ ও ৪৪-এ বিস্তারিত দেওয়া হয়েছে)।</i>
                     </p>
                 </div>
 
@@ -4828,6 +4844,9 @@ p-value                   = 1.621588e-06
                     অন্তত একটি ভুল হওয়ার ঝুঁকি = <code style="color:var(--warn);font-size:15px;">1 − (0.95)⁶ ≈ 1 − 0.735 = ২৬.৫%!</code> (প্রতি ৪টি পরীক্ষায় ১টিতে ভুয়া ফলাফল!)<br><br>
                     <b>ANOVA-র মহিমা:</b> ANOVA আলাদা আলাদা জোড়ায় না গিয়ে একক সামগ্রিক টেস্টের (Omnibus Test) মাধ্যমে সব গ্রুপের গড় একসাথে পরীক্ষা করে, ফলে Type 1 Error কঠোরভাবে <b>মূল ৫%-তেই সুরক্ষিত থাকে</b>।<br>
                     <i>(বিশেষ তথ্য: যদি ঠিক ২টি গ্রুপের ওপর ANOVA চালানো হয়, তবে F-মান হুবহু <b>F = t²</b> হয় — অর্থাৎ ২ গ্রুপে t-test ও ANOVA অভিন্ন ফলাফল দেয়)।</i></p>
+                    <p style="font-size:12px;color:var(--muted);margin-top:8px;">
+                        <i>* নোট: এখানে <code>1 − (0.95)ᵏ</code> হিসাবটি মূলত একটি তাত্ত্বিক আসন্ন মান (Approximation); কারণ একই ডেটাসেটের ওপর একাধিক পেয়ারওয়াইজ t-test চালালে টেস্টগুলো সম্পূর্ণ স্বাধীন (Independent) থাকে না — তারা একই গ্রুপকে শেয়ার করে। তবুও এটি পরিষ্কার প্রমাণ করে যে টেস্ট বাড়ালে সামগ্রিক মিথ্যা অ্যালার্মের ঝুঁকি বহুগুণ বেড়ে যায়।</i>
+                    </p>
                 </div>
 
                 <h3 class="sub">(গ) Factor এবং Level — পারিভাষিক পরিচয়</h3>
@@ -4849,7 +4868,7 @@ p-value                   = 1.621588e-06
                         <td><b>১. Normality of Sampling Distribution</b></td>
                         <td>প্রতিটি গ্রুপের ডেটা বা নমুনার গড়ের বণ্টন Normal Distribution মেনে চলবে।</td>
                         <td>F-distribution মূলত দুটি স্বাভাবিক ভ্যারিয়েন্সের তাত্ত্বিক অনুপাত থেকে গঠিত।</td>
-                        <td>অত্যধিক Skewed ডেটায় p-value ভুল আসে। <i>(সমাধান: ডেটা রূপান্তর অথবা নন-প্যারামেট্রিক Kruskal-Wallis টেস্ট)</i>।</td>
+                        <td>অত্যধিক Skewed বা নন-নরমাল ডেটায় p-value ভুল আসে। <i>(সমাধান: ডেটা রূপান্তর অথবা নন-প্যারামেট্রিক <b>Kruskal-Wallis H-test</b>)</i>।</td>
                     </tr>
                     <tr>
                         <td><b>২. Absence of Outliers</b></td>
@@ -4861,7 +4880,7 @@ p-value                   = 1.621588e-06
                         <td><b>৩. Homogeneity of Variance</b></td>
                         <td>সব গ্রুপের পপুলেশন ভ্যারিয়েন্স সমান হতে হবে: <code>σ₁² = σ₂² = σ₃²</code>।</td>
                         <td>ANOVA সব গ্রুপের ভেতরের গোলমালকে একত্র করে একটি কমন গোলমাল (Pooled Within Variance) হিসেবে গণ্য করে।</td>
-                        <td>একটি গ্রুপের ভ্যারিয়েন্স অন্য গ্রুপের ৩-৪ গুণ হলে টেস্ট অকার্যকর হয়। এটি যাচাই করতে <b>Levene's Test</b> ব্যবহার করা হয়।</td>
+                        <td>ভ্যারিয়েন্স অসমান হলে (Heteroscedasticity) টেস্ট ভুল সিদ্ধান্ত দেয় (যাচাইয়ে <b>Levene's Test</b>)। <i>(সমাধান: ভ্যারিয়েন্স অসমান হলে সাধারণ ANOVA-র বদলে <b>Welch's ANOVA</b> ব্যবহার করতে হয়)</i>।</td>
                     </tr>
                     <tr>
                         <td><b>৪. Independence of Samples</b></td>
@@ -4946,7 +4965,7 @@ p-value                   = 1.621588e-06
                 </div>
 
                 <!-- Inline SVG: Partitioning of Variance & F-distribution concept -->
-                <svg class="svg-chart" viewBox="0 0 720 260" width="100%" height="260" style="background:#151822;border:1px solid #2a2f3d;border-radius:8px;margin:18px 0;">
+                <svg class="svg-chart" viewBox="0 0 720 260" style="background:#151822;border:1px solid #2a2f3d;border-radius:8px;margin:18px 0;">
                     <text x="360" y="24" text-anchor="middle" fill="#e7e9ee" font-size="13" font-weight="bold">ANOVA ভ্যারিয়েন্স বিভাজন ও F-অনুপাত (Signal vs Noise)</text>
                     
                     <!-- Box Left: Partitioning -->
@@ -4983,9 +5002,9 @@ p-value                   = 1.621588e-06
                 <h3 class="sub">(জ) সম্পূর্ণ সমাধান — পৃষ্ঠা ৪৪-এর উদাহরণ ("ফল আসে না / Fail to Reject" কেস)</h3>
                 <p>
                     <b>সমস্যা:</b> নিচের ৩টি গ্রুপের ডেটা পর্যবেক্ষণ করো:<br>
-                    • <b>Group 1 (x₁):</b> <code>[1, 2, 4, 5, 3]</code> $\implies n₁ = 5$<br>
-                    • <b>Group 2 (x₂):</b> <code>[6, 7, 3, 2, 1]</code> $\implies n₂ = 5$<br>
-                    • <b>Group 3 (x₃):</b> <code>[5, 6, 3, 2, 4]</code> $\implies n₃ = 5$<br>
+                    • <b>Group 1 (x₁):</b> <code>[1, 2, 4, 5, 3]</code> ⟹ n₁ = 5$<br>
+                    • <b>Group 2 (x₂):</b> <code>[6, 7, 3, 2, 1]</code> ⟹ n₂ = 5$<br>
+                    • <b>Group 3 (x₃):</b> <code>[5, 6, 3, 2, 4]</code> ⟹ n₃ = 5$<br>
                     মোট পর্যবেক্ষণ <code>N = 15</code>, গ্রুপ সংখ্যা <code>k = 3</code>। <code>α = 0.05</code> লেভেলে টেস্ট করো — গ্রুপগুলোর মধ্যে কি কোনো উল্লেখযোগ্য পার্থক্য আছে?
                 </p>
 
@@ -4995,7 +5014,8 @@ p-value                   = 1.621588e-06
                     • Group 1 গড়: <code>x̄₁ = (1 + 2 + 4 + 5 + 3) / 5 = 15 / 5 = 3.0</code><br>
                     • Group 2 গড়: <code>x̄₂ = (6 + 7 + 3 + 2 + 1) / 5 = 19 / 5 = 3.8</code><br>
                     • Group 3 গড়: <code>x̄₃ = (5 + 6 + 3 + 2 + 4) / 5 = 20 / 5 = 4.0</code><br>
-                    • <b>Grand Mean (সার্বিক গড় x̄):</b> <code>(3.0 + 3.8 + 4.0) / 3 = 10.8 / 3 = 3.6</code>
+                    • <b>Grand Mean (সার্বিক গড় x̄):</b> <code>x̄ = Σx / N = (15 + 19 + 20) / 15 = 54 / 15 = 3.6</code><br>
+                    <small style="color:var(--muted);"><i>(সতর্কতা: গড়ের গড় <code>(3.0 + 3.8 + 4.0) / 3 = 3.6</code> শুধুমাত্র তখনই খাটে যখন প্রতিটি গ্রুপের স্যাম্পল সাইজ সমান (n₁ = n₂ = n₃ = 5)। গ্রুপ সাইজ অসমান হলে অবশ্যই মূল সূত্র <code>Σx / N</code> বা <code>Σ(nᵢ · x̄ᵢ) / N</code> (Weighted Mean) ব্যবহার করতে হবে)।</i></small>
                 </p>
 
                 <p><b>ধাপ ২: SS_between (গ্রুপগুলোর মধ্যকার বিচ্যুতি) হিসাব</b><br>
@@ -5025,13 +5045,20 @@ p-value                   = 1.621588e-06
                     <code>F = MS_between / MS_within = 1.4 / 3.9 ≈ 0.3589 ≈ 0.36</code><br><br>
                     • <b>Critical Value:</b> F-Table থেকে <code>df₁ = 2</code> এবং <code>df₂ = 12</code> এর জন্য <code>α = 0.05</code> এ <b>Critical F ≈ 3.89</b>।<br>
                     • <b>সিদ্ধান্ত:</b> যেহেতু ক্যালকুলেটেড <code>F = 0.36 &lt; 3.89</code> (Acceptance Region-এ পড়েছে, <code>p ≈ 0.71</code>):<br>
-                    $\implies$ <b>Fail to reject H₀</b> (Null Hypothesis বাতিল করা সম্ভব নয়)।
+                    ⟹ <b>Fail to reject H₀</b> (Null Hypothesis বাতিল করা সম্ভব নয়)।
                 </p>
 
                 <div class="box tip">
                     <span class="tag">গভীর অন্তর্দৃষ্টি — কেন ফল এল না?</span>
                     <p>লক্ষ্য করো, গ্রুপগুলোর নিজস্ব গড়গুলো (৩.০, ৩.৮, ৪.০) খুবই কাছাকাছি (SS_between মাত্র ২.৮)। কিন্তু গ্রুপের ভেতরের মানগুলোর স্বাভাবিক ব্যক্তিগত ছড়ানো-ছিটানো ভাব ছিল বিশাল (SS_within = ৪৬.৮)!<br>
                     অর্থাৎ <b>গোলমাল (Noise) সংকেতের (Signal) চেয়ে প্রায় তিন গুণ বেশি শক্তিশালী</b> ছিল, ফলে F-মান একেরও অনেক নিচে (০.৩৬) নেমে গেছে। তাই কোনো গ্রুপের গড়ের মধ্যে পরিসংখ্যানগত পার্থক্য নেই।</p>
+                </div>
+
+                <div class="box note">
+                    <span class="tag">Omnibus Test ও Post-Hoc Analysis (Tukey HSD)</span>
+                    <p><b>যদি ANOVA-তে H₀ বাতিল (Reject) হতো, তখন কী করতাম?</b><br>
+                    মনে রাখা জরুরি — ANOVA হলো একটি <b>Omnibus Test</b>। এটি শুধু একটি লালবাতি জ্বালায়: <i>"কমপক্ষে একটি গ্রুপ বাকিদের থেকে আলাদা"</i>। কিন্তু এটি নির্দিষ্ট করে বলে না <b>কোন গ্রুপটি কার চেয়ে আলাদা</b> (১ বনাম ২, ২ বনাম ৩, নাকি ১ বনাম ৩)?<br>
+                    তাই ANOVA সিগনিফিক্যান্ট হলে (Reject H₀) কোন নির্দিষ্ট দুটি গ্রুপের মধ্যে আসল তফাত রয়েছে তা বের করতে <b>Post-Hoc Test (যেমন: Tukey's HSD — Honestly Significant Difference)</b> চালাতে হয়, যা Family-wise Type 1 Error নিয়ন্ত্রণ রেখে সঠিক পার্থক্যটি নির্দেশ করে।</p>
                 </div>
 
                 <h3 class="sub">(ঝ) Python কোড — ANOVA যাচাই</h3>
@@ -5243,7 +5270,7 @@ p-value                = 0.7056
                     <rect x="500" y="45" width="215" height="50" rx="6" fill="#1e2230" stroke="#3a4055"/>
                     <text x="508" y="63" fill="#4ade80" font-size="10" font-weight="bold">বিশাল Between ব্যবধান (Signal = 49.33)</text>
                     <text x="508" y="78" fill="#8b91a1" font-size="9.5">গ্রুপের ভেতরের গোলমাল খুবই নগণ্য</text>
-                    <text x="508" y="90" fill="#f9c74f" font-size="9.5">Noise = 0.57 $\implies$ F = 86.33!</text>
+                    <text x="508" y="90" fill="#f9c74f" font-size="9.5">Noise = 0.57 ⟹ F = 86.33!</text>
                 </svg>
 
                 <!-- ── 5 Steps of ANOVA Hypothesis Testing ── -->
@@ -5426,7 +5453,7 @@ p-value                = 0.7056
                 <!-- ── Step 5: Decision & Interpretation ── -->
                 <p><b>ধাপ ৫: পরিসংখ্যানগত ও ক্লিনিকাল সিদ্ধান্ত গ্রহণ (Decision &amp; Interpretation)</b><br>
                     • <b>পরিসংখ্যানগত সিদ্ধান্ত:</b> যেহেতু ক্যালকুলেটেড <code>F = 86.33</code> মানটি ক্রিটিক্যাল মান <code>3.55</code>-এর চেয়ে অনেক গুণ বড় (<code>86.33 &gt;&gt; 3.55</code>), এবং <code>p-value &lt; 0.0001 &lt; 0.05</code>:<br>
-                    $\implies$ <b>Reject H₀ (Null Hypothesis নিশ্চিতভাবে বাতিল)!</b><br><br>
+                    ⟹ <b>Reject H₀ (Null Hypothesis নিশ্চিতভাবে বাতিল)!</b><br><br>
                     • <b>বাস্তব জীবনের অর্থ (Clinical Interpretation):</b> ওষুধের ভিন্ন ভিন্ন ডোজের কারণে রোগীদের মাথাব্যথার তীব্রতায় পরিসংখ্যানগতভাবে চরম তাৎপর্যপূর্ণ পার্থক্য তৈরি হয়েছে। গ্রাফ ও গড় পর্যালোচনা করলে দেখা যায়, <b>৪৫ মিলিগ্রাম ডোজ গ্রহণে রোগীদের ব্যথার রেটিং সবচেয়ে নাটকীয়ভাবে কমে গড় ৩.০-এ নেমে এসেছে</b>, যা সবচেয়ে বেশি কার্যকরী।
                 </p>
 
@@ -5536,8 +5563,8 @@ group1 group2 meandiff p-adj   lower   upper  reject
                         <b>ধাপ ৪: Test Statistic ও p-value হিসাব</b><br>
                         • স্যাম্পল ডেটা থেকে Z, t, χ², বা F এর মান নির্ণয় করো।<br><br>
                         <b>ধাপ ৫: সিদ্ধান্ত গ্রহণ ও বাস্তব ব্যাখ্যা</b><br>
-                        • Test Statistic যদি Rejection Region-এ পড়ে (অথবা <code>p-value &lt; α</code> হয়) $\implies$ <b>Reject H₀</b>!<br>
-                        • অন্যথায় $\implies$ <b>Fail to reject H₀</b> (কখনোই "Accept H₀" বলবে না)।
+                        • Test Statistic যদি Rejection Region-এ পড়ে (অথবা <code>p-value &lt; α</code> হয়) ⟹ <b>Reject H₀</b>!<br>
+                        • অন্যথায় ⟹ <b>Fail to reject H₀</b> (কখনোই "Accept H₀" বলবে না)।
                     </p>
                 </div>
 
@@ -5676,7 +5703,7 @@ group1 group2 meandiff p-adj   lower   upper  reject
                     </tr>
                     <tr>
                         <td><b>Confidence Interval পদ্ধতি</b></td>
-                        <td><code>μ₀</code> যদি <code>(1 − α)% CI</code>-এর <b>বাইরে</b> পড়ে $\implies$ <b>Reject H₀</b></td>
+                        <td><code>μ₀</code> যদি <code>(1 − α)% CI</code>-এর <b>বাইরে</b> পড়ে ⟹ <b>Reject H₀</b></td>
                         <td>—</td>
                         <td>—</td>
                     </tr>
@@ -5687,13 +5714,13 @@ group1 group2 meandiff p-adj   lower   upper  reject
                     <span class="tag">পরীক্ষার কুইক গাইড</span>
                     <p>
                         ১. <b>ডেটা কি ক্যাটাগরিকাল (গণনা / ফ্রিকোয়েন্সি)?</b><br>
-                        $\implies$ <b>Chi-Square (χ²) Test</b> (একক চলক হলে Goodness of Fit; দুই চলকের সংযোগ হলে Test of Independence)।<br><br>
+                        ⟹ <b>Chi-Square (χ²) Test</b> (একক চলক হলে Goodness of Fit; দুই চলকের সংযোগ হলে Test of Independence)।<br><br>
                         ২. <b>ডেটা কি নিউমেরিক্যাল এবং গড় তুলনা করতে হবে?</b><br>
                         • যদি <b>১টি স্যাম্পল বা ২টি স্যাম্পলের গড়</b> হয়:<br>
-                        &nbsp;&nbsp;&nbsp;&nbsp;- Population σ জানা এবং <code>n ≥ 30</code> $\implies$ <b>Z-Test</b><br>
-                        &nbsp;&nbsp;&nbsp;&nbsp;- Population σ অজানা বা <code>n &lt; 30</code> $\implies$ <b>Student's t-Test</b><br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;- Population σ জানা এবং <code>n ≥ 30</code> ⟹ <b>Z-Test</b><br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;- Population σ অজানা বা <code>n &lt; 30</code> ⟹ <b>Student's t-Test</b><br>
                         • যদি <b>৩ বা ততোধিক গ্রুপের গড়</b> তুলনা করতে হয়:<br>
-                        &nbsp;&nbsp;&nbsp;&nbsp;$\implies$ একাধিক t-test না করে সরাসরি <b>One-Way ANOVA (F-Test)</b> চালাবে (Type 1 Error এড়াতে)।
+                        &nbsp;&nbsp;&nbsp;&nbsp;⟹ একাধিক t-test না করে সরাসরি <b>One-Way ANOVA (F-Test)</b> চালাবে (Type 1 Error এড়াতে)।
                     </p>
                 </div>
 
@@ -5880,6 +5907,18 @@ group1 group2 meandiff p-adj   lower   upper  reject
                 const mx=toX((opts.shade[0]+opts.shade[1])/2);
                 ctx.fillStyle=C.barHL;ctx.font='bold 12px Inter,sans-serif';ctx.textAlign='center';
                 ctx.fillText(opts.shadeLabel,mx,toY(curves[0].fn((opts.shade[0]+opts.shade[1])/2))-10);
+            }
+
+            /* marks (vertical dashed lines with label) */
+            if(opts.marks){
+                opts.marks.forEach(function(m,i){
+                    const mx=toX(m.val);
+                    ctx.strokeStyle=m.color||C.line3;ctx.lineWidth=1.5;ctx.setLineDash([5,3]);
+                    ctx.beginPath();ctx.moveTo(mx,pad.t+10);ctx.lineTo(mx,pad.t+ph);ctx.stroke();
+                    ctx.setLineDash([]);
+                    ctx.fillStyle=m.color||C.line3;ctx.font='bold 11px JetBrains Mono,monospace';ctx.textAlign='left';
+                    ctx.fillText(m.label,mx+4,pad.t+25+i*16);
+                });
             }
         };
 
@@ -6087,35 +6126,19 @@ group1 group2 meandiff p-adj   lower   upper  reject
             var medianX=Math.exp(mu);
             var modeX=Math.exp(mu-sig*sig);
 
-            drawCurves('lognormalGraph',[
-                {fn:lnPDF, label:'Log-Normal (μ=0, σ=1)'}
-            ], 0.01, 8, {title:'Log-Normal Distribution',xLabel:'x',yLabel:'f(x)'});
-
-            /* mark mean, median, mode on the canvas */
-            var s2=setupCanvas('lognormalGraph'); if(!s2) return;
-            var ctx2=s2.ctx, w2=s2.w, h2=s2.h;
-            /* re-draw with marks — simple approach: just add vertical lines */
-            var pad2={t:40,r:20,b:50,l:55};
-            var pw2=w2-pad2.l-pad2.r, ph2=h2-pad2.t-pad2.b;
-            var xmin2=0.01, xmax2=8;
-            /* compute ymax */
-            var ymax2=0;
-            for(var i=0;i<=400;i++){var x=xmin2+i*(xmax2-xmin2)/400;var y=lnPDF(x);if(y>ymax2)ymax2=y;}
-            ymax2*=1.12;
-            function toX2(x){return pad2.l+(x-xmin2)/(xmax2-xmin2)*pw2;}
-            function toY2(y){return pad2.t+ph2-y/ymax2*ph2;}
-
             var marks=[
                 {val:modeX,label:'Mode='+modeX.toFixed(2),color:C.line3},
                 {val:medianX,label:'Median='+medianX.toFixed(2),color:C.line2},
                 {val:meanX,label:'Mean='+meanX.toFixed(2),color:C.line4}
             ];
-            marks.forEach(function(m,i){
-                ctx2.strokeStyle=m.color;ctx2.lineWidth=1.5;ctx2.setLineDash([5,3]);
-                ctx2.beginPath();ctx2.moveTo(toX2(m.val),pad2.t+10);ctx2.lineTo(toX2(m.val),pad2.t+ph2);ctx2.stroke();
-                ctx2.setLineDash([]);
-                ctx2.fillStyle=m.color;ctx2.font='bold 11px JetBrains Mono,monospace';ctx2.textAlign='left';
-                ctx2.fillText(m.label,toX2(m.val)+4,pad2.t+25+i*16);
+
+            drawCurves('lognormalGraph',[
+                {fn:lnPDF, label:'Log-Normal (μ=0, σ=1)'}
+            ], 0.01, 8, {
+                title:'Log-Normal Distribution',
+                xLabel:'x',
+                yLabel:'f(x)',
+                marks: marks
             });
         })();
 
@@ -6173,7 +6196,7 @@ group1 group2 meandiff p-adj   lower   upper  reject
             });
             var labels2=[], vals2=[];
             for(var i=0;i<nBins;i++){
-                labels2.push((lo+i*binW2+binW2/2).toFixed(1));
+                labels2.push((lo+i*binW2+binW2/2).toFixed(2));
                 vals2.push(bins[i]);
             }
             drawBars('cltHist',labels2,vals2,{title:'CLT Simulation — '+pop+', n = '+n+', ২০০০ sample mean',xLabel:'Sample Mean (x̄)',yLabel:'Frequency',vDec:0,yDec:0});
